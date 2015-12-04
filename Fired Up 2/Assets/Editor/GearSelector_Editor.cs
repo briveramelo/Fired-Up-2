@@ -2,9 +2,9 @@
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(GearSelector))]
+[CustomEditor(typeof(GearSelector_UI))]
 [CanEditMultipleObjects]
-public class GearSelector_Editor : Editor {
+public class GearSelector_UI_Editor : Editor {
 
     public SerializedProperty
         UIMovementAnimator;

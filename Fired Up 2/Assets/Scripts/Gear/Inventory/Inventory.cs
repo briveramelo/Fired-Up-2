@@ -37,19 +37,16 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public void UpdateAmmo(GearEnum GearToUpdate, bool addItem) {
-        UpdateInventoryBank(GearToUpdate, addItem);
+    public void UpdateAmmo(GearEnum GearToUpdate, float quantityToAdd) {
+        UpdateInventoryBank(GearToUpdate, quantityToAdd);
         UpdateUIDisplay(GearToUpdate);
     }
 
-    void UpdateInventoryBank(GearEnum GearToUpdate, bool addItem) {
-        if (GearToUpdate == GearEnum.SonicHose) {
-            SonicHose.Instance.BatteryPower += 1f;
-        }
-        else /*if (GearToUpdate != GearEnum.SonicHose)*/{
-            if (addItem) gearInventory[GearToUpdate]++;
-            else gearInventory[GearToUpdate]--;
-        }
+    void UpdateInventoryBank(GearEnum GearToUpdate, float quantityToAdd) {
+        if (GearToUpdate == GearEnum.SonicHose)
+            SonicHose.Instance.BatteryPower += quantityToAdd;
+        else
+            gearInventory[GearToUpdate]+= (int)quantityToAdd;
     }
 
     void UpdateUIDisplay(GearEnum GearToUpdate) {

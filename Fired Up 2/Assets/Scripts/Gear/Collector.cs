@@ -6,7 +6,7 @@ public class Collector : MonoBehaviour {
     LayerMask collectableMask;
 
     void Awake() {
-        collectableMask = Layers.LayerMasks.allExtinguishers;
+        collectableMask = Layers.LayerMasks.allCollectables;
     }
 
     void OnTriggerEnter(Collider col) {

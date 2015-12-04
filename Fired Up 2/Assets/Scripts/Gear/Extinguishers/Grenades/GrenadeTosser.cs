@@ -30,7 +30,7 @@ public class GrenadeTosser : Inventory {
 
 	IEnumerator ThrowThing(){
 		GameObject objectToSpawn = CurrentGear == GearEnum.K_Bomb ? k_Bomb : blackDeath;
-        Inventory.Instance.UpdateAmmo(CurrentGear, false);
+        UpdateAmmo(CurrentGear, -1);
         canThrowGrenade = false;
 		GameObject grenade = Instantiate(objectToSpawn, transform.position, Quaternion.identity) as GameObject;
 		grenade.GetComponentInChildren<Rigidbody>().AddForce(Camera.main.transform.forward * throwForce);

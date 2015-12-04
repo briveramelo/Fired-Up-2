@@ -6,7 +6,6 @@ public class UI_Animations : MonoBehaviour {
 	[SerializeField]	private TextMesh inventoryQuantity;
 	[SerializeField]	private Animator UIAnimator;
 	
-	
 	public virtual void ActivateUI(){
 		UIAnimator.SetInteger("AnimState",1);
 	}

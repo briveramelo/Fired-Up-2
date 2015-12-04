@@ -5,11 +5,10 @@ public class SonicHose_UI : UI_Animations {
 
 	[SerializeField] private EffectSettings sonicEffectSettings;
 	[SerializeField] private UVTextureAnimator[] textureAnimatorScripts;
-	[SerializeField] private SonicHose sonicHoseScript;
 	[SerializeField] private Transform sonicBeamTransform;
 
 	void Update(){
-		sonicBeamTransform.localScale = new Vector3(1f,1f,sonicHoseScript.BatteryPower);
+		sonicBeamTransform.localScale = new Vector3(1f,1f,SonicHose.Instance.BatteryPower);
 	}
 
 	public override void ActivateUI(){
