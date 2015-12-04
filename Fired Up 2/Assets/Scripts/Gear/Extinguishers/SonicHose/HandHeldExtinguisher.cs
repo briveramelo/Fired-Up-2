@@ -58,14 +58,6 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
         myAnimator.SetInteger("AnimState", (int)HoseStates.Idle);
         myCollider.enabled = false;
         if (fires.Count > 0) fires.Clear();
-        StartCoroutine(Recharge());
-    }
-
-    IEnumerator Recharge(){
-        while (percentFull < 1f && myAnimator.GetInteger("AnimState") != (int)HoseStates.Engage){
-            percentFull += Time.deltaTime / mySoundClipLength;
-            yield return null;
-        }
     }
 
     protected virtual IEnumerator PutAway(){

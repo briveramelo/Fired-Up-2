@@ -9,7 +9,7 @@ namespace FU{
 		#region LayerMasks
 		public static class LayerMasks{
 			public static LayerMask allFires = LayerMaskExtensions.Create (Fires.electricFire, Fires.solidFire, Fires.liquidFire);
-			public static LayerMask allExtinguishers = LayerMaskExtensions.Create (Extinguishers.blackDeath, Extinguishers.kBomb, Extinguishers.sonicHose, Extinguishers.extinguisherCannister);
+			public static LayerMask allExtinguishers = LayerMaskExtensions.Create (Extinguishers.blackDeath, Extinguishers.kBomb, Extinguishers.sonicHose);
 			public static LayerMask allObjects = LayerMaskExtensions.Create (Objects.furniture, Objects.ground);
 			public static LayerMask allPeople = LayerMaskExtensions.Create (People.NPC,People.you);
             public static LayerMask allCollectables = LayerMaskExtensions.Create(Collectables.CO2_Cannister, Collectables.Powder_Cannister, Collectables.K_Bomb, Collectables.BlackDeath, Collectables.SonicHose_Battery);
@@ -34,7 +34,6 @@ namespace FU{
 			public static int sonicHose = 13;
 			public static int kBomb = 14;
 			public static int blackDeath = 15;
-            public static int extinguisherCannister = 16;
 
 			public static string sonicHoseString = "SonicHose";
 			public static string kBombString = "KBomb";

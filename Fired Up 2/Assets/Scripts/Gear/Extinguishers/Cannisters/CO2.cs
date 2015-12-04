@@ -5,8 +5,16 @@ using System.Collections.Generic;
 
 public class CO2 : HandHeldExtinguisher{
 
-    protected override void Awake(){
-        base.Awake();
-        //myAnimator.SetInteger("AnimState", (int)HoseStates.PutAway);
+    [SerializeField] private ParticleSystem gasParticles;
+
+    protected override IEnumerator Use(){
+        gasParticles.enableEmission = true;
+        StartCoroutine(base.Use());
+        yield return null;
+    }
+
+    protected override void DeActivateHose() {
+        gasParticles.enableEmission = false;
+        base.DeActivateHose();
     }
 }
