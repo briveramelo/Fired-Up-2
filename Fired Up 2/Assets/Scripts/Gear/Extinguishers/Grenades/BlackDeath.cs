@@ -9,6 +9,7 @@ public class BlackDeath : MonoBehaviour {
 	[SerializeField]	private EffectSettings effectSettings;
 	[SerializeField]	private ParticleSystem rockParticles;
 	[SerializeField]	private LayerMask layersToPull;
+
 	private float holeRadius;
 	private float pullForce;
 	private bool singularizing;
@@ -45,20 +46,25 @@ public class BlackDeath : MonoBehaviour {
 	}
 
 	IEnumerator PullInObjects(){
-		while (singularizing){
+        foreach (Collider col in Physics.OverlapSphere(transform.position, holeRadius, Layers.LayerMasks.allFires.value)){
+            FireSpread fireSpread = col.GetComponent<FireSpread>();
+            fireSpread.ExtinguishFire();
+        }
+
+        while (singularizing){
 			foreach (Collider col in Physics.OverlapSphere(transform.position,holeRadius,layersToPull)){
 				Vector3 pullDir = (transform.position - col.transform.position).normalized;
 				float pullFactor = Vector3.Distance(transform.position,col.transform.position)/holeRadius;
 				col.attachedRigidbody.AddForce(pullDir * pullForce * pullFactor);
 			}
-			yield return null;
+            
+            yield return null;
 		}
 		yield return null;
 	}
 	
 	void OnTriggerEnter(Collider col){
-		if (LayerMaskExtensions.IsInLayerMask(col.gameObject, layersToPull)){
-			Destroy(col.gameObject);
-		}
+        if (LayerMaskExtensions.IsInLayerMask(col.gameObject, layersToPull))
+            Destroy(col.gameObject);
 	}
 }

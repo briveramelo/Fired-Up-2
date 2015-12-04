@@ -22,8 +22,8 @@ public class K_Bomb : MonoBehaviour {
 		iceExplosion.transform.position = transform.position;
 		iceExplosion.SetActive(true);
 		foreach (Collider col in Physics.OverlapSphere(transform.position,explosionRadius, extinguishableMask.value)){
-//			Fire fire = col.GetComponent<Fire>();
-//			fire.Extinguish();
+            FireSpread firespread = col.GetComponent<FireSpread>();
+            firespread.ExtinguishFire();
 		}
 		Destroy(gameObject);
 	}

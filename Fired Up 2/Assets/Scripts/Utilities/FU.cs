@@ -9,10 +9,11 @@ namespace FU{
 		#region LayerMasks
 		public static class LayerMasks{
 			public static LayerMask allFires = LayerMaskExtensions.Create (Fires.electricFire, Fires.solidFire, Fires.liquidFire);
-			public static LayerMask allExtinguishers = LayerMaskExtensions.Create (Extinguishers.blackDeath, Extinguishers.kBomb, Extinguishers.sonicHose, Extinguishers.extinguisherCannister);
+			public static LayerMask allExtinguishers = LayerMaskExtensions.Create (Extinguishers.blackDeath, Extinguishers.kBomb, Extinguishers.sonicHose);
 			public static LayerMask allObjects = LayerMaskExtensions.Create (Objects.furniture, Objects.ground);
 			public static LayerMask allPeople = LayerMaskExtensions.Create (People.NPC,People.you);
-			public static LayerMask ground = LayerMaskExtensions.Create (Objects.furniture, Objects.ground, People.NPC);
+            public static LayerMask allCollectables = LayerMaskExtensions.Create(Collectables.CO2_Cannister, Collectables.Powder_Cannister, Collectables.K_Bomb, Collectables.BlackDeath, Collectables.SonicHose_Battery);
+            public static LayerMask ground = LayerMaskExtensions.Create (Objects.furniture, Objects.ground, People.NPC);
 		}
 		#endregion
 
@@ -33,7 +34,6 @@ namespace FU{
 			public static int sonicHose = 13;
 			public static int kBomb = 14;
 			public static int blackDeath = 15;
-            public static int extinguisherCannister = 16;
 
 			public static string sonicHoseString = "SonicHose";
 			public static string kBombString = "KBomb";
@@ -49,10 +49,11 @@ namespace FU{
 			public static string furnitureString = "Furniture";
 			public static string groundString = "Ground";
 		}
-		#endregion
+        #endregion
 
-		#region People
-		public static class People{
+
+        #region People
+        public static class People{
 			public static int NPC = 19;
 			public static int you = 20;
 
@@ -60,11 +61,21 @@ namespace FU{
 			public static string youString = "You";
 		}
 		#endregion
-	}
-	#endregion
 
-	#region Controls
-	public static class Controls{
+        #region Collectables
+        public static class Collectables {
+            public static int CO2_Cannister = 21;
+            public static int Powder_Cannister = 22;
+            public static int K_Bomb = 23;
+            public static int BlackDeath = 24;
+            public static int SonicHose_Battery = 25;
+        }
+        #endregion
+    }
+    #endregion
+
+    #region Controls
+    public static class Controls{
 		public static void SetControls (){
 			if (Application.platform == RuntimePlatform.OSXPlayer ||
 			    Application.platform == RuntimePlatform.OSXEditor ||
