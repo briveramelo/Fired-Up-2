@@ -16,12 +16,15 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
     protected float timeToExtinguish;
     protected List<Collider> fires;
     protected float minPercentToUse;
+    float lastAxis;
+    float deadZone;
 
     protected virtual void Awake(){
         mySoundClipLength = mySound.clip.length;
         timeToExtinguish = 0.5f;
         percentFull = 1f;
         minPercentToUse = 0f;
+        deadZone = 0.3f;
         fires = new List<Collider>();
     }
 
@@ -29,13 +32,14 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
         if (Inventory.CurrentGear == MyGear){
             if (LastGear != MyGear)
                 Equip();
-            if (Input.GetButtonDown(Controls.FightFire) && percentFull > minPercentToUse)
+            if (Input.GetAxisRaw(Controls.FightFire) > deadZone && percentFull >= minPercentToUse && lastAxis<= deadZone)
                 StartCoroutine(Use());
         }
         else if (LastGear == MyGear && Inventory.CurrentGear != MyGear)
             StartCoroutine(PutAway());
 
         LastGear = Inventory.CurrentGear;
+        lastAxis = Input.GetAxisRaw(Controls.FightFire);
     }
 
     protected virtual void Equip(){
@@ -46,7 +50,7 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
         myAnimator.SetInteger("AnimState", (int)HoseStates.Engage);
         myCollider.enabled = true;
         mySound.Play();
-        while (Input.GetButton(Controls.FightFire) && Inventory.CurrentGear == MyGear && percentFull > 0f){
+        while (Input.GetAxisRaw(Controls.FightFire)>0.3f && Inventory.CurrentGear == MyGear && percentFull > 0f){
             percentFull -= Time.deltaTime / mySoundClipLength;
             yield return null;
         }
