@@ -7,7 +7,7 @@ using FU;
 public class Inventory : MonoBehaviour {
 
     public static Inventory Instance;
-	protected static Dictionary <GearEnum,int> gearInventory;
+	public static Dictionary <GearEnum,int> gearInventory;
 	public static GearEnum CurrentGear;
 
 	protected static SonicHose_UI sonicHose_UI;

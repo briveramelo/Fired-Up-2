@@ -7,8 +7,16 @@ public class SonicHose : HandHeldExtinguisher {
 
     public static SonicHose Instance;
 
-    [SerializeField]
-    private EffectSettings beamEffectSettingsScript;
+    [SerializeField] private GameObject sonicPulse;
+    private float rechargeTime;
+
+    protected override void Awake() {
+        base.Awake();
+        Instance = this;
+        rechargeTime = 1f;
+        minPercentToUse = 1f;
+    }
+
 
     public float BatteryPower{
         get { return percentFull; }
@@ -19,32 +27,28 @@ public class SonicHose : HandHeldExtinguisher {
         }
     }
 
-    protected override void Awake(){
-        base.Awake();
-        Instance = this;
-    }
-
-    protected override void OnTriggerEnter(Collider col){
-        if (LayerMaskExtensions.IsInLayerMask(col.gameObject, Layers.LayerMasks.allFires) && !fires.Contains(col))
-            StartCoroutine(TryToExtinguish(col));
-    }
-
     protected override IEnumerator Use(){
-        beamEffectSettingsScript.IsVisible = true;
-        StartCoroutine(base.Use());
+        myAnimator.SetInteger("AnimState", (int)HoseStates.Engage);
+        mySound.Play();
+       
+        BatteryPower = 0f;
+        SonicPulse sonicPulseScript = (Instantiate(sonicPulse, transform.position, Quaternion.Euler (90f,transform.root.rotation.eulerAngles.y,0f)) as GameObject).GetComponent<SonicPulse>();
+        sonicPulseScript.Launch(transform.up);
+
+        DeActivateHose();
         StartCoroutine(Recharge());
         yield return null;
     }
 
-    IEnumerator Recharge(){
-        while (percentFull < 1f && myAnimator.GetInteger("AnimState") != (int)HoseStates.Engage) {
-            percentFull += Time.deltaTime / mySoundClipLength;
-            yield return null;
-        }
+    protected override void DeActivateHose(){
+        myAnimator.SetInteger("AnimState", (int)HoseStates.Idle);
     }
 
-    protected override void DeActivateHose(){
-        beamEffectSettingsScript.IsVisible = false;
-        base.DeActivateHose();
+        IEnumerator Recharge() {
+        while (BatteryPower < 1f){
+            BatteryPower += Time.deltaTime / rechargeTime;
+            yield return null;
+        }
+        BatteryPower = 1f;
     }
 }

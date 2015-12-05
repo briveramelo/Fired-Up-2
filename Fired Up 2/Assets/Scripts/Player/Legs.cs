@@ -17,7 +17,7 @@ public class Legs : MonoBehaviour {
 		minAxisInput = 0.15f;
 		maxSpeed = 5f;
 		moveForce = .5f;
-		jumpForce = 300f;
+		jumpForce = 500f;
 	}
 	
 	// Update is called once per frame
@@ -47,7 +47,7 @@ public class Legs : MonoBehaviour {
 		if (Input.GetButtonDown (Controls.Jump)){
 			if (Physics.CheckSphere(feetTran.position,.5f,Layers.LayerMasks.ground.value)){
 				playerBody.velocity = new Vector3 (playerBody.velocity.x,0f,playerBody.velocity.z);
-				playerBody.AddForce (jumpForce * Vector3.up);
+                playerBody.AddForce (jumpForce * Vector3.up);
 			}
 		}
 	}

@@ -16,5 +16,11 @@ public class CO2 : HandHeldExtinguisher{
     protected override void DeActivateHose() {
         gasParticles.enableEmission = false;
         base.DeActivateHose();
+        if (percentFull <= 0f) {
+            Inventory.Instance.UpdateAmmo(MyGear, -1);
+            if (Inventory.gearInventory[MyGear] > 0) {
+                percentFull = 1f;
+            }
+        }
     }
 }

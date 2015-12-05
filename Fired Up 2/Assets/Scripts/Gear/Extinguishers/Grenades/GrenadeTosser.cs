@@ -10,6 +10,8 @@ public class GrenadeTosser : Inventory {
 	private float throwForce;
 	private float timeToWaitToThrow;
 	private bool canThrowGrenade;
+    private float deadZone=.3f;
+    private float lastAxis;
 
 	// Use this for initialization
 	void Awake () {
@@ -20,13 +22,14 @@ public class GrenadeTosser : Inventory {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown (Controls.FightFire) && gearInventory[CurrentGear]>0 &&
+		if (Input.GetAxisRaw (Controls.FightFire)>=deadZone && gearInventory[CurrentGear]>0 &&
 		    (CurrentGear == GearEnum.K_Bomb || CurrentGear == GearEnum.BlackDeath) &&
-		    canThrowGrenade){
+		    canThrowGrenade && lastAxis<deadZone){
 
 			StartCoroutine (ThrowThing());
 		}
-	}
+        lastAxis = Input.GetAxisRaw(Controls.FightFire);
+    }
 
 	IEnumerator ThrowThing(){
 		GameObject objectToSpawn = CurrentGear == GearEnum.K_Bomb ? k_Bomb : blackDeath;
