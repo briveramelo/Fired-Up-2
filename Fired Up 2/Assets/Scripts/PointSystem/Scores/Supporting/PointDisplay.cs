@@ -9,6 +9,7 @@ public class PointDisplay : MonoBehaviour {
     public void DisplayPoints(int points, ScoreType scoreEnum) {
         pointValue.text = points.ToString();
         scoreType.text = scoreEnum.ToString();
+        Destroy(gameObject, 1.25f);
     }
 
 }
