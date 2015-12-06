@@ -18,6 +18,7 @@ public class Room : MonoBehaviour {
         //Undo Occulsion
         //Set Fires
 
+
     }
     void OnTriggerExit()
     {
