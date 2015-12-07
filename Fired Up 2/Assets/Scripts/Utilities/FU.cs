@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace FU{
 
+    public static class FireFighter {
+        public static Transform playerTransform;
+    }
+
 	#region Layers
 	public static class Layers {
 		#region LayerMasks

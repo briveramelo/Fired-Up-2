@@ -11,4 +11,5 @@ public abstract class Score : MonoBehaviour{
     }
 
     protected abstract int CalculateScore();
+
 }

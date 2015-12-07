@@ -18,6 +18,7 @@ public class Legs : MonoBehaviour {
 		maxSpeed = 5f;
 		moveForce = .5f;
 		jumpForce = 500f;
+        FireFighter.playerTransform = transform.root;
 	}
 	
 	// Update is called once per frame

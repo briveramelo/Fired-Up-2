@@ -14,7 +14,7 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
     protected float percentFull;
     protected float mySoundClipLength;
     protected float timeToExtinguish;
-    protected List<Collider> fires;
+    public List<Collider> fires;
     protected float minPercentToUse;
     float lastAxis;
     float deadZone;
@@ -71,7 +71,7 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
 
     protected virtual void OnTriggerEnter(Collider col){
         if (LayerMaskExtensions.IsInLayerMask(col.gameObject, Layers.LayerMasks.allFires) && !fires.Contains(col)
-            && RoomLocator.roomLocator.tag == col.gameObject.tag)
+            && col.tag == RoomLocator.roomLocator.tag)
             StartCoroutine(TryToExtinguish(col));
     }
 

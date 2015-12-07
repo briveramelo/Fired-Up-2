@@ -5,7 +5,7 @@ public class SituationalAwareness : Score {
 
     //set for each level
     //Damage beyond this returns 0 points;
-    [SerializeField] private int damageBeforeZeroPoints =100;
+    [SerializeField] private int damageBeforeZeroPoints =1000;
     private int pointDropRate;
 
     void Awake() {
