@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using FU;
+using System.Linq;
+
 public class K_Bomb : MonoBehaviour {
 
     #region Init
     [SerializeField]	private GameObject iceExplosion;
-	[SerializeField]	private float timeToExplode;
+	private float timeToExplode;
 	private float explosionRadius;
     #endregion
 
@@ -20,7 +22,9 @@ public class K_Bomb : MonoBehaviour {
 		iceExplosion.transform.rotation = Quaternion.Euler(-90f,0f,0f);
 		iceExplosion.transform.position = transform.position;
 		iceExplosion.SetActive(true);
-		foreach (Collider col in Physics.OverlapSphere(transform.position,explosionRadius, Layers.LayerMasks.allFires.value)){
+
+        Collider[] extingishableColliders = Physics.OverlapSphere(transform.position, explosionRadius, Layers.LayerMasks.allFires.value).Where(col => CompareTag(col.tag)).ToArray();
+        foreach (Collider col in extingishableColliders){
             FireSpread firespread = col.GetComponent<FireSpread>();
             firespread.ExtinguishFire();
 		}
