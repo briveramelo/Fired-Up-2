@@ -26,9 +26,10 @@ public class BlackDeath : MonoBehaviour {
     private float timeBendTime = 4f;
     private float minimumTimeScale = 0.4f;
     private float maximumTimeScale = 1.5f;
-    private float minTimeMult;
+    private float maxDistanceBeforeZeroTimeScale = 7f;
+    private float distanceToTimeFactor;
     private float maxTimeMult;
-    private float distanceToTimeFactor = 7f;
+    private float timeFactor;
 
     // Use this for initialization
     void Awake () {
@@ -41,8 +42,8 @@ public class BlackDeath : MonoBehaviour {
         riseSpeed = .005f;
         timer = new Stopwatch();
 
-        minTimeMult = maximumTimeScale - 1f;
         maxTimeMult = 1f - minimumTimeScale;
+        distanceToTimeFactor = maxTimeMult / maxDistanceBeforeZeroTimeScale;
 
         StartCoroutine (RipThroughSpaceTime());
 	}
@@ -58,7 +59,7 @@ public class BlackDeath : MonoBehaviour {
         blackHoleSound.SetActive(true);
 		singularizing = true;
         StartCoroutine (MoveUp());
-        StartCoroutine (PulseLights());
+        //StartCoroutine (PulseLights());
         StartCoroutine (BendTime());
 		StartCoroutine (PullInObjects());
 
@@ -75,17 +76,19 @@ public class BlackDeath : MonoBehaviour {
         Transform playerTransform = FindObjectOfType<Legs>().transform;
         while ( timeElapsed < timeBendTime) {
             timeElapsed = objectiveWatch.Elapsed.Milliseconds / 1000f;
-            Time.timeScale = 1 + Mathf.Cos(timeElapsed * 4f) * DistanceToTimeFactor(myPosition, playerTransform);
+            timeFactor = DistanceToTimeFactor(myPosition, playerTransform);
+            Time.timeScale = 1 + Mathf.Cos(timeElapsed * timeFactor) * timeFactor;
             yield return null; 
         }
+        Time.timeScale = 1;
         yield return null;
     }
 
     float DistanceToTimeFactor(Vector3 myPosition, Transform playerTransform) {
         float distance = Vector3.Distance(myPosition, playerTransform.position);
-        float factor = maxTimeMult - distance / distanceToTimeFactor;
+        float factor = maxTimeMult - distance * distanceToTimeFactor;
         
-        return Mathf.Clamp(factor, minTimeMult, maxTimeMult);
+        return Mathf.Clamp(factor, 0, maxTimeMult);
     }
 
     IEnumerator PulseLights() {

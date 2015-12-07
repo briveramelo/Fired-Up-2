@@ -8,11 +8,13 @@ public class SonicPulse : MonoBehaviour {
 
     public void Launch(Vector3 launchDirection) {
         pulseBody.velocity = launchDirection * pulseSpeed;
+        gameObject.tag = RoomLocator.roomLocator.tag;
         StartCoroutine(Pulse());
     }
 
     void OnTriggerEnter(Collider col){
-        if (LayerMaskExtensions.IsInLayerMask(col.gameObject, Layers.LayerMasks.allFires))
+        if (LayerMaskExtensions.IsInLayerMask(col.gameObject, Layers.LayerMasks.allFires)
+            && CompareTag(col.gameObject.tag))
             col.GetComponent<FireSpread>().ExtinguishFire();
     }
 
