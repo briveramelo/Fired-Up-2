@@ -13,10 +13,11 @@ public class Room : MonoBehaviour {
 	void Update () {
 	
 	}
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider col)
     {
         //Undo Occulsion
         //Set Fires
+        if(col.name == "RoomLocator")
         RoomLocator.roomLocator.ChangeTag(this.tag);
 
     }
