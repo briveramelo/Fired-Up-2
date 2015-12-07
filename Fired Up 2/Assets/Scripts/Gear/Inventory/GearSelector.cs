@@ -44,6 +44,10 @@ public class GearSelector : Inventory {
             }
 		    else{
                 CurrentGear--;
+                if (gearInventory[CurrentGear] <= 0){
+                    ToggleGear(back);
+                    return;
+                }
 		    }
         }
 

@@ -91,6 +91,7 @@ public class BlackDeath : MonoBehaviour {
         return Mathf.Clamp(factor, 0, maxTimeMult);
     }
 
+    #region PulseLights
     IEnumerator PulseLights() {
         Vector3 myPosition = transform.position;
         Light[] nearbyLights = FindObjectsOfType<Light>().Where(theLight => Vector3.Distance(theLight.transform.position, myPosition) < holeRadius).ToArray();
@@ -145,6 +146,7 @@ public class BlackDeath : MonoBehaviour {
 
         yield return null;
     }
+    #endregion
 
     IEnumerator MoveUp() {
         float distanceAwayFromEnd = 0f;
@@ -157,7 +159,8 @@ public class BlackDeath : MonoBehaviour {
     }
 
 	IEnumerator PullInObjects(){
-        foreach (Collider col in Physics.OverlapSphere(transform.position, holeRadius, Layers.LayerMasks.allFires.value)){
+        Collider[] extingishableColliders = Physics.OverlapSphere(transform.position, holeRadius, Layers.LayerMasks.allFires.value).Where(col => CompareTag(col.tag)).ToArray();
+        foreach (Collider col in extingishableColliders) {
             FireSpread fireSpread = col.GetComponent<FireSpread>();
             fireSpread.ExtinguishFire();
         }
