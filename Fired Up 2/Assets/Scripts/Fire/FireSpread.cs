@@ -8,7 +8,7 @@ using System.Linq;
 public class FireSpread : MonoBehaviour {
 
     public bool isOnFire;
-    private FireSpread[] nearbyFireSpreadScripts;
+    private List<FireSpread> nearbyFireSpreadScripts = new List<FireSpread>();
     [SerializeField] private EffectSettings fireEffectSettings;
     [SerializeField] private GameObject myFireParts;
     private float fireRadius;
@@ -35,12 +35,23 @@ public class FireSpread : MonoBehaviour {
         fireRadius = 1f;
         Collider[] nearbyFireColliders = Physics.OverlapSphere(transform.position, fireRadius, Layers.LayerMasks.allFires.value);
         nearbyFireColliders = nearbyFireColliders.Where(col => col != thisCollider).ToArray();
-        nearbyFireSpreadScripts = new FireSpread[nearbyFireColliders.Length];
+        //nearbyFireSpreadScripts = new FireSpread[nearbyFireColliders.Length];
         for (int i = 0; i < nearbyFireColliders.Length; i++) {
-            nearbyFireSpreadScripts[i] = nearbyFireColliders[i].GetComponent<FireSpread>();
+            
+                if (this.tag.Equals(nearbyFireColliders[i].tag))
+                {
+                    nearbyFireSpreadScripts.Add(nearbyFireColliders[i].GetComponent<FireSpread>());
+                   
+                }
+            
         }
-
-        if (isOnFire) CatchFire();
+        
+        if (isOnFire)
+        {
+           // printLocalFires();
+CatchFire();
+        }
+        
     }
 
     public void CatchFire() {
@@ -57,11 +68,13 @@ public class FireSpread : MonoBehaviour {
         float fireRandomTime = Random.Range(timeItTakesToCatchFire -2,timeItTakesToCatchFire + 2);
             yield return new WaitForSeconds(fireRandomTime);
            // Debug.Log(this.transform.position + "  " + this.name + "Begining of CoRoutine");
-            if (nearbyFireSpreadScripts.Length > 0 && isOnFire)
+            if (nearbyFireSpreadScripts.Count > 0 && isOnFire)
             {
-                for (int i = 0; i < nearbyFireSpreadScripts.Length; i++)
+                for (int i = 0; i < nearbyFireSpreadScripts.Count; i++)
                 {
-                    if ((!nearbyFireSpreadScripts[i].isOnFire) && (Random.Range(0, 1) < .6) && ((Time.time - nearbyFireSpreadScripts[i].extingishTime) > waitTimeAfterExtingishing))
+                    if ((!nearbyFireSpreadScripts[i].isOnFire) && 
+                        (Random.Range(0, 1) < .6) && 
+                        ((Time.time - nearbyFireSpreadScripts[i].extingishTime) > waitTimeAfterExtingishing))
                     {
                         nearbyFireSpreadScripts[i].CatchFire();
                     }
@@ -101,9 +114,9 @@ public class FireSpread : MonoBehaviour {
 
 
 	void printLocalFires(){
-		if(nearbyFireSpreadScripts.Length > 0){
-			for(int i = 0; i < nearbyFireSpreadScripts.Length-1; i++)   //foreach (FireSpread fire in fireList){
-			Debug.Log(nearbyFireSpreadScripts[i].name);
+		if(nearbyFireSpreadScripts.Count > 0){
+			for(int i = 0; i < nearbyFireSpreadScripts.Count-1; i++)   //foreach (FireSpread fire in fireList){
+			Debug.Log(this.name +"With tag "+ tag + "Can spawn" + nearbyFireSpreadScripts[i].name + "with tag" + nearbyFireSpreadScripts[i].tag);
 		}
 	}
 }
