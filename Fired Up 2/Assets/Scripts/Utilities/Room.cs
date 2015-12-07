@@ -17,7 +17,7 @@ public class Room : MonoBehaviour {
     {
         //Undo Occulsion
         //Set Fires
-
+        RoomLocator.roomLocator.ChangeTag(this.tag);
 
     }
     void OnTriggerExit()
