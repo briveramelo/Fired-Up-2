@@ -86,10 +86,12 @@ namespace FU{
 				Sideways = "Mac_Sideways";
 				LookUp = "Mac_LookUp";
 				LookSideways = "Mac_LookSideways";
+
 				Jump = "Mac_Jump";
 				FightFire = "Mac_FightFire";
-				ToggleGear = "Mac_ToggleGear";
-			}
+				ToggleForward = "Mac_ToggleForward";
+                ToggleBack = "Mac_ToggleBack";
+            }
 			else{
 				Forward = "Win_Forward";
 				Sideways = "Win_Sideways";
@@ -98,8 +100,9 @@ namespace FU{
 				
 				Jump = "Win_Jump";
 				FightFire = "Win_FightFire";
-				ToggleGear = "Win_ToggleGear";
-			}
+                ToggleForward = "Win_ToggleForward";
+                ToggleBack = "Win_ToggleBack";
+            }
 		}
 
 		public static string Forward;
@@ -108,8 +111,9 @@ namespace FU{
 		public static string LookSideways;
 		public static string Jump;
 		public static string FightFire;
-		public static string ToggleGear;
-	}
+		public static string ToggleForward;
+        public static string ToggleBack;
+    }
 
 	#endregion
 
