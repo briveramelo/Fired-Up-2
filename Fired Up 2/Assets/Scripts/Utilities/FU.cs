@@ -21,11 +21,11 @@ namespace FU{
 		public static class LayerMasks{
 			public static LayerMask allFires = LayerMaskExtensions.Create (Fires.electricFire, Fires.solidFire, Fires.liquidFire);
 			public static LayerMask allExtinguishers = LayerMaskExtensions.Create (Extinguishers.blackDeath, Extinguishers.kBomb, Extinguishers.sonicHose, Extinguishers.powder, Extinguishers.CO2);
-			public static LayerMask allObjects = LayerMaskExtensions.Create (Objects.furniture, Objects.ground);
+			public static LayerMask allObjects = LayerMaskExtensions.Create (Rooms.furniture, Rooms.ground);
 			public static LayerMask allPeople = LayerMaskExtensions.Create (People.NPC,People.you);
             public static LayerMask allCollectables = LayerMaskExtensions.Create(Collectables.CO2_Cannister, Collectables.Powder_Cannister, Collectables.K_Bomb, Collectables.BlackDeath, Collectables.SonicHose_Battery);
-            public static LayerMask ground = LayerMaskExtensions.Create (Objects.furniture, Objects.ground, People.NPC);
-            public static LayerMask groundAndWalls = LayerMaskExtensions.Create(Objects.furniture, Objects.ground, People.NPC, Objects.walls);
+            public static LayerMask ground = LayerMaskExtensions.Create (Rooms.furniture, Rooms.ground, People.NPC);
+            public static LayerMask groundAndWalls = LayerMaskExtensions.Create(Rooms.furniture, Rooms.ground, People.NPC, Rooms.walls);
         }
 		#endregion
 
@@ -55,11 +55,13 @@ namespace FU{
 		}
 		#endregion
 
-		#region Objects
-		public static class Objects{
+		#region Rooms
+		public static class Rooms{
 			public static int furniture = 17;
 			public static int ground = 18;
             public static int walls = 30;
+            public static int roomLocator = 26; 
+            public static int room = 27;
 
 			public static string furnitureString = "Furniture";
 			public static string groundString = "Ground";
@@ -84,13 +86,6 @@ namespace FU{
             public static int K_Bomb = 23;
             public static int BlackDeath = 24;
             public static int SonicHose_Battery = 25;
-        }
-        #endregion
-
-        #region Room
-        public static class Rooms{
-            public static int RoomLocator = 26;
-            public static int Room = 27;
         }
         #endregion
     }

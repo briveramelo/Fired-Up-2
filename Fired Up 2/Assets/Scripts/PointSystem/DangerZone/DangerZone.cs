@@ -8,7 +8,7 @@ public abstract class DangerZone : MonoBehaviour {
     public bool HasZoneBeenTriggered { get { return hasZoneBeenTriggered; } }
 
     void OnTriggerEnter(Collider col) {
-        if (col.gameObject.layer == Layers.People.you && !hasZoneBeenTriggered) {
+        if (col.gameObject.layer == Layers.Rooms.roomLocator && !hasZoneBeenTriggered) {
             hasZoneBeenTriggered = true;
             TriggerZone();
         }

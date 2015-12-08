@@ -5,9 +5,10 @@ using FU;
 public class Player : MonoBehaviour {
     public static Player player;
     public List<MonoBehaviour> movements;
-    static bool playerDead = false;
+    static bool playerDead;
     // Use this for initialization
     void Start () {
+        playerDead = false;
         player = this;
 	}
 

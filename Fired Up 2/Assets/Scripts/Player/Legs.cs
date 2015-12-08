@@ -36,7 +36,7 @@ public class Legs : MonoBehaviour {
 	void Awake () {
 		minAxisInput = 0.15f;
 		maxSpeed = 5f;
-		moveForce = .15f;
+		moveForce = .25f;
 		jumpForce = 500f;
         FireFighter.playerTransform = transform.root;
 	}
