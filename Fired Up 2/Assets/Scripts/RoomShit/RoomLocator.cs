@@ -7,10 +7,10 @@ public class RoomLocator : MonoBehaviour {
     public static RoomLocator PlayerRoomLocator;
 	// Use this for initialization
 	void Start () {
-        Collider[] rooms = Physics.OverlapSphere(transform.position, 0.1f);
-        Collider room = rooms.Where(col => col.GetComponent<Room>()).ToArray()[0];
-        if (room!=null)
-            ChangeTag(room.tag);
+        Collider[] rooms = Physics.OverlapSphere(transform.position, 0.1f).Where(col => col.GetComponent<Room>()).ToArray();
+        if (rooms.Length>0) {
+            ChangeTag(rooms[0].tag);
+        }
 
         if (transform.root.gameObject.layer == Layers.People.you)
             PlayerRoomLocator = this;

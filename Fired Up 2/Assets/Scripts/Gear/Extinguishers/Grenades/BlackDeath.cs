@@ -163,7 +163,7 @@ public class BlackDeath : MonoBehaviour {
         foreach (Collider col in extingishableColliders) {
             FireSpread fireSpread = col.GetComponent<FireSpread>();
             fireSpread.ExtinguishFire();
-            fireSpread.SupplyOxygen(false, 6.5f);
+            fireSpread.SupplyOxygen(false, 12f);
         }
 
         willKillOnCollision = true;
@@ -180,7 +180,10 @@ public class BlackDeath : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider col){
-        if (LayerMaskExtensions.IsInLayerMask(col.gameObject, layersToPull) && willKillOnCollision)
-            Destroy(col.gameObject);
+        if (LayerMaskExtensions.IsInLayerMask(col.gameObject, layersToPull) && willKillOnCollision) {
+            if (col.gameObject.layer == Layers.People.you)
+                Player.player.KillPlayer();
+        }
+            
 	}
 }
