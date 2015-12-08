@@ -71,7 +71,7 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
 
     protected virtual void OnTriggerEnter(Collider col){
         if (LayerMaskExtensions.IsInLayerMask(col.gameObject, Layers.LayerMasks.allFires) && !fires.Contains(col)
-            && col.tag == RoomLocator.roomLocator.tag)
+            && col.tag == RoomLocator.PlayerRoomLocator.tag)
             StartCoroutine(TryToExtinguish(col));
     }
 

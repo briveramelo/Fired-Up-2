@@ -18,9 +18,11 @@ public class FireSpread : MonoBehaviour {
     float waitTimeAfterExtingishing = 5f;
     //TaskManager task = new TaskManager();
     Task throwFire;
-    public float extingishTime = 0;
+    [HideInInspector] public float timeOfLastExtinguish = 0;
     int counterforDebug = 0;
     int currentPointValue = 100;
+    private bool isOxygen = true;
+    Task wait;
 
     void Start() {
         //throwFire = new Task(SetFires(), false);
@@ -52,10 +54,12 @@ public class FireSpread : MonoBehaviour {
 
 
     public void CatchFire() {
-        myFireParts.SetActive(true);
-        fireEffectSettings.IsVisible = true;
-        isOnFire = true;
-        throwFire = new Task(SetFires(), true);
+        if (isOxygen) {
+            myFireParts.SetActive(true);
+            fireEffectSettings.IsVisible = true;
+            isOnFire = true;
+            throwFire = new Task(SetFires(), true);
+        }
         
         //Debug.Log(this.transform.position + "  " + this.name + "Calling CoRoutine + catch fire");
         //StartCoroutine(SetFires());
@@ -71,7 +75,7 @@ public class FireSpread : MonoBehaviour {
             {
                 if ((!nearbyFireSpreadScripts[i].isOnFire) && 
                     (Random.Range(0, 1) < .6) && 
-                    ((Time.time - nearbyFireSpreadScripts[i].extingishTime) > waitTimeAfterExtingishing))
+                    ((Time.time - nearbyFireSpreadScripts[i].timeOfLastExtinguish) > waitTimeAfterExtingishing))
                 {
                     nearbyFireSpreadScripts[i].CatchFire();
                 }
@@ -84,7 +88,7 @@ public class FireSpread : MonoBehaviour {
     
     public void ExtinguishFire(){
         // myFireParts.SetActive(false);
-        extingishTime = Time.time;
+        timeOfLastExtinguish = Time.time;
         if(isOnFire) {
             fireEffectSettings.IsVisible = false;
             isOnFire = false;
@@ -103,4 +107,20 @@ public class FireSpread : MonoBehaviour {
 			Debug.Log(this.name +"With tag "+ tag + "Can spawn" + nearbyFireSpreadScripts[i].name + "with tag" + nearbyFireSpreadScripts[i].tag);
 		}
 	}
+
+    public void SupplyOxygen(bool oxygen, float timeToWait) {
+        isOxygen = oxygen;
+        if (!oxygen) {
+            if (wait!=null)
+                wait.Stop();
+            wait = new Task(WaitForOxygen(timeToWait), true);
+        }
+    }
+
+    IEnumerator WaitForOxygen(float timeToWait) {
+        yield return new WaitForSeconds(timeToWait);
+        isOxygen = true;
+    }
+
+
 }

@@ -8,7 +8,7 @@ public class SonicPulse : MonoBehaviour {
 
     public void Launch(Vector3 launchDirection) {
         pulseBody.velocity = launchDirection * pulseSpeed;
-        gameObject.tag = RoomLocator.roomLocator.tag;
+        gameObject.tag = RoomLocator.PlayerRoomLocator.tag;
         StartCoroutine(Pulse());
     }
 

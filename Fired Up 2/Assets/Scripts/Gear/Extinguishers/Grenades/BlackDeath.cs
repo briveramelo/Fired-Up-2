@@ -163,8 +163,10 @@ public class BlackDeath : MonoBehaviour {
         foreach (Collider col in extingishableColliders) {
             FireSpread fireSpread = col.GetComponent<FireSpread>();
             fireSpread.ExtinguishFire();
+            fireSpread.SupplyOxygen(false, 6.5f);
         }
 
+        willKillOnCollision = true;
         while (singularizing){
 			foreach (Collider col in Physics.OverlapSphere(transform.position,holeRadius,layersToPull)){
 				Vector3 pullDir = (transform.position - col.transform.position).normalized;
@@ -175,7 +177,6 @@ public class BlackDeath : MonoBehaviour {
             yield return null;
 		}
 		yield return null;
-        willKillOnCollision = true;
 	}
 	
 	void OnTriggerEnter(Collider col){

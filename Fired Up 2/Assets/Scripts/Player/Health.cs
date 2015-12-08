@@ -25,7 +25,7 @@ public class Health : MonoBehaviour {
     {
         for(int i = 0; i < firesInRadius.Count; i++)
         {
-            if(firesInRadius[i].isOnFire && firesInRadius[i].tag == RoomLocator.roomLocator.tag){
+            if(firesInRadius[i].isOnFire && firesInRadius[i].tag == RoomLocator.PlayerRoomLocator.tag){
                 health -= 1/(((this.transform.position - firesInRadius[i].transform.position).magnitude));//fix mag inverse
                 //Debug.Log(health);
             }

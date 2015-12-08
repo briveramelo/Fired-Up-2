@@ -31,8 +31,7 @@ public class ComboTracker : MonoBehaviour {
             firesInCurrentCombo = 1;
             currentPointPool = pointsToAdd;
         }
-        Quaternion displayRotation = Quaternion.LookRotation(displayPosition - FireFighter.playerTransform.position);
-        PointDisplay comboDisplay = (Instantiate(pointDisplayGameObject, displayPosition, displayRotation) as GameObject).GetComponent<PointDisplay>();
+        PointDisplay comboDisplay = (Instantiate(pointDisplayGameObject, displayPosition, transform.LookAtPlayer(displayPosition)) as GameObject).GetComponent<PointDisplay>();
         comboDisplay.DisplayCombo("x " + firesInCurrentCombo);
 
         if (Timer!= null)
@@ -44,8 +43,7 @@ public class ComboTracker : MonoBehaviour {
         isComboing = true;
         yield return new WaitForSeconds(maxComboTime);
 
-        Quaternion displayRotation = Quaternion.LookRotation(displayPosition - FireFighter.playerTransform.position);
-        PointDisplay pointDisplay = (Instantiate(pointDisplayGameObject, displayPosition, displayRotation) as GameObject).GetComponent<PointDisplay>();
+        PointDisplay pointDisplay = (Instantiate(pointDisplayGameObject, displayPosition, transform.LookAtPlayer(displayPosition)) as GameObject).GetComponent<PointDisplay>();
         int pointPoolCombo = currentPointPool * firesInCurrentCombo;
         pointDisplay.DisplayPoints(pointPoolCombo, ScoreType.ProblemSolving);
 

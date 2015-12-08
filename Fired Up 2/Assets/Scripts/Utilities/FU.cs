@@ -8,6 +8,11 @@ namespace FU{
         public static Transform playerTransform;
         public static Transform playerShoulderTransform;
         public static Transform followSpotTransform;
+        public static Transform pointsSpot;
+
+        public static Quaternion LookAtPlayer(this Quaternion quat, Vector3 displayPosition){
+            return Quaternion.LookRotation(displayPosition - FireFighter.playerTransform.position);
+        }
     }
 
 	#region Layers
@@ -141,10 +146,16 @@ namespace FU{
 		
     }
 
-	#endregion
+    #endregion
 
-	#region LayerMaskExtensions
-	public static class LayerMaskExtensions{
+    public static class ExtensionMethods {
+        public static Quaternion LookAtPlayer(this Transform trans, Vector3 displayPosition){
+            return Quaternion.LookRotation(displayPosition - FireFighter.playerTransform.position);
+        }
+    }
+
+    #region LayerMaskExtensions
+    public static class LayerMaskExtensions{
 
 		public static LayerMask Create(params string[] layerNames)
 		{
@@ -227,7 +238,3 @@ namespace FU{
 	}
 	#endregion
 }
-
-#region ExtensionMethods
-
-#endregion

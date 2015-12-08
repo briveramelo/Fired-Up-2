@@ -27,6 +27,7 @@ public class K_Bomb : MonoBehaviour {
         foreach (Collider col in extingishableColliders){
             FireSpread firespread = col.GetComponent<FireSpread>();
             firespread.ExtinguishFire();
+            firespread.SupplyOxygen(false, 4f);
 		}
 		Destroy(gameObject);
 	}

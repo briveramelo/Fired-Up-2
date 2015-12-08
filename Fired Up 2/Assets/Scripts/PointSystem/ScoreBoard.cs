@@ -1,24 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+public class ScoreBoard : MonoBehaviour {
 
-public static class ScoreBoard {
+    public static ScoreBoard Instance;
 
-    static int Combos;
-    static int Confidence;
-    static int ProblemSolving;
-    static int Resilience;
-    static int SituationalAwareness;
-    static int TimeBonus;
+    private int Combos;
+    private int Confidence;
+    private int ProblemSolving;
+    private int Resilience;
+    private int SituationalAwareness;
+    private int TimeBonus;
+    private DateTime nowTime;
+    [HideInInspector] public LevelEnum ThisLevel = LevelEnum.One;
 
-    public static void SetScore(ScoreType ScoreTypeToSet, int Score) {
+    void Start() {
+        Instance = this;
+        ThisLevel = GameManager.Instance.CurrentLevel;
+    }
+
+    public void SetScore(ScoreType ScoreTypeToSet, int Score) {
         switch (ScoreTypeToSet) {
-            case ScoreType.Combos:                  Combos = Score;             break;
-            case ScoreType.Confidence:              Confidence = Score;         break;
-            case ScoreType.Resilience:              Resilience = Score;         break;
-            case ScoreType.TimeBonus:               TimeBonus = Score;          break;
-            case ScoreType.SituationalAwareness:    SituationalAwareness = Score;break;
-            case ScoreType.ProblemSolving:          ProblemSolving = Score;     break;
+            case ScoreType.Combos:                  Combos =                Score;  break;
+            case ScoreType.Confidence:              Confidence =            Score;  break;
+            case ScoreType.Resilience:              Resilience =            Score;  break;
+            case ScoreType.TimeBonus:               TimeBonus =             Score;  break;
+            case ScoreType.SituationalAwareness:    SituationalAwareness =  Score;  break;
+            case ScoreType.ProblemSolving:          ProblemSolving =        Score;  break;
         }
+    }
+
+    public void DocumentTime() {
+        nowTime = DateTime.UtcNow;
     }
 
 }
