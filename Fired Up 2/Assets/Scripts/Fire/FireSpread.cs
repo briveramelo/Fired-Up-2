@@ -7,7 +7,8 @@ using System.Linq;
 
 public class FireSpread : MonoBehaviour {
 
-    [HideInInspector] public bool isOnFire;
+    //[HideInInspector]
+    public bool isOnFire;
     private List<FireSpread> nearbyFireSpreadScripts = new List<FireSpread>();
     [SerializeField] private EffectSettings fireEffectSettings;
     [SerializeField] private GameObject myFireParts;

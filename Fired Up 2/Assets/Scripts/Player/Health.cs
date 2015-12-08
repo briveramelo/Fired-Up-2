@@ -12,7 +12,11 @@ public class Health : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(firesInRadius.Count > 0)
+        if(health <= 0)
+        {
+            Player.player.KillPlayer();
+        }
+	    else if(firesInRadius.Count > 0)
         {
             CalculateHealth();
         }
