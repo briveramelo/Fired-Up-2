@@ -90,7 +90,7 @@ public class FireSpread : MonoBehaviour {
                     (Random.Range(0, 1) < .6) && 
                     ((Time.time - nearbyFireSpreadScripts[i].timeOfLastExtinguish) > waitTimeAfterExtingishing))
                 {
-                    Debug.Log(this.tag + "Spread fire to" + nearbyFireSpreadScripts[i].tag);
+                    //Debug.Log(this.tag + "Spread fire to" + nearbyFireSpreadScripts[i].tag);
                     if (this.tag.Equals(nearbyFireSpreadScripts[i].tag)) // added because of dynamic fire tagging
                         nearbyFireSpreadScripts[i].CatchFire();
                 }
@@ -118,7 +118,7 @@ public class FireSpread : MonoBehaviour {
 
 	void printLocalFires(){
 		if(nearbyFireSpreadScripts.Count > 0){
-			for(int i = 0; i < nearbyFireSpreadScripts.Count-1; i++)   //foreach (FireSpread fire in fireList){
+			for(int i = 0; i < nearbyFireSpreadScripts.Count-1; i++)    //foreach (FireSpread fire in fireList){
 			Debug.Log(this.name +"With tag "+ tag + "Can spawn" + nearbyFireSpreadScripts[i].name + "with tag" + nearbyFireSpreadScripts[i].tag);
 		}
 	}

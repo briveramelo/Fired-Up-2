@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Room : MonoBehaviour {
-    public bool useInspectorFIres;
+    public bool useInspectorFires = false;
     public List<FireSpread> startFires = new List<FireSpread>();
     FireSpread[] allFires = new FireSpread[400];
     List<FireSpread> Room1 = new List<FireSpread>();
@@ -15,10 +15,11 @@ public class Room : MonoBehaviour {
     public int Room1FireNumber;
     public int Room2FireNumber;
     public int Room3FireNumber;
+    int firesTagged;
 
     void Start()
     {
-        if(useInspectorFIres && startFires.Count > 0)
+        if(useInspectorFires && startFires.Count > 0)
         {
             setFires(startFires);
         }
@@ -27,6 +28,7 @@ public class Room : MonoBehaviour {
             allFires = FindObjectsOfType<FireSpread>();
             SortListsByTag();
             Debug.Log(allFires.Length);
+            Debug.Log(Room1.Count);
             pickRandomFiresByRoom();
         }
 
@@ -52,11 +54,11 @@ public class Room : MonoBehaviour {
         {
             if(allFires[i] != null)
             {
-                if (allFires[i].tag == "Level1Room1")
+                if (allFires[i].gameObject.tag == "Level1Room1")
                     Room1.Add(allFires[i]);
-                if (allFires[i].tag == "Level1Room2")
+                if (allFires[i].gameObject.tag == "Level1Room2")
                     Room2.Add(allFires[i]);
-                if (allFires[i].tag == "Level1Room3")
+                if (allFires[i].gameObject.tag == "Level1Room3")
                     Room3.Add(allFires[i]);
             }
         
@@ -66,10 +68,9 @@ public class Room : MonoBehaviour {
     }
     void OnTriggerEnter(Collider col){
         //Logic for collision checks is in the Physics Layer collision pyramid
-        Debug.Log(col.name + "Collided with Room");
         //if (col.gameObject.layer == 26)
         col.GetComponent<RoomLocator>().ChangeTag(this.tag);
-        if (col.gameObject.layer == 20)
+        if (col.name == "RoomLocator")
         {
             if (col.tag == "Level1Room1")
                 setFires(Room1Fires);
@@ -87,6 +88,7 @@ public class Room : MonoBehaviour {
 
     void setFires(List<FireSpread> fires)
     {
+        Debug.Log("This was called for" + fires.Count);
         for(int i = 0; i < fires.Count; i++)
         {
             Debug.Log("I set fire too" + fires[i].name);
