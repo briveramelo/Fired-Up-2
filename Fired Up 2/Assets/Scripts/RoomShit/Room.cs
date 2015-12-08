@@ -66,9 +66,10 @@ public class Room : MonoBehaviour {
     }
     void OnTriggerEnter(Collider col){
         //Logic for collision checks is in the Physics Layer collision pyramid
-        if (col.tag == "RoomLocator")
-            col.GetComponent<RoomLocator>().ChangeTag(this.tag);
-        else if (col.gameObject.layer == 27)
+        Debug.Log(col.name + "Collided with Room");
+        //if (col.gameObject.layer == 26)
+        col.GetComponent<RoomLocator>().ChangeTag(this.tag);
+        if (col.gameObject.layer == 20)
         {
             if (col.tag == "Level1Room1")
                 setFires(Room1Fires);
@@ -88,6 +89,7 @@ public class Room : MonoBehaviour {
     {
         for(int i = 0; i < fires.Count; i++)
         {
+            Debug.Log("I set fire too" + fires[i].name);
             fires[i].isOnFire = true;
         }
     }
