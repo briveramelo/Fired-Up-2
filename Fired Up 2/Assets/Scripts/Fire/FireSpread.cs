@@ -22,6 +22,7 @@ public class FireSpread : MonoBehaviour {
     int counterforDebug = 0;
     int currentPointValue = 100;
     private bool isOxygen = true;
+    bool FiresOnlyLightFiresInTheirRoom = true;
     Task wait;
 
     void Start() {
@@ -34,9 +35,9 @@ public class FireSpread : MonoBehaviour {
         
         //nearbyFireSpreadScripts = new FireSpread[nearbyFireColliders.Length];
         for (int i = 0; i < nearbyFireColliders.Length; i++) {
-            if (this.tag.Equals(nearbyFireColliders[i].tag)){
+           // if (this.tag.Equals(nearbyFireColliders[i].tag)){ //Removed do to dynamic tagging of fires
                 nearbyFireSpreadScripts.Add(nearbyFireColliders[i].GetComponent<FireSpread>());
-            }
+          //  }
         }
         
         if (isOnFire){
@@ -44,7 +45,17 @@ public class FireSpread : MonoBehaviour {
             CatchFire();
         }
     }
-
+    void FindFiresInMyRoom()
+    {
+        for (int i = 0; i < nearbyFireSpreadScripts.Count; i++)
+        {
+            if (!this.tag.Equals(nearbyFireSpreadScripts[i].tag))
+            {
+                Debug.Log(this.tag + "removed" + (nearbyFireSpreadScripts[i].tag));
+                nearbyFireSpreadScripts.RemoveAt(i);
+            }
+        }
+    }
     void Update(){
         // if (isOnFire){
         //      Debug.Log(this.transform.position + "  " + this.name);
@@ -71,13 +82,17 @@ public class FireSpread : MonoBehaviour {
         //Debug.Log(this.transform.position + "  " + this.name + "Begining of CoRoutine");
         if (nearbyFireSpreadScripts.Count > 0 && isOnFire)
         {
+            if(FiresOnlyLightFiresInTheirRoom)
+            FindFiresInMyRoom();
             for (int i = 0; i < nearbyFireSpreadScripts.Count; i++)
             {
                 if ((!nearbyFireSpreadScripts[i].isOnFire) && 
                     (Random.Range(0, 1) < .6) && 
                     ((Time.time - nearbyFireSpreadScripts[i].timeOfLastExtinguish) > waitTimeAfterExtingishing))
                 {
-                    nearbyFireSpreadScripts[i].CatchFire();
+                    Debug.Log(this.tag + "Spread fire to" + nearbyFireSpreadScripts[i].tag);
+                    if (this.tag.Equals(nearbyFireSpreadScripts[i].tag)) // added because of dynamic fire tagging
+                        nearbyFireSpreadScripts[i].CatchFire();
                 }
             }
         }
