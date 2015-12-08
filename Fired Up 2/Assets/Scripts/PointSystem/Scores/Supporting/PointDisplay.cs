@@ -10,6 +10,7 @@ public class PointDisplay : MonoBehaviour {
     [SerializeField] AudioClip pointClip;
     [SerializeField] AudioClip comboClip;
     protected static GameObject lastCombo;
+    private float lerpSpeed = 0.05f;
 
     public void DisplayPoints(int points, ScoreType scoreEnum, bool followPlayer = false) {
         soundPlayer.clip = pointClip;
@@ -18,9 +19,16 @@ public class PointDisplay : MonoBehaviour {
         scoreType.text = scoreEnum.ToString();
         Destroy(gameObject, ComboTracker.Instance.MaxComboTime);
         if (followPlayer)
-            transform.parent = FireFighter.playerTransform;
+            StartCoroutine(EnsurePlayerCanSeePoints());
     }
 
+    IEnumerator EnsurePlayerCanSeePoints() {
+        transform.parent = FireFighter.pointsSpot;
+        while (true) {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, lerpSpeed);
+            yield return null;
+        }
+    }
 
     public void DisplayCombo(string combo) {
         soundPlayer.clip = comboClip;

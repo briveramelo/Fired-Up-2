@@ -6,8 +6,8 @@ public abstract class Score : MonoBehaviour{
     protected ScoreType MyScoreType;
     protected int maxPoints = 50000;
 
-    protected void SendToScoreBoard() {
-        ScoreBoard.SetScore(MyScoreType, CalculateScore());
+    public void SendToScoreBoard() {
+        ScoreBoard.Instance.SetScore(MyScoreType, CalculateScore());
     }
 
     protected abstract int CalculateScore();

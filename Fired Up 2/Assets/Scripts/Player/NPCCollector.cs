@@ -5,8 +5,6 @@ public class NPCCollector : MonoBehaviour {
 
     public static NPCCollector Instance;
 
-    [SerializeField] private Transform followSpot;
-    [SerializeField] private Transform shoulder;
     [SerializeField] private Legs myLegs;
     private NPC_Legs npcLegs_Carrying;
     private float communicationDistance = 7f;
@@ -25,8 +23,6 @@ public class NPCCollector : MonoBehaviour {
 
     void Awake() {
         Instance = this;
-        FireFighter.playerShoulderTransform = shoulder;
-        FireFighter.followSpotTransform = followSpot;
     }
 
     void Update() {

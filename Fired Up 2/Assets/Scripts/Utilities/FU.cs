@@ -8,6 +8,7 @@ namespace FU{
         public static Transform playerTransform;
         public static Transform playerShoulderTransform;
         public static Transform followSpotTransform;
+        public static Transform pointsSpot;
 
         public static Quaternion LookAtPlayer(this Quaternion quat, Vector3 displayPosition){
             return Quaternion.LookRotation(displayPosition - FireFighter.playerTransform.position);

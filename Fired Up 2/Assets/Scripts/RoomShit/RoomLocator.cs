@@ -7,7 +7,8 @@ public class RoomLocator : MonoBehaviour {
     public static RoomLocator PlayerRoomLocator;
 	// Use this for initialization
 	void Start () {
-        Collider room = Physics.OverlapSphere(transform.position, 0.1f).Where(col => col.GetComponent<Room>()).ToArray()[0];
+        Collider[] rooms = Physics.OverlapSphere(transform.position, 0.1f);
+        Collider room = rooms.Where(col => col.GetComponent<Room>()).ToArray()[0];
         if (room!=null)
             ChangeTag(room.tag);
 
