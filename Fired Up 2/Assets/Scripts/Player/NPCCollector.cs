@@ -75,7 +75,7 @@ public class NPCCollector : MonoBehaviour {
 
     void Highlight(Collider col, bool highlight) {
         Selectable_Light npcLight = col.GetComponent<Selectable_Light>();
-        npcLight.IsSelectable = highlight;
+        npcLight.IsHoveredOver = highlight;
         if (highlight)
             npcLight.HighlightOnHover();            
     }

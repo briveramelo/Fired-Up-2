@@ -13,6 +13,7 @@ public class NPC_Legs : MonoBehaviour {
     public bool IsBeingPickedUp { get { return isBeingPickedUp; } }
     private bool isSelectable;
     public bool IsSelectable { get { return isSelectable; } set { isSelectable = value; } }
+    private bool isHomeSafe;
 
     private float maxSpeed = 5f;
     private float moveForce = 2f;
@@ -25,17 +26,21 @@ public class NPC_Legs : MonoBehaviour {
 
 
     public void ToggleFollow() {
-        StopAllCoroutines();
-        myAgent.enabled = true;
-        isFollowingPlayer = !isFollowingPlayer;
-        StartCoroutine(FollowPlayer());
+        if (!isHomeSafe) {
+            StopAllCoroutines();
+            myAgent.enabled = true;
+            isFollowingPlayer = !isFollowingPlayer;
+            StartCoroutine(FollowPlayer());
+        }
     }
 
     public void ToggleFollow(bool follow) {
-        StopAllCoroutines();
-        myAgent.enabled = true;
-        isFollowingPlayer = follow;
-        StartCoroutine(FollowPlayer());
+        if (!isHomeSafe) {
+            StopAllCoroutines();
+            myAgent.enabled = true;
+            isFollowingPlayer = follow;
+            StartCoroutine(FollowPlayer());
+        }
     }
 
     IEnumerator FollowPlayer() {
@@ -48,11 +53,13 @@ public class NPC_Legs : MonoBehaviour {
     }
 
     public void PickUp() {
-        StopAllCoroutines();
-        myAgent.enabled = false;
-        isBeingCarried = true;
-        isBeingPickedUp = true;
-        StartCoroutine(GetPickedUp());
+        if (!isHomeSafe) {
+            StopAllCoroutines();
+            myAgent.enabled = false;
+            isBeingCarried = true;
+            isBeingPickedUp = true;
+            StartCoroutine(GetPickedUp());
+        }
     }
 
     private IEnumerator GetPickedUp() {
@@ -70,10 +77,18 @@ public class NPC_Legs : MonoBehaviour {
     }
 
     public void DropOff(float targetDistanceAway) {
+        if (!isHomeSafe) {
+            StopAllCoroutines();
+            myAgent.enabled = true;
+            myAgent.destination = FireFighter.playerTransform.position + FireFighter.playerTransform.forward * targetDistanceAway;
+            isBeingCarried = false;
+        }
+    }
+
+    public void EnterSafeZone(Vector3 zoneCenter) {
         StopAllCoroutines();
-        myAgent.enabled = true;
-        myAgent.destination = FireFighter.playerTransform.position + FireFighter.playerTransform.forward * targetDistanceAway;
-        isBeingCarried = false;
+        myAgent.destination = zoneCenter;
+        isHomeSafe = true;
     }
 
 }

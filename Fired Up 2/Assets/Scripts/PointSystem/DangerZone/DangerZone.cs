@@ -4,7 +4,8 @@ using FU;
 
 public abstract class DangerZone : MonoBehaviour {
 
-    bool hasZoneBeenTriggered;
+    private bool hasZoneBeenTriggered;
+    public bool HasZoneBeenTriggered { get { return hasZoneBeenTriggered; } }
 
     void OnTriggerEnter(Collider col) {
         if (col.gameObject.layer == Layers.People.you && !hasZoneBeenTriggered) {

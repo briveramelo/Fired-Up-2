@@ -7,7 +7,8 @@ public class Room : MonoBehaviour {
 	
     void OnTriggerEnter(Collider col){
         //Logic for collision checks is in the Physics Layer collision pyramid
-        col.GetComponent<RoomLocator>().ChangeTag(this.tag);
+        if (col.GetComponent<RoomLocator>())
+            col.GetComponent<RoomLocator>().ChangeTag(this.tag);
     }
 
     void OnTriggerExit(){
