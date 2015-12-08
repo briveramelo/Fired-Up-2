@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using FU;
+using System.Diagnostics;
 
 public class Legs : MonoBehaviour {
 
@@ -11,20 +12,41 @@ public class Legs : MonoBehaviour {
 	private float maxSpeed;
 	private float jumpForce;
 	private float moveForce;
+    private bool canMove = true;
+    private float pickUpTime = 2f;
+
+    public void ImmobilizeLegs(NPC_Legs npcLegs) {
+        StopAllCoroutines();
+        StartCoroutine(Immobilize(npcLegs));
+    }
+
+    private IEnumerator Immobilize(NPC_Legs npcLegs) {
+        canMove = false;
+        Stopwatch timer = new Stopwatch();
+        timer.Start();
+        while (true) {
+            if (timer.Elapsed.Seconds > pickUpTime || !npcLegs.IsBeingPickedUp)
+                break; 
+            yield return null;
+        }
+        canMove = true;
+    }
 
 	// Use this for initialization
 	void Awake () {
 		minAxisInput = 0.15f;
 		maxSpeed = 5f;
-		moveForce = .5f;
+		moveForce = .15f;
 		jumpForce = 500f;
         FireFighter.playerTransform = transform.root;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Move ();
-		Jump();
+        if (canMove) {
+            Move ();
+		    Jump();
+        }
 	}
 
 	void Move(){

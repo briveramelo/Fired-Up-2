@@ -36,7 +36,7 @@ public class GrenadeTosser : Inventory {
         UpdateAmmo(CurrentGear, -1);
         canThrowGrenade = false;
 		GameObject grenade = Instantiate(objectToSpawn, transform.position, Quaternion.identity) as GameObject;
-		grenade.GetComponentInChildren<Rigidbody>().AddForce(Camera.main.transform.forward * throwForce);
+		grenade.GetComponentInChildren<Rigidbody>().AddForce(transform.forward * throwForce);
 
 		yield return new WaitForSeconds(timeToWaitToThrow);
 
@@ -45,6 +45,6 @@ public class GrenadeTosser : Inventory {
 
 	void OnDrawGizmos(){
 		Gizmos.color = Color.red;
-		Gizmos.DrawLine (transform.position, transform.position + Camera.main.transform.forward * 3f);
+		Gizmos.DrawLine (transform.position, transform.position + transform.forward * 3f);
 	}
 }

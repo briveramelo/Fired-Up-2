@@ -6,6 +6,8 @@ namespace FU{
 
     public static class FireFighter {
         public static Transform playerTransform;
+        public static Transform playerShoulderTransform;
+        public static Transform followSpotTransform;
     }
 
 	#region Layers
@@ -13,12 +15,13 @@ namespace FU{
 		#region LayerMasks
 		public static class LayerMasks{
 			public static LayerMask allFires = LayerMaskExtensions.Create (Fires.electricFire, Fires.solidFire, Fires.liquidFire);
-			public static LayerMask allExtinguishers = LayerMaskExtensions.Create (Extinguishers.blackDeath, Extinguishers.kBomb, Extinguishers.sonicHose);
+			public static LayerMask allExtinguishers = LayerMaskExtensions.Create (Extinguishers.blackDeath, Extinguishers.kBomb, Extinguishers.sonicHose, Extinguishers.powder, Extinguishers.CO2);
 			public static LayerMask allObjects = LayerMaskExtensions.Create (Objects.furniture, Objects.ground);
 			public static LayerMask allPeople = LayerMaskExtensions.Create (People.NPC,People.you);
             public static LayerMask allCollectables = LayerMaskExtensions.Create(Collectables.CO2_Cannister, Collectables.Powder_Cannister, Collectables.K_Bomb, Collectables.BlackDeath, Collectables.SonicHose_Battery);
             public static LayerMask ground = LayerMaskExtensions.Create (Objects.furniture, Objects.ground, People.NPC);
-		}
+            public static LayerMask groundAndWalls = LayerMaskExtensions.Create(Objects.furniture, Objects.ground, People.NPC, Objects.walls);
+        }
 		#endregion
 
 		#region Fires
@@ -38,8 +41,10 @@ namespace FU{
 			public static int sonicHose = 13;
 			public static int kBomb = 14;
 			public static int blackDeath = 15;
+            public static int powder = 28;
+            public static int CO2 = 29;
 
-			public static string sonicHoseString = "SonicHose";
+            public static string sonicHoseString = "SonicHose";
 			public static string kBombString = "KBomb";
 			public static string blackDeathString = "BlackDeath";
 		}
@@ -49,6 +54,7 @@ namespace FU{
 		public static class Objects{
 			public static int furniture = 17;
 			public static int ground = 18;
+            public static int walls = 30;
 
 			public static string furnitureString = "Furniture";
 			public static string groundString = "Ground";
@@ -75,12 +81,31 @@ namespace FU{
             public static int SonicHose_Battery = 25;
         }
         #endregion
+
+        #region Room
+        public static class Rooms{
+            public static int RoomLocator = 26;
+            public static int Room = 27;
+        }
+        #endregion
     }
     #endregion
 
     #region Controls
     public static class Controls{
-		public static void SetControls (){
+
+        public static string Forward;
+        public static string Sideways;
+        public static string LookUp;
+        public static string LookSideways;
+        public static string Jump;
+        public static string FightFire;
+        public static string ToggleForward;
+        public static string ToggleBack;
+        public static string FollowMe;
+        public static string PickUpPlayer;
+
+        public static void SetControls (){
 			if (Application.platform == RuntimePlatform.OSXPlayer ||
 			    Application.platform == RuntimePlatform.OSXEditor ||
 			    Application.platform == RuntimePlatform.OSXDashboardPlayer ||
@@ -95,6 +120,8 @@ namespace FU{
 				FightFire = "Mac_FightFire";
 				ToggleForward = "Mac_ToggleForward";
                 ToggleBack = "Mac_ToggleBack";
+                FollowMe = "Mac_FollowMe";
+                PickUpPlayer = "Mac_PickUpPlayer";
             }
 			else{
 				Forward = "Win_Forward";
@@ -106,17 +133,12 @@ namespace FU{
 				FightFire = "Win_FightFire";
                 ToggleForward = "Win_ToggleForward";
                 ToggleBack = "Win_ToggleBack";
+                FollowMe = "Win_FollowMe";
+                PickUpPlayer = "Win_PickUpPlayer";
             }
 		}
 
-		public static string Forward;
-		public static string Sideways;
-		public static string LookUp;
-		public static string LookSideways;
-		public static string Jump;
-		public static string FightFire;
-		public static string ToggleForward;
-        public static string ToggleBack;
+		
     }
 
 	#endregion
