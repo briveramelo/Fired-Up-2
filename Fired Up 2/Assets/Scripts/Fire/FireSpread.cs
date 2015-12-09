@@ -51,7 +51,7 @@ public class FireSpread : MonoBehaviour {
         {
             if (!this.tag.Equals(nearbyFireSpreadScripts[i].tag))
             {
-                Debug.Log(this.tag + "removed" + (nearbyFireSpreadScripts[i].tag));
+                //Debug.Log(this.tag + "removed" + (nearbyFireSpreadScripts[i].tag));
                 nearbyFireSpreadScripts.RemoveAt(i);
             }
         }

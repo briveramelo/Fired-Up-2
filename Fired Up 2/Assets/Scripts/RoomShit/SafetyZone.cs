@@ -32,7 +32,8 @@ public class SafetyZone : MonoBehaviour {
 
             if (Input.GetButtonDown(Controls.Jump)){
                 if (allCleared) {
-                    //finish the level
+                    EndOfLevel.Instance.SaveScores();
+                    EndOfLevel.Instance.EndLevel();
                 }
             }
         }

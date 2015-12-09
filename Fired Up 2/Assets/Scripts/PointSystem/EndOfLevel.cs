@@ -13,6 +13,12 @@ public class EndOfLevel : MonoBehaviour {
             score.SendToScoreBoard();
         }
         ScoreBoard.Instance.DocumentTime();
+        ScoreBoard.Instance.CalculateTotal();
         ScoreSaver.Instance.PromptSave(ScoreBoard.Instance);
+        
+    }
+
+    public void EndLevel() {
+        Application.LoadLevel(1); //pointscreen
     }
 }

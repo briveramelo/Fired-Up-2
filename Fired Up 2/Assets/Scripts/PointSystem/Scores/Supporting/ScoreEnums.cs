@@ -1,7 +1,7 @@
 ﻿public enum ScoreType {
-    Combos = 0,
-    Confidence = 1,
-    ProblemSolving = 2,
+    Confidence = 0,
+    ProblemSolving = 1,
+    Combos = 2,
     Resilience = 3,
     SituationalAwareness =4,
     TimeBonus = 5
