@@ -51,11 +51,11 @@ public class Room : MonoBehaviour {
 
     void setFires(List<FireSpread> fires)
     {
- 
+        Debug.Log(gameObject.tag + "" + fires.Count);
         for(int i = 0; i < fires.Count; i++)
         {
             fires[i].CatchFire();
         }
-        hasBeenSetOnFire = true;
+       hasBeenSetOnFire = true;
     }
 }

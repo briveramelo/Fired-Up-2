@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using FU;
 public class Health : MonoBehaviour {
-    float health = 100f;
+    public float health = 100f;
     List<FireSpread> firesInRadius = new List<FireSpread>();
 	// Use this for initialization
 	void Awake () {
@@ -14,7 +14,10 @@ public class Health : MonoBehaviour {
 	void Update () {
         if(health <= 0)
         {
+            if(gameObject.layer == 20)
             Player.player.KillPlayer();
+            else
+            Debug.Log("The NPC is dead"); // Kill AI animator
         }
 	    else if(firesInRadius.Count > 0)
         {
@@ -32,10 +35,10 @@ public class Health : MonoBehaviour {
             
         }
     }
-    //void DamageMe(float amount)
-   // {
-    //    health -= amount;
-   // }
+    public void DamagePlayer(float amount)
+    {
+        health -= amount;
+    }
     void OnTriggerEnter(Collider col)
     {
         //Debug.Log(col.tag);
