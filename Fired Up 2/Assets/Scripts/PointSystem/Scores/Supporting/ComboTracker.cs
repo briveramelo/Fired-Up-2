@@ -45,7 +45,7 @@ public class ComboTracker : MonoBehaviour {
 
         PointDisplay pointDisplay = (Instantiate(pointDisplayGameObject, displayPosition, transform.LookAtPlayer(displayPosition)) as GameObject).GetComponent<PointDisplay>();
         int pointPoolCombo = currentPointPool * firesInCurrentCombo;
-        pointDisplay.DisplayPoints(pointPoolCombo, ScoreType.ProblemSolving);
+        pointDisplay.DisplayPoints(pointPoolCombo, Score.ProblemSolving);
 
         ProblemSolving.Instance.ProblemSolvingPoints += pointPoolCombo;
         isComboing = false;

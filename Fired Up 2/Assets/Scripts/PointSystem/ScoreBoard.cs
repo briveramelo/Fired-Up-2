@@ -4,55 +4,50 @@ using System;
 public class ScoreBoard : MonoBehaviour {
 
     public static ScoreBoard Instance;
-
-    private int combos;                 public int Combos { get { return combos; } }
-    private int confidence;             public int Confidence { get { return confidence; } }
-    private int problemSolving;         public int ProblemSolving { get { return problemSolving; } }
-    private int resilience;             public int Resilience { get { return resilience; } }
-    private int situationalAwareness;   public int SituationalAwareness { get { return situationalAwareness; } }
-    private int timeBonus;              public int TimeBonus { get { return timeBonus; } }
-    private int pointTotal;             public int PointTotal { get { return pointTotal; } }
-    private DateTime nowTime;           
-    [HideInInspector] public LevelEnum ThisLevel = LevelEnum.One;
+    private LevelSaveData thisLevelSaveData; public LevelSaveData ThisLevelSaveData { get { return thisLevelSaveData; } }
 
     void Start() {
         Instance = this;
-        ThisLevel = GameManager.Instance.CurrentLevel;
+        thisLevelSaveData = new LevelSaveData();
+        thisLevelSaveData.thisLevel = GameManager.Instance.CurrentLevel;
+        thisLevelSaveData.levelDifficulty = GameManager.Instance.LevelDifficulty;
     }
 
-    public void SetScore(ScoreType ScoreTypeToSet, int Score) {
-        switch (ScoreTypeToSet) {
-            case ScoreType.Combos:                  combos =                Score;  break;
-            case ScoreType.Confidence:              confidence =            Score;  break;
-            case ScoreType.Resilience:              resilience =            Score;  break;
-            case ScoreType.TimeBonus:               timeBonus =             Score;  break;
-            case ScoreType.SituationalAwareness:    situationalAwareness =  Score;  break;
-            case ScoreType.ProblemSolving:          problemSolving =        Score;  break;
+    public void SetScore(Score ScoreToSet, int newSetScore) {
+        switch (ScoreToSet) {
+            case Score.Combos:                  thisLevelSaveData.combos =                newSetScore;  break;
+            case Score.Confidence:              thisLevelSaveData.confidence =            newSetScore;  break;
+            case Score.Resilience:              thisLevelSaveData.resilience =            newSetScore;  break;
+            case Score.TimeBonus:               thisLevelSaveData.timeBonus =             newSetScore;  break;
+            case Score.SituationalAwareness:    thisLevelSaveData.situationalAwareness =  newSetScore;  break;
+            case Score.ProblemSolving:          thisLevelSaveData.problemSolving =        newSetScore;  break;
         }
     }
 
-    public int GetScore(ScoreType ScoreToReturn) {
+    public void CalculateTotal(){
+        thisLevelSaveData.pointTotal = 0;
+        foreach (Score score in Enum.GetValues(typeof(Score))){
+            thisLevelSaveData.pointTotal += GetScore(score);
+        }
+    }
+
+    public int GetScore(Score ScoreToReturn) {
         switch (ScoreToReturn) {
-            case ScoreType.Combos:                  return combos;
-            case ScoreType.Confidence:              return confidence;
-            case ScoreType.Resilience:              return resilience;
-            case ScoreType.TimeBonus:               return timeBonus;
-            case ScoreType.SituationalAwareness:    return situationalAwareness;
-            case ScoreType.ProblemSolving:          return problemSolving;
+            case Score.Combos:                  return thisLevelSaveData.combos;
+            case Score.Confidence:              return thisLevelSaveData.confidence;
+            case Score.Resilience:              return thisLevelSaveData.resilience;
+            case Score.TimeBonus:               return thisLevelSaveData.timeBonus;
+            case Score.SituationalAwareness:    return thisLevelSaveData.situationalAwareness;
+            case Score.ProblemSolving:          return thisLevelSaveData.problemSolving;
+            case Score.Total:                   return thisLevelSaveData.pointTotal;
         }
         int whyMakeMeDoThisUnity = 0;
         return whyMakeMeDoThisUnity;
     }
 
-    public void CalculateTotal(){
-        pointTotal = 0;
-        foreach (ScoreType scoreType in Enum.GetValues(typeof(ScoreType))){
-            pointTotal += GetScore(scoreType);
-        }
-    }
 
     public void DocumentTime() {
-        nowTime = DateTime.UtcNow;
+        thisLevelSaveData.nowTime = DateTime.UtcNow;
     }
 
 }

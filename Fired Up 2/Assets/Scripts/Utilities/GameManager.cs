@@ -4,10 +4,10 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
-    private LevelEnum currentLevel = LevelEnum.One;
-    public LevelEnum CurrentLevel { get { return currentLevel; } }
+    private Level currentLevel;         public Level        CurrentLevel    { get { return currentLevel; } }
+    private Difficulty levelDifficulty; public Difficulty   LevelDifficulty { get { return levelDifficulty; } }
 
-	void Awake () {
+    void Awake () {
         if (Instance == null){
             DontDestroyOnLoad(gameObject);
             Instance = this;
@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
 	}
 
     void OnLevelWasLoaded(int level) {
-        currentLevel = (LevelEnum)level;
+        currentLevel = (Level)level;
+        //levelDifficulty = (Difficulty)
+        //Search
     }
 }

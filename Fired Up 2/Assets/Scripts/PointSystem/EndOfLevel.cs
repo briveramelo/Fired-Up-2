@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 public class EndOfLevel : MonoBehaviour {
 
     public static EndOfLevel Instance;
@@ -9,16 +9,16 @@ public class EndOfLevel : MonoBehaviour {
     }
 
     public void SaveScores() {
-        foreach (Score score in FindObjectsOfType<Score>()) {
-            score.SendToScoreBoard();
+        foreach (ScoreType scoreType in FindObjectsOfType<ScoreType>()) {
+            scoreType.SendToScoreBoard();
         }
         ScoreBoard.Instance.DocumentTime();
         ScoreBoard.Instance.CalculateTotal();
-        ScoreSaver.Instance.PromptSave(ScoreBoard.Instance);
+        DataSaver.Instance.PromptSave(ScoreBoard.Instance.ThisLevelSaveData);
         
     }
 
     public void EndLevel() {
-        Application.LoadLevel(1); //pointscreen
+        SceneManager.LoadScene((int)Level.PointScreen);
     }
 }

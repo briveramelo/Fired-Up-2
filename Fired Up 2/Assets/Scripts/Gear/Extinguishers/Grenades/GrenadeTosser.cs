@@ -23,7 +23,7 @@ public class GrenadeTosser : Inventory {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetAxisRaw (Controls.FightFire)>=deadZone && gearInventory[CurrentGear]>0 &&
-		    (CurrentGear == GearEnum.K_Bomb || CurrentGear == GearEnum.BlackDeath) &&
+		    (CurrentGear == Gear.K_Bomb || CurrentGear == Gear.BlackDeath) &&
 		    canThrowGrenade && lastAxis<deadZone){
 
 			StartCoroutine (ThrowThing());
@@ -32,7 +32,7 @@ public class GrenadeTosser : Inventory {
     }
 
 	IEnumerator ThrowThing(){
-		GameObject objectToSpawn = CurrentGear == GearEnum.K_Bomb ? k_Bomb : blackDeath;
+		GameObject objectToSpawn = CurrentGear == Gear.K_Bomb ? k_Bomb : blackDeath;
         UpdateAmmo(CurrentGear, -1);
         canThrowGrenade = false;
 		GameObject grenade = Instantiate(objectToSpawn, transform.position, Quaternion.identity) as GameObject;

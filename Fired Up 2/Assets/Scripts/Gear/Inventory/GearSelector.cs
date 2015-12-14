@@ -23,8 +23,8 @@ public class GearSelector : Inventory {
 
 	void ToggleGear(bool toggleForward){
         if (toggleForward) {
-            if ((int)CurrentGear == Enum.GetNames(typeof(GearEnum)).Length-1){
-			    CurrentGear = GearEnum.SonicHose;
+            if ((int)CurrentGear == Enum.GetNames(typeof(Gear)).Length-1){
+			    CurrentGear = Gear.SonicHose;
 		    }
 		    else{
 			    CurrentGear++;
@@ -36,7 +36,7 @@ public class GearSelector : Inventory {
         }
         else {
             if (CurrentGear == 0){
-                CurrentGear = (GearEnum)(Enum.GetNames(typeof(GearEnum)).Length - 1);
+                CurrentGear = (Gear)(Enum.GetNames(typeof(Gear)).Length - 1);
                 if (gearInventory[CurrentGear] <= 0){
                     ToggleGear(back);
                     return;

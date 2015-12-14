@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Score : MonoBehaviour{
+public abstract class ScoreType : MonoBehaviour{
 
-    protected ScoreType MyScoreType;
+    protected Score MyScoreEnum;
     protected int maxPoints = 50000;
 
     public void SendToScoreBoard() {
-        ScoreBoard.Instance.SetScore(MyScoreType, CalculateScore());
+        ScoreBoard.Instance.SetScore(MyScoreEnum, CalculateScore());
     }
 
     protected abstract int CalculateScore();

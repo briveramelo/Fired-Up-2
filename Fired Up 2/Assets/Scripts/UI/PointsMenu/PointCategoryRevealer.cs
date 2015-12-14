@@ -3,62 +3,60 @@ using System.Collections;
 using FU;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PointCategoryRevealer : MonoBehaviour {
 
     [SerializeField] Text levelName;
-	[SerializeField] GameObject[] categories;
+	[SerializeField] GameObject[] pointGameObjects;
     [SerializeField] Text[] pointTextScripts;
-    [SerializeField] GameObject total;
-    [SerializeField] Text totalTextScript;
 
     private float timeToFlipPoints = 1.5f;
 
     IEnumerator Start() {
         yield return null;
-        Controls.SetControls();
-        levelName.text = "Level1";
-        foreach (ScoreType scoreType in Enum.GetValues(typeof(ScoreType))){
-            categories[(int)scoreType].SetActive(true);
-            int score = ScoreBoard.Instance.GetScore(scoreType);
-            int currentPointDisplay = 0;
-            int flipRate = (int)(score / timeToFlipPoints);
-            while (!Input.GetButtonDown(Controls.Jump) && currentPointDisplay < score) {
-                currentPointDisplay += flipRate;
-                pointTextScripts[(int)scoreType].text = currentPointDisplay.ToString();
-                yield return null;
-            }
-            pointTextScripts[(int)scoreType].text = score.ToString();
-            yield return new WaitForSeconds(.5f);
-        }
-        while (!Input.GetButtonDown(Controls.Jump)) {
-            yield return null;
-        }
-
-        foreach (GameObject game in categories) {
-            game.SetActive(false);
-        }
-
-        total.SetActive(true);
-        int scoreTotal = ScoreBoard.Instance.PointTotal;
-        int pointDisplay = 0;
-        int jumpRate = (int)(scoreTotal / (timeToFlipPoints + 1.5f));
-        while (!Input.GetButtonDown(Controls.Jump) && pointDisplay < scoreTotal) {
-            pointDisplay += jumpRate;
-            totalTextScript.text = pointDisplay.ToString();
-            yield return null;
-        }
-        totalTextScript.text = scoreTotal.ToString();
-
-        while (!Input.GetButtonDown(Controls.Jump)) {
-            Application.LoadLevel(0);
-            yield return null;
-        }
-
+        levelName.text = ScoreBoard.Instance.ThisLevelSaveData.thisLevel.ToString();
+        yield return StartCoroutine(DisplayAllSubtotals());
+        yield return StartCoroutine(WaitForInput());
+        HidePoints();
+        yield return StartCoroutine(DisplayPoints(pointGameObjects[pointGameObjects.Length-1], Score.Total));
+        yield return StartCoroutine(WaitForInput());
+        SceneManager.LoadScene((int)Level.LevelSelect);
     }
 
-    IEnumerator PumpThePoints() {
-        yield return null;
+    void Elsewhere() {
+        Controls.SetControls();
+    }
 
+    IEnumerator DisplayAllSubtotals() {
+        for (int i=0; i<Enum.GetValues(typeof(ScoreType)).Length-1; i++){
+            yield return StartCoroutine(DisplayPoints(pointGameObjects[i], (Score)i));
+        }
+    }
+    
+    IEnumerator DisplayPoints(GameObject textToActivate, Score ScoreToReturn) {
+        textToActivate.SetActive(true);
+        int score = ScoreBoard.Instance.GetScore(ScoreToReturn);
+        int pointDisplay = 0;
+        int flipRate = (int)(score / timeToFlipPoints);
+        while (!Input.GetButtonDown(Controls.Jump) && pointDisplay < score) {
+            pointDisplay += flipRate;
+            pointTextScripts[(int)ScoreToReturn].text = pointDisplay.ToString();
+            yield return null;
+        }
+        pointTextScripts[(int)ScoreToReturn].text = score.ToString();
+        yield return new WaitForSeconds(.5f);
+    }
+
+    IEnumerator WaitForInput() {
+        while (!Input.GetButtonDown(Controls.Jump)) {
+            yield return null;
+        }
+    }
+
+    void HidePoints() {
+        foreach (GameObject game in pointGameObjects) {
+            game.SetActive(false);
+        }
     }
 }

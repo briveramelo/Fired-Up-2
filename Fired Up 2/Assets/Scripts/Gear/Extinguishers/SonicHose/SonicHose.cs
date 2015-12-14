@@ -28,7 +28,7 @@ public class SonicHose : HandHeldExtinguisher {
     }
 
     protected override IEnumerator Use(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Engage);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Engage);
         mySound.Play();
        
         BatteryPower = 0f;
@@ -41,7 +41,7 @@ public class SonicHose : HandHeldExtinguisher {
     }
 
     protected override void DeActivateHose(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Idle);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Idle);
     }
 
         IEnumerator Recharge() {

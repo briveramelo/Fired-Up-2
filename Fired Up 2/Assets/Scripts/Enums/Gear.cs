@@ -1,4 +1,4 @@
-﻿public enum GearEnum{
+﻿public enum Gear{
 	SonicHose = 0,
     CO2 = 1,
     Powder = 2,

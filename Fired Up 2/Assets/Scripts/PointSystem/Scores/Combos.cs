@@ -2,14 +2,14 @@
 using System.Collections;
 using System;
 
-public class Combos : Score {
+public class Combos : ScoreType {
 
     public static Combos Instance;
     [HideInInspector] public int ComboPoints;
 
     void Awake() {
         Instance = this;
-        MyScoreType = ScoreType.Combos;
+        MyScoreEnum = Score.Combos;
     }
 
 

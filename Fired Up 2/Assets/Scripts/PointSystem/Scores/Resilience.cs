@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-public class Resilience : Score {
+public class Resilience : ScoreType {
 
     //(damageTaken / lives Lost)
 
@@ -12,7 +12,7 @@ public class Resilience : Score {
     void Awake() {
         Instance = this;
         pointRiseRate = maxPoints / maxDamageDeathRatio;
-        MyScoreType = ScoreType.Resilience;
+        MyScoreEnum = Score.Resilience;
     }
 
    

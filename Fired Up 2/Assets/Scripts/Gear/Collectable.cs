@@ -3,7 +3,7 @@ using System.Collections;
 using FU;
 public class Collectable : MonoBehaviour {
 
-    [SerializeField] GearEnum GearType;
+    [SerializeField] Gear GearType;
     [SerializeField] private float quantity = 1;
 
     public void GetCollected(){

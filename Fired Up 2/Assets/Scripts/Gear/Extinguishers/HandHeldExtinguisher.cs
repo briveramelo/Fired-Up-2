@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 public abstract class HandHeldExtinguisher : MonoBehaviour {
 
-    [SerializeField] protected GearEnum MyGear;
+    [SerializeField] protected Gear MyGear;
     [SerializeField] protected Animator myAnimator;
     [SerializeField] protected Collider myCollider;
     [SerializeField] protected AudioSource mySound;
 
-    protected GearEnum LastGear;
+    protected Gear LastGear;
     protected float percentFull;
     protected float mySoundClipLength;
     protected float timeToExtinguish;
@@ -43,11 +43,11 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
     }
 
     protected virtual void Equip(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Equip);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Equip);
     }
 
     protected virtual IEnumerator Use(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Engage);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Engage);
         myCollider.enabled = true;
         mySound.Play();
         while (Input.GetAxisRaw(Controls.FightFire)>0.3f && Inventory.CurrentGear == MyGear && percentFull > 0f){
@@ -59,14 +59,14 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
 
     protected virtual void DeActivateHose(){
         mySound.Stop();
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Idle);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Idle);
         myCollider.enabled = false;
         if (fires.Count > 0) fires.Clear();
     }
 
     protected virtual IEnumerator PutAway(){
         yield return null;
-        myAnimator.SetInteger("AnimState", (int)HoseStates.PutAway);
+        myAnimator.SetInteger("AnimState", (int)HoseState.PutAway);
     }
 
     protected virtual void OnTriggerEnter(Collider col){
