@@ -12,7 +12,7 @@ public class PointDisplay : MonoBehaviour {
     protected static GameObject lastCombo;
     private float lerpSpeed = 0.05f;
 
-    public void DisplayPoints(int points, ScoreType scoreEnum, bool followPlayer = false) {
+    public void DisplayPoints(int points, Score scoreEnum, bool followPlayer = false) {
         soundPlayer.clip = pointClip;
         soundPlayer.Play();
         pointValue.text = "+" + points.ToString();

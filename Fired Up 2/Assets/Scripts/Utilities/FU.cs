@@ -99,9 +99,10 @@ namespace FU{
         public static string LookUp;
         public static string LookSideways;
         public static string Jump;
-        public static string FightFire;
-        public static string ToggleForward;
-        public static string ToggleBack;
+        public static string UseHose;
+        public static string ThrowGrenade;
+        public static string ToggleHose;
+        public static string ToggleGrenade;
         public static string FollowMe;
         public static string PickUpPlayer;
 
@@ -117,9 +118,10 @@ namespace FU{
 				LookSideways = "Mac_LookSideways";
 
 				Jump = "Mac_Jump";
-				FightFire = "Mac_FightFire";
-				ToggleForward = "Mac_ToggleForward";
-                ToggleBack = "Mac_ToggleBack";
+                UseHose = "Mac_UseHose";
+                ThrowGrenade = "Mac_ThrowGrenade";
+                ToggleHose = "Mac_ToggleHose";
+                ToggleGrenade = "Mac_ToggleGrenade";
                 FollowMe = "Mac_FollowMe";
                 PickUpPlayer = "Mac_PickUpPlayer";
             }
@@ -130,9 +132,10 @@ namespace FU{
 				LookSideways = "Win_LookSideways";
 				
 				Jump = "Win_Jump";
-				FightFire = "Win_FightFire";
-                ToggleForward = "Win_ToggleForward";
-                ToggleBack = "Win_ToggleBack";
+                UseHose = "Win_UseHose";
+                ThrowGrenade = "Win_ThrowGrenade";
+                ToggleHose = "Win_ToggleHose";
+                ToggleGrenade = "Win_ToggleGrenade";
                 FollowMe = "Win_FollowMe";
                 PickUpPlayer = "Win_PickUpPlayer";
             }
@@ -141,7 +144,7 @@ namespace FU{
 		
     }
 
-    #endregion
+    #endregion 
 
     public static class ExtensionMethods {
         public static Quaternion LookAtPlayer(this Transform trans, Vector3 displayPosition){

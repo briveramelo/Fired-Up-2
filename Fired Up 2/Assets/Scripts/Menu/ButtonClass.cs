@@ -3,17 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class ButtonClass : MonoBehaviour {
-    public Image mustache;
-    public string username;
-    public string rank;
-    public string totalBest;
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    [SerializeField] Text Name;
+    [SerializeField] Text Rank;
+    [SerializeField] Text TotalBest;
+
+    public void SetPlayerInfo(PlayerInfo incomingPlayerInfo) {
+        Name.text = incomingPlayerInfo._playerName;
+        Rank.text = incomingPlayerInfo._myRank.ToString();
+        TotalBest.text = incomingPlayerInfo._totalBest.ToString();
+    }
 }

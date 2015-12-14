@@ -4,54 +4,48 @@ using System;
 using FU;
 
 public class GearSelector : Inventory {
-    private bool forward = true;
-    private bool back = false;
 
-	void Start(){
-		CurrentGear = 0;
-	}
+    void Start() {
+        CurrentHose = Gear.SonicHose;
+        CurrentGrenade = Gear.K_Bomb;
+    }
 
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetButtonDown (Controls.ToggleForward)){
-			ToggleGear(forward);
-		}
-        else if (Input.GetButtonDown (Controls.ToggleBack)){
-			ToggleGear(back);
-		}
-	}
+    void Update() {
+        if (Input.GetButtonDown(Controls.ToggleHose)) {
+            ToggleHose();
+        }
+        else if (Input.GetButtonDown(Controls.ToggleGrenade)) {
+            ToggleGrenade();
+        }
+    }
 
-	void ToggleGear(bool toggleForward){
-        if (toggleForward) {
-            if ((int)CurrentGear == Enum.GetNames(typeof(GearEnum)).Length-1){
-			    CurrentGear = GearEnum.SonicHose;
-		    }
-		    else{
-			    CurrentGear++;
-			    if (gearInventory[CurrentGear]<=0){
-				    ToggleGear(forward);
-                    return;
-			    }
-		    }
+    void ToggleHose() {
+        if (CurrentHose == Gear.Powder) {
+            CurrentHose = Gear.SonicHose;
         }
         else {
-            if (CurrentGear == 0){
-                CurrentGear = (GearEnum)(Enum.GetNames(typeof(GearEnum)).Length - 1);
-                if (gearInventory[CurrentGear] <= 0){
-                    ToggleGear(back);
-                    return;
-                }
+            CurrentHose++;
+            if (GearInventory[CurrentHose] <= 0) {
+                ToggleHose();
+                return;
             }
-		    else{
-                CurrentGear--;
-                if (gearInventory[CurrentGear] <= 0){
-                    ToggleGear(back);
-                    return;
-                }
-		    }
         }
 
-        GearSelector_UI.Instance.HighlightActiveGearIcon();
+        HoseSelector_UI.Instance.HighlightActiveIcon();
+    }
+
+    void ToggleGrenade() {
+        if (GearInventory[Gear.K_Bomb] <= 0 && GearInventory[Gear.BlackDeath] <= 0){
+            CurrentGrenade = Gear.Empty;
+        }
+        else if (CurrentGrenade != Gear.K_Bomb && GearInventory[Gear.K_Bomb] > 0) {
+            CurrentGrenade = Gear.K_Bomb;
+        }
+        else if (CurrentGrenade != Gear.BlackDeath && GearInventory[Gear.BlackDeath] > 0) {
+            CurrentGrenade = Gear.BlackDeath;
+        }
+
+        GrenadeSelector_UI.Instance.HighlightActiveIcon();
     }
 
 	

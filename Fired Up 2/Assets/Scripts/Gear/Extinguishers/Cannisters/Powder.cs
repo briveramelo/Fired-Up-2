@@ -4,20 +4,20 @@ using System.Collections;
 public class Powder : HandHeldExtinguisher {
 
     [SerializeField] private ParticleSystem gasParticles;
-   // [SerializeField] private ParticleSystem flecParticles;
     protected override IEnumerator Use(){
-        gasParticles.enableEmission = true;
-       // flecParticles.enableEmission = true;
+        ParticleSystem.EmissionModule em = gasParticles.emission;
+        em.enabled = true;
         StartCoroutine(base.Use());
         yield return null;
     }
 
     protected override void DeActivateHose(){
-        gasParticles.enableEmission = false;
+        ParticleSystem.EmissionModule em = gasParticles.emission;
+        em.enabled = false;
         base.DeActivateHose();
         if (percentFull <= 0f){
             Inventory.Instance.UpdateAmmo(MyGear, -1);
-            if (Inventory.gearInventory[MyGear] > 0)
+            if (Inventory.GearInventory[MyGear] > 0)
                 percentFull = 1f;
         }
     }

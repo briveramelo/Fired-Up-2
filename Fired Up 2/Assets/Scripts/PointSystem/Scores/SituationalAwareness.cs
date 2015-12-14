@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SituationalAwareness : Score {
+public class SituationalAwareness : ScoreType {
 
     //set for each level
     //Damage beyond this returns 0 points;
@@ -10,7 +10,7 @@ public class SituationalAwareness : Score {
 
     void Awake() {
         pointDropRate = maxPoints / damageBeforeZeroPoints;
-        MyScoreType = ScoreType.SituationalAwareness;
+        MyScoreEnum = Score.SituationalAwareness;
     }
 
     protected override int CalculateScore() {
