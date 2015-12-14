@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Linq;
 
 [RequireComponent (typeof(GameManager))]
 public class DataSaver : MonoBehaviour {
-
 
     public static DataSaver Instance;
     private DataSave dataSaveFile;      public DataSave DataSaveFile { get { return dataSaveFile; } }
@@ -15,15 +15,21 @@ public class DataSaver : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         Instance = this;
+        //ClearData();
+        Load();
     }
-	
-    public void Load(){
-		if (File.Exists(Application.dataPath + "/DataSaves.dat")){
 
+    void ClearData() {
+        dataSaveFile = new DataSave();
+        Save();
+    }
+
+    void Load(){
+		if (File.Exists(Application.dataPath + "/DataSaves.dat")){
             BinaryFormatter bf = new BinaryFormatter ();
 			FileStream fileStream = File.Open(Application.dataPath + "/DataSaves.dat", FileMode.Open);
             dataSaveFile = (DataSave)bf.Deserialize(fileStream);
-			fileStream.Close();
+            fileStream.Close();
 		}
 	}
 
@@ -46,12 +52,13 @@ public class DataSaver : MonoBehaviour {
 	}
 
     public void CreateNewPlayer(string PlayerName) {
-        if (dataSaveFile.playersLevelBests.Count==0) {
+        if (dataSaveFile.playersLevelBests == null) {
             dataSaveFile = new DataSave(PlayerName);
         }
         else {
             dataSaveFile.AddNewPlayer(PlayerName);
         }
+        Save();
     }
 	
 }
@@ -62,11 +69,6 @@ public struct DataSave{
 
     public DataSave(string playerName) {
         playersLevelBests = new Dictionary<PlayerInfo, Dictionary<Level, LevelSaveData>>();
-        if (PlayerInfo.IsRepeatName(playerName)) {
-            //break and display repeat display code;
-            //Search
-        }
-
         AddNewPlayer(playerName);
     }
 
@@ -81,4 +83,13 @@ public struct DataSave{
         PlayerInfo newPlayerInfo = new PlayerInfo(playerName);
         playersLevelBests.Add(newPlayerInfo, newLevelBests);
     }
+
+    public static bool IsRepeatName(string newPlayerName) {
+        if (DataSaver.Instance.DataSaveFile.playersLevelBests != null) {
+            return DataSaver.Instance.DataSaveFile.playersLevelBests.Any(playerLevelBest => newPlayerName == playerLevelBest.Key._playerName);
+        }
+        else {
+            return false;
+        }
+    } 
 }

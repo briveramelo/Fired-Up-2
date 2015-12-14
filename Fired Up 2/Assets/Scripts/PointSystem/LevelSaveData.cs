@@ -1,5 +1,5 @@
 ﻿using System;
-
+[Serializable]
 public class LevelSaveData{
     public int combos;
     public int confidence;

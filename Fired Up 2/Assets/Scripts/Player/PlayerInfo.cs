@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System;
 
+[Serializable]
 public struct PlayerInfo {
 
     public string _playerName;
@@ -15,6 +17,11 @@ public struct PlayerInfo {
     }
 
     public static bool IsRepeatName(string newPlayerName) {
-        return DataSaver.Instance.DataSaveFile.playersLevelBests.Any(playerLevelBest => newPlayerName == playerLevelBest.Key._playerName);
+        if (DataSaver.Instance.DataSaveFile.playersLevelBests != null) {
+            return DataSaver.Instance.DataSaveFile.playersLevelBests.Any(playerLevelBest => newPlayerName == playerLevelBest.Key._playerName);
+        }
+        else {
+            return false;
+        }
     }
 }

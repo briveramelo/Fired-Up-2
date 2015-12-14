@@ -1,4 +1,6 @@
-﻿public enum Level {
+﻿using System;
+[Serializable]
+public enum Level {
     LandingScreen=0,
     ProfileScreen=1,
     LevelSelect=2,

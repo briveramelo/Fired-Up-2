@@ -17,7 +17,7 @@ public class Powder : HandHeldExtinguisher {
         base.DeActivateHose();
         if (percentFull <= 0f){
             Inventory.Instance.UpdateAmmo(MyGear, -1);
-            if (Inventory.gearInventory[MyGear] > 0)
+            if (Inventory.GearInventory[MyGear] > 0)
                 percentFull = 1f;
         }
     }

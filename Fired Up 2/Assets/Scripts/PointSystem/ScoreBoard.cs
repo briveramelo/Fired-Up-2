@@ -45,7 +45,6 @@ public class ScoreBoard : MonoBehaviour {
         return whyMakeMeDoThisUnity;
     }
 
-
     public void DocumentTime() {
         thisLevelSaveData.nowTime = DateTime.UtcNow;
     }
