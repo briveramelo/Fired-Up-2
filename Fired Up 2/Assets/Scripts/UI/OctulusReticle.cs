@@ -3,33 +3,64 @@ using System.Collections;
 
 public class OctulusReticle : MonoBehaviour {
     Renderer material;
+    bool hasBeenCalled;
 	// Use this for initialization
 	void Start () {
         material = this.GetComponent<Renderer>();
         material.material.SetFloat("_Cutoff", .01f);
+        hasBeenCalled = false;
     }
 	
 
     void OnTriggerStay(Collider col)
     {
         material.material.SetFloat("_Cutoff", material.material.GetFloat("_Cutoff") + .4f * Time.deltaTime);
-        if (col.gameObject.GetComponent<DifficultySelect>() != null)
+        if (!hasBeenCalled)
         {
-            col.gameObject.GetComponent<DifficultySelect>().OnHoverOverObject();
-            if (material.material.GetFloat("_Cutoff") >= 1)
+            if (col.gameObject.GetComponent<DifficultySelect>() != null)
             {
+                col.gameObject.GetComponent<DifficultySelect>().OnHoverOverObject();
+                if (material.material.GetFloat("_Cutoff") >= 1)
+                {
 
-                col.gameObject.GetComponent<DifficultySelect>().OnHoldForEnoughTime();
+                    if (!hasBeenCalled)
+                    {
+                        hasBeenCalled = true;
+                        col.gameObject.GetComponent<DifficultySelect>().OnHoldForEnoughTime();
+                    }
+                        
+                    
+                }
+
             }
-            
-        }
-        else if (col.gameObject.GetComponent<LevelSelect>() != null)
-        {
-            col.gameObject.GetComponent<LevelSelect>().OnHoverOverObject();
-            if (material.material.GetFloat("_Cutoff") >= 1)
+            else if (col.gameObject.GetComponent<LevelSelect>() != null)
             {
-
-                col.gameObject.GetComponent<LevelSelect>().OnHoldForEnoughTime();
+                col.gameObject.GetComponent<LevelSelect>().OnHoverOverObject();
+                if (material.material.GetFloat("_Cutoff") >= 1)
+                {
+                    if (!hasBeenCalled)
+                    {
+                        hasBeenCalled = true;
+                        col.gameObject.GetComponent<LevelSelect>().OnHoldForEnoughTime();
+                    }
+                        
+                    
+                }
+            }
+            else if (col.gameObject.GetComponent<GearSelectionMenu>() != null)
+            {
+                col.gameObject.GetComponent<GearSelectionMenu>().OnHoverOverObject();
+                if (material.material.GetFloat("_Cutoff") >= 1)
+                {
+                    Debug.Log("Look at me" + hasBeenCalled);
+                    if (!hasBeenCalled)
+                    {
+                        hasBeenCalled = true;
+                        col.gameObject.GetComponent<GearSelectionMenu>().OnHoldForEnoughTime();
+                    }
+                        
+                    
+                }
             }
         }
     }
@@ -43,6 +74,11 @@ public class OctulusReticle : MonoBehaviour {
         {
             col.gameObject.GetComponent<LevelSelect>().OnHoverExitObject();
         }
-            material.material.SetFloat("_Cutoff", .01f);
+        else if (col.gameObject.GetComponent<GearSelectionMenu>() != null)
+        {
+            col.gameObject.GetComponent<GearSelectionMenu>().OnHoverExitObject();
+        }
+        material.material.SetFloat("_Cutoff", .01f);
+        hasBeenCalled = false;
     }
 }

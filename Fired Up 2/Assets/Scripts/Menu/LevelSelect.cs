@@ -29,7 +29,6 @@ public class LevelSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
     public void OnHoverOverObject()
     {
@@ -52,7 +51,10 @@ public class LevelSelect : MonoBehaviour {
             light.intensity = 0;
         }
         else
+        {
+            Debug.Log(light.name + "This is alskdhf;l");
             light.intensity = startIntensity;
+        }
             
     }
     public void OnHoldForEnoughTime()
