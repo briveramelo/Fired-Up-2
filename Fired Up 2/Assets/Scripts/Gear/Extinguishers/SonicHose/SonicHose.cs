@@ -7,9 +7,8 @@ public class SonicHose : HandHeldExtinguisher {
 
     public static SonicHose Instance;
 
-    [SerializeField] private AudioClip chargeSound;
-    [SerializeField] private AudioClip blastSound;
     [SerializeField] private GameObject sonicPulse;
+    [SerializeField] private AudioSource chargePlayer;
     private float rechargeTime;
     private bool isCharging;
 
@@ -44,7 +43,6 @@ public class SonicHose : HandHeldExtinguisher {
 
     void BlastHose() {
         myAnimator.SetInteger("AnimState", (int)HoseState.Engage);
-        mySound.clip = blastSound;
         mySound.Play();
         BatteryPower = 0f;
     }
@@ -55,13 +53,13 @@ public class SonicHose : HandHeldExtinguisher {
 
     IEnumerator Charge() {
         isCharging = true;
-        mySound.clip = chargeSound;
-        mySound.Play();
+        chargePlayer.Play();
         while (BatteryPower < 1f){
             BatteryPower += Time.deltaTime / rechargeTime;
             yield return null;
         }
-        mySound.Stop();
+        chargePlayer.Stop();
+        yield return new WaitForSeconds(0.2f);
         BatteryPower = 1f;
         isCharging = false;
     }

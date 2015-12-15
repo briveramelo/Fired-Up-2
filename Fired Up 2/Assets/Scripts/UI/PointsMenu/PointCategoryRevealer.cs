@@ -7,11 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class PointCategoryRevealer : MonoBehaviour {
 
-    [SerializeField] Text levelName;
-	[SerializeField] GameObject[] pointGameObjects;
-    [SerializeField] Text[] pointTextScripts;
+    [SerializeField] private Text levelName;
+	[SerializeField] private GameObject[] pointGameObjects;
+    private Text[] pointTextScripts;
 
     private float timeToFlipPoints = 1.5f;
+
+    void Awake() {
+        Controls.SetControls();
+        pointTextScripts = new Text[pointGameObjects.Length];
+        for (int i = 0; i < pointTextScripts.Length; i++) {
+            pointTextScripts[i] = pointGameObjects[i].GetComponent<Text>();
+        }
+    }
 
     IEnumerator Start() {
         yield return null;
@@ -22,10 +30,6 @@ public class PointCategoryRevealer : MonoBehaviour {
         yield return StartCoroutine(DisplayPoints(pointGameObjects[pointGameObjects.Length-1], Score.Total));
         yield return StartCoroutine(WaitForInput());
         SceneManager.LoadScene((int)Level.LevelSelect);
-    }
-
-    void Elsewhere() {
-        Controls.SetControls();
     }
 
     IEnumerator DisplayAllSubtotals() {

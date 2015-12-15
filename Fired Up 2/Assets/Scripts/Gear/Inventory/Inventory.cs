@@ -21,11 +21,11 @@ public class Inventory : MonoBehaviour {
     void Awake(){
         Instance = this;
         GearInventory = new Dictionary<Gear, int>();
-		GearInventory.Add(Gear.SonicHose,   1);
-        GearInventory.Add(Gear.CO2,         2);
-        GearInventory.Add(Gear.Powder,      2);
-        GearInventory.Add(Gear.K_Bomb,      2);
-		GearInventory.Add(Gear.BlackDeath,  3);
+		GearInventory.Add(Gear.SonicHose,   GameManager.Instance.SonicHoseQuantity);
+        GearInventory.Add(Gear.CO2,         GameManager.Instance.C02Quantity);
+        GearInventory.Add(Gear.Powder,      GameManager.Instance.PowderQuantity);
+        GearInventory.Add(Gear.K_Bomb,      GameManager.Instance.KBombQuantity);
+		GearInventory.Add(Gear.BlackDeath,  GameManager.Instance.BlackDeathQuantity);
         GearInventory.Add(Gear.Empty,       int.MaxValue);
 
         sonicHose_UI =      FindObjectOfType<SonicHose_UI>();

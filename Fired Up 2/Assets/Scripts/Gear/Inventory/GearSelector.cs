@@ -8,6 +8,7 @@ public class GearSelector : Inventory {
     void Start() {
         CurrentHose = Gear.SonicHose;
         CurrentGrenade = Gear.K_Bomb;
+        GrenadeSelector_UI.Instance.HighlightActiveIcon();
     }
 
     void Update() {

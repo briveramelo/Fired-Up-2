@@ -14,7 +14,7 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
     protected float percentFull;
     protected float mySoundClipLength;
     protected float timeToExtinguish;
-    public List<Collider> fires;
+    private List<Collider> fires;
     protected float minPercentToUse;
     float lastAxis;
     float deadZone;
