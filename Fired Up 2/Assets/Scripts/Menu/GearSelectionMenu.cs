@@ -6,7 +6,7 @@ public class GearSelectionMenu : MonoBehaviour {
     public bool isThresholdValue;
     public bool isCostValue;
     public bool isSelected;
-    public enum Gear {Co2,Powder,Sonic,IceGrenade,BlackHole};
+   // public enum Gear {Co2,Powder,Sonic,IceGrenade,BlackHole};
     public Gear gear;
     public int cost;
     public int ThresholdValue;
@@ -32,15 +32,15 @@ public class GearSelectionMenu : MonoBehaviour {
     {
         if (isCostValue)
         {
-            if (gear == Gear.BlackHole)
+            if (gear == Gear.BlackDeath)
             {
                 BlackHolecostValue = cost;
             }
-            else if (gear == Gear.Co2)
+            else if (gear == Gear.CO2)
             {
                 CO2costValue = cost;
             }
-            else if (gear == Gear.IceGrenade)
+            else if (gear == Gear.K_Bomb)
             {
                 IceGrenadecostValue = cost;
             }
@@ -48,7 +48,7 @@ public class GearSelectionMenu : MonoBehaviour {
             {
                 PowdercostValue = cost;
             }
-            else if (gear == Gear.Sonic)
+            else if (gear == Gear.SonicHose)
             {
                 SoniccostValue = cost;
             }
@@ -56,15 +56,15 @@ public class GearSelectionMenu : MonoBehaviour {
         }
         else if (isThresholdValue)
         {
-            if (gear == Gear.BlackHole)
+            if (gear == Gear.BlackDeath)
             {
                 BlackHoleThresholdValue = ThresholdValue;
             }
-            else if (gear == Gear.Co2)
+            else if (gear == Gear.CO2)
             {
                 CO2ThresholdValue = ThresholdValue;
             }
-            else if (gear == Gear.IceGrenade)
+            else if (gear == Gear.K_Bomb)
             {
                 IceGrenadeThresholdValue = ThresholdValue;
             }
@@ -72,7 +72,7 @@ public class GearSelectionMenu : MonoBehaviour {
             {
                 PowderThresholdValue = ThresholdValue;
             }
-            else if (gear == Gear.Sonic)
+            else if (gear == Gear.SonicHose)
             {
                 SonicThresholdValue = ThresholdValue;
             }
@@ -82,17 +82,17 @@ public class GearSelectionMenu : MonoBehaviour {
     }
 	void Start () {
         textMesh = this.GetComponent<TextMesh>();
-        if (gear == Gear.BlackHole)
+        if (gear == Gear.BlackDeath)
         {
             ThresholdValue = BlackHoleThresholdValue;
             cost = BlackHolecostValue;
         }
-        else if (gear == Gear.Co2)
+        else if (gear == Gear.CO2)
         {
             ThresholdValue = CO2ThresholdValue;
             cost = CO2costValue;
         }
-        else if (gear == Gear.IceGrenade)
+        else if (gear == Gear.K_Bomb)
         {
             ThresholdValue = IceGrenadeThresholdValue;
             cost = IceGrenadecostValue;
@@ -102,7 +102,7 @@ public class GearSelectionMenu : MonoBehaviour {
             ThresholdValue = PowderThresholdValue;
             cost = PowdercostValue;
         }
-        else if (gear == Gear.Sonic)
+        else if (gear == Gear.SonicHose)
         {
             ThresholdValue = SonicThresholdValue;
             cost = SoniccostValue;
