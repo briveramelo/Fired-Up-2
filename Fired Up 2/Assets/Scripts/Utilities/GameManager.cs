@@ -4,6 +4,8 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
+
+    private PlayerInfo selectedPlayer;  public PlayerInfo   SelectedPlayer  { get { return selectedPlayer; } }
     private Level currentLevel;         public Level        CurrentLevel    { get { return currentLevel; } }
     private Difficulty levelDifficulty; public Difficulty   LevelDifficulty { get { return levelDifficulty; } }
 
@@ -12,6 +14,17 @@ public class GameManager : MonoBehaviour {
     private int powderQuantity;         public int PowderQuantity { get { return powderQuantity; } }
     private int kBombQuantity;          public int KBombQuantity { get { return kBombQuantity; } }
     private int blackDeathQuantity;     public int BlackDeathQuantity { get { return blackDeathQuantity; } }
+
+    void Awake () {
+        if (Instance == null){
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+            Application.targetFrameRate = 90;
+        }
+        else if (Instance != this) {
+            Destroy(gameObject);
+        }
+	}
 
     public void SetInventory(Gear GearType, int quantity) {
         switch (GearType) {
@@ -31,20 +44,8 @@ public class GameManager : MonoBehaviour {
         levelDifficulty = newLevelDifficulty;
     }
 
-    void Awake () {
-        if (Instance == null){
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
-            Application.targetFrameRate = 90;
-        }
-        else if (Instance != this) {
-            Destroy(gameObject);
-        }
-	}
-
-    void OnLevelWasLoaded(int level) {
-        currentLevel = (Level)level;
-        //levelDifficulty = (Difficulty)
-        //Search
+    public void SetPlayerInfo(PlayerInfo playerInfo) {
+        selectedPlayer = playerInfo;
     }
+
 }

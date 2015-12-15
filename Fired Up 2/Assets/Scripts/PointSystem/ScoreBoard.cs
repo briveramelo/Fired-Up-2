@@ -11,6 +11,11 @@ public class ScoreBoard : MonoBehaviour {
         thisLevelSaveData = new LevelSaveData();
         thisLevelSaveData.thisLevel = GameManager.Instance.CurrentLevel;
         thisLevelSaveData.levelDifficulty = GameManager.Instance.LevelDifficulty;
+
+        //foreach (Score SetupScore in Enum.GetValues(typeof(Score))) {
+        //    SetScore(SetupScore, (int)SetupScore);
+        //}
+
     }
 
     public void SetScore(Score ScoreToSet, int newSetScore) {
@@ -26,9 +31,13 @@ public class ScoreBoard : MonoBehaviour {
 
     public void CalculateTotal(){
         thisLevelSaveData.pointTotal = 0;
-        foreach (Score score in Enum.GetValues(typeof(Score))){
-            thisLevelSaveData.pointTotal += GetScore(score);
+        for (int i=0; i<Enum.GetValues(typeof(Score)).Length-1; i++){
+            thisLevelSaveData.pointTotal += GetScore((Score)i);
         }
+    }
+
+    public void SaveToDataSaver() {
+        DataSaver.Instance.SaveLevelData(thisLevelSaveData);
     }
 
     public int GetScore(Score ScoreToReturn) {

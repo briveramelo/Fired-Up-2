@@ -14,8 +14,7 @@ public class EndOfLevel : MonoBehaviour {
         }
         ScoreBoard.Instance.DocumentTime();
         ScoreBoard.Instance.CalculateTotal();
-        DataSaver.Instance.PromptSave(ScoreBoard.Instance.ThisLevelSaveData);
-        
+        ScoreBoard.Instance.SaveToDataSaver();
     }
 
     public void EndLevel() {

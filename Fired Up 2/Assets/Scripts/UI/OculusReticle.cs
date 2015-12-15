@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OctulusReticle : MonoBehaviour {
+public class OculusReticle : MonoBehaviour {
     Renderer material;
     bool hasBeenCalled;
 	// Use this for initialization
 	void Start () {
-        material = this.GetComponent<Renderer>();
+        material = GetComponent<Renderer>();
         material.material.SetFloat("_Cutoff", .01f);
         hasBeenCalled = false;
     }

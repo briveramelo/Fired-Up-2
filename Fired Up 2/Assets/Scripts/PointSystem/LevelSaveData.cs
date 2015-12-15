@@ -7,6 +7,7 @@ public class LevelSaveData{
     public int resilience;
     public int situationalAwareness;
     public int timeBonus;
+
     public int pointTotal;
     public DateTime nowTime;
     public Difficulty levelDifficulty;

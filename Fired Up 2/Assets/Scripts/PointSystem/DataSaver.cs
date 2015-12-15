@@ -33,12 +33,13 @@ public class DataSaver : MonoBehaviour {
 		}
 	}
 
-    public void PromptSave(LevelSaveData newLevelSaveData){
+    public void SaveLevelData(LevelSaveData newLevelSaveData){
         PlayerInfo playerInfo = newLevelSaveData.playerInfo;
+        Difficulty difficulty = newLevelSaveData.levelDifficulty;
         Level ThisLevel = newLevelSaveData.thisLevel;
         
-        if (newLevelSaveData.pointTotal > dataSaveFile.playersLevelBests[playerInfo][ThisLevel].pointTotal) {
-            dataSaveFile.playersLevelBests[playerInfo][ThisLevel] = newLevelSaveData;
+        if (newLevelSaveData.pointTotal > dataSaveFile.playersLevelBests[playerInfo][ThisLevel][difficulty].pointTotal) {
+            dataSaveFile.playersLevelBests[playerInfo][ThisLevel][difficulty] = newLevelSaveData;
 		    Save();
         }
 	}
@@ -65,23 +66,27 @@ public class DataSaver : MonoBehaviour {
 
 [Serializable]
 public struct DataSave{
-    public Dictionary<PlayerInfo, Dictionary<Level, LevelSaveData>> playersLevelBests;
+    public Dictionary<PlayerInfo, Dictionary<Level, Dictionary<Difficulty, LevelSaveData>>> playersLevelBests;
 
     public DataSave(string playerName) {
-        playersLevelBests = new Dictionary<PlayerInfo, Dictionary<Level, LevelSaveData>>();
+        playersLevelBests = new Dictionary<PlayerInfo, Dictionary<Level, Dictionary<Difficulty, LevelSaveData>>>();
         AddNewPlayer(playerName);
     }
 
     public void AddNewPlayer(string playerName) {
-        Dictionary<Level, LevelSaveData> newLevelBests = new Dictionary<Level, LevelSaveData>();
+        Dictionary<Level, Dictionary<Difficulty, LevelSaveData>> newLevelDifficultyBests = new Dictionary<Level, Dictionary<Difficulty, LevelSaveData>>();
         LevelSaveData emptyLevelSaveData = new LevelSaveData();
 
         foreach (Level levelEnum in Enum.GetValues(typeof(Level))){
-            newLevelBests.Add(levelEnum, emptyLevelSaveData);
+            Dictionary<Difficulty, LevelSaveData> newDifficultyBests = new Dictionary<Difficulty, LevelSaveData>();
+            foreach (Difficulty difficultyEnum in Enum.GetValues(typeof(Difficulty))) {
+                newDifficultyBests.Add(difficultyEnum, emptyLevelSaveData);
+            }
+            newLevelDifficultyBests.Add(levelEnum, newDifficultyBests);
         }
 
         PlayerInfo newPlayerInfo = new PlayerInfo(playerName);
-        playersLevelBests.Add(newPlayerInfo, newLevelBests);
+        playersLevelBests.Add(newPlayerInfo, newLevelDifficultyBests);
     }
 
     public static bool IsRepeatName(string newPlayerName) {

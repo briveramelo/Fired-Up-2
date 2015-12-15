@@ -4,52 +4,79 @@ using FU;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Diagnostics;
 
 public class PointCategoryRevealer : MonoBehaviour {
 
     [SerializeField] private Text levelName;
 	[SerializeField] private GameObject[] pointGameObjects;
+    private Animator[] pointAnimators;
+    private PointsDance[] pointDancers;
     private Text[] pointTextScripts;
 
-    private float timeToFlipPoints = 1.5f;
+    [SerializeField] private Text totalText;
+    [SerializeField] private GameObject totalGameObject;
+    [SerializeField] private Animator totalAnimator;
+
+    public static PointCategoryRevealer Instance;
+    private float timeToFlipPoints = 1.5f; public float TimeToFlipPoints { get { return timeToFlipPoints; } }
 
     void Awake() {
         Controls.SetControls();
-        pointTextScripts = new Text[pointGameObjects.Length];
-        for (int i = 0; i < pointTextScripts.Length; i++) {
+
+        Instance = this;
+        int arraySize = pointGameObjects.Length;
+        pointTextScripts = new Text[arraySize + 1];
+        pointDancers = new PointsDance[arraySize];
+        pointAnimators = new Animator[arraySize];
+        for (int i = 0; i < pointGameObjects.Length; i++) {
             pointTextScripts[i] = pointGameObjects[i].GetComponent<Text>();
+            pointDancers[i] = pointGameObjects[i].GetComponent<PointsDance>();
+            pointAnimators[i] = pointGameObjects[i].GetComponent<Animator>();
         }
     }
 
     IEnumerator Start() {
         yield return null;
-        levelName.text = ScoreBoard.Instance.ThisLevelSaveData.thisLevel.ToString();
+            levelName.text = GameManager.Instance.CurrentLevel.ToString();
         yield return StartCoroutine(DisplayAllSubtotals());
         yield return StartCoroutine(WaitForInput());
-        HidePoints();
-        yield return StartCoroutine(DisplayPoints(pointGameObjects[pointGameObjects.Length-1], Score.Total));
+            HidePoints();
+        yield return null;
+        yield return StartCoroutine(DisplayPoints(totalGameObject, totalText, Score.Total, totalAnimator));
         yield return StartCoroutine(WaitForInput());
-        SceneManager.LoadScene((int)Level.LevelSelect);
+            SceneManager.LoadScene((int)Level.LevelSelect);
     }
 
     IEnumerator DisplayAllSubtotals() {
-        for (int i=0; i<Enum.GetValues(typeof(ScoreType)).Length-1; i++){
-            yield return StartCoroutine(DisplayPoints(pointGameObjects[i], (Score)i));
+        for (int i=0; i<Enum.GetValues(typeof(Score)).Length-1; i++){
+            yield return StartCoroutine(DisplayPoints(pointGameObjects[i], pointTextScripts[i], (Score)i, pointAnimators[i]));
         }
     }
     
-    IEnumerator DisplayPoints(GameObject textToActivate, Score ScoreToReturn) {
+    IEnumerator DisplayPoints(GameObject textToActivate, Text textScript, Score ScoreToReturn, Animator pointAnimator) {
+        textToActivate.transform.parent.gameObject.SetActive(true);
         textToActivate.SetActive(true);
-        int score = ScoreBoard.Instance.GetScore(ScoreToReturn);
+
         int pointDisplay = 0;
-        int flipRate = (int)(score / timeToFlipPoints);
-        while (!Input.GetButtonDown(Controls.Jump) && pointDisplay < score) {
+        int score = ScoreBoard.Instance.GetScore(ScoreToReturn) * 10000 + 1337;
+        int flipRate = Mathf.CeilToInt(score / (timeToFlipPoints * 60));
+        while (!Input.GetButtonDown(Controls.Jump) && pointDisplay < score){
             pointDisplay += flipRate;
-            pointTextScripts[(int)ScoreToReturn].text = pointDisplay.ToString();
+            textScript.text = pointDisplay.ToString();
             yield return null;
         }
-        pointTextScripts[(int)ScoreToReturn].text = score.ToString();
-        yield return new WaitForSeconds(.5f);
+        pointAnimator.SetInteger("AnimState", 1);
+        textScript.text = score.ToString();
+
+        Stopwatch timer = new Stopwatch();
+        timer.Start();
+        float elapsedTime = 0f;
+        while (!Input.GetButtonDown(Controls.Jump) && elapsedTime < timeToFlipPoints) {
+            elapsedTime = timer.ElapsedMilliseconds / 1000f;
+            yield return null;
+        }
+        yield return new WaitForEndOfFrame();
     }
 
     IEnumerator WaitForInput() {
@@ -60,7 +87,7 @@ public class PointCategoryRevealer : MonoBehaviour {
 
     void HidePoints() {
         foreach (GameObject game in pointGameObjects) {
-            game.SetActive(false);
+            game.transform.parent.gameObject.SetActive(false);
         }
     }
 }

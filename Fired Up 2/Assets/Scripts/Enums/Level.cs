@@ -1,7 +1,7 @@
 ﻿using System;
 [Serializable]
 public enum Level {
-    LandingScreen=0,
+    TitleScreen=0,
     ProfileScreen=1,
     LevelSelect=2,
     PointScreen=3,
