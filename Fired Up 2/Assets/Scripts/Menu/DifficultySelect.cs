@@ -18,16 +18,16 @@ public class DifficultySelect : MonoBehaviour {
             text.color = selectedColor;
     }
 
-    void OnMouseOver()
+    public void OnHoverOverObject()
     {
         text.color = selectedColor;
     }
-    void OnMouseExit()
+    public void OnHoverExitObject()
     {
         if (MyDifficulty != difficultyChoice)
             text.color = defaultColor;
     }
-    void OnMouseDown()
+    public void OnHoldForEnoughTime()
     {
         for (int i = 0; i < difficulties.Length; i++)
         {
