@@ -15,8 +15,7 @@ public class OculusReticle : MonoBehaviour {
     void OnTriggerStay(Collider col)
     {
         material.material.SetFloat("_Cutoff", material.material.GetFloat("_Cutoff") + .4f * Time.deltaTime);
-        if (!hasBeenCalled)
-        {
+
             if (col.gameObject.GetComponent<DifficultySelect>() != null)
             {
                 col.gameObject.GetComponent<DifficultySelect>().OnHoverOverObject();
@@ -62,6 +61,20 @@ public class OculusReticle : MonoBehaviour {
                     
                 }
             }
+            else if (col.gameObject.GetComponent<TheyreFiredUp>() != null)
+            {
+                col.gameObject.GetComponent<TheyreFiredUp>().OnHoverOverObject();
+                if (material.material.GetFloat("_Cutoff") >= 1)
+                {
+                    if (!hasBeenCalled)
+                    {
+                        hasBeenCalled = true;
+                        col.gameObject.GetComponent<TheyreFiredUp>().OnHoldForEnoughTime();
+                    }
+
+
+                }
+            
         }
     }
     void OnTriggerExit(Collider col)
@@ -77,6 +90,10 @@ public class OculusReticle : MonoBehaviour {
         else if (col.gameObject.GetComponent<GearSelectionMenu>() != null)
         {
             col.gameObject.GetComponent<GearSelectionMenu>().OnHoverExitObject();
+        }
+        else if (col.gameObject.GetComponent<TheyreFiredUp>() != null)
+        {
+            col.gameObject.GetComponent<TheyreFiredUp>().OnHoverExitObject();
         }
         material.material.SetFloat("_Cutoff", .01f);
         hasBeenCalled = false;

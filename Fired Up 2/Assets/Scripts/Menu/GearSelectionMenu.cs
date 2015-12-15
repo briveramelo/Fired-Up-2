@@ -22,6 +22,12 @@ public class GearSelectionMenu : MonoBehaviour {
     static int SonicThresholdValue;
     static int IceGrenadeThresholdValue;
     static int BlackHoleThresholdValue;
+    public static int PowderQuantity;
+    public static int CO2Quantity;
+    public static int SonicQuantity;
+    public static int KBombQuantity;
+    public static int BlackholeQuantity;
+
     TextMesh textMesh;
     BoxCollider boxCollider = null;
     GearSelectionMenu[] allGearQuatities = new GearSelectionMenu[35];
@@ -125,7 +131,6 @@ public class GearSelectionMenu : MonoBehaviour {
     {
         for (int i = 0; i < allGearQuatities.Length; i++)
         {
-            Debug.Log(allGearQuatities[i].gear + "Compared too" + gear);
             if (allGearQuatities[i].gear.Equals(gear))
                 otherQuantitiesOfThisGear.Add(allGearQuatities[i]);
         }
@@ -147,6 +152,26 @@ public class GearSelectionMenu : MonoBehaviour {
         isSelected = true;
         textMesh.color = Color.blue;
         boxCollider.enabled = false;
+        if (gear == Gear.BlackDeath)
+        {
+            BlackholeQuantity = quantity;
+        }
+        else if (gear == Gear.CO2)
+        {
+            CO2Quantity = quantity;
+        }
+        else if (gear == Gear.K_Bomb)
+        {
+            KBombQuantity = quantity;
+        }
+        else if (gear == Gear.Powder)
+        {
+            PowderQuantity = quantity;
+        }
+        else if (gear == Gear.SonicHose)
+        {
+            SonicQuantity = quantity;
+        }
     }
     public void OnHoverOverObject()
     {
