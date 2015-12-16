@@ -29,14 +29,14 @@ public class TheyreFiredUp : MonoBehaviour {
     void loadSceneAndStoreData()
     {
         Debug.Log("Stored Data");
-        Debug.Log((Difficulty)DifficultySelect.difficultyChoice);
+        Debug.Log(LevelSelect.levelChoice);
         GameManager.Instance.SetDifficulty((Difficulty)DifficultySelect.difficultyChoice);
         GameManager.Instance.SetInventory(Gear.BlackDeath, GearSelectionMenu.BlackholeQuantity);
         GameManager.Instance.SetInventory(Gear.CO2, GearSelectionMenu.CO2Quantity);
         GameManager.Instance.SetInventory(Gear.K_Bomb, GearSelectionMenu.KBombQuantity);
         GameManager.Instance.SetInventory(Gear.Powder, GearSelectionMenu.PowderQuantity);
         GameManager.Instance.SetInventory(Gear.SonicHose, GearSelectionMenu.SonicQuantity);
-        SceneManager.LoadScene(LevelSelect.levelChoice);
+       // SceneManager.LoadScene(LevelSelect.levelChoice);
     }
     void turnFiresOn()
     {
