@@ -8,6 +8,7 @@ public class Room : MonoBehaviour {
     List<FireSpread> RoomRandomFires = new List<FireSpread>();
     public int RoomFireNumber = 2;
     bool hasBeenSetOnFire;
+    //higithub
 
     void Start()
     {
