@@ -7,13 +7,25 @@ public class Legs : MonoBehaviour {
 
 	[SerializeField]	private	Rigidbody playerBody;
 	[SerializeField]	private Transform feetTran;
+    [SerializeField]    private Transform cameraTran;
 	private float minAxisInput;
 	private float speed;
 	private float maxSpeed;
-	private float jumpForce;
 	private float moveForce;
     private bool canMove = true;
     private float pickUpTime = 2f;
+    private bool isSquatting = false;
+    private bool isMidSquat = false;
+    [SerializeField, Range (0,0.5f)]  private float squatSpeed = 0.03f;
+    private float standingMaxSpeed = 5f;
+    private float squattingMaxSpeed = 3f;
+
+    void Awake () {
+		maxSpeed = standingMaxSpeed;
+		minAxisInput = 0.15f;
+		moveForce = .25f;
+        FireFighter.playerTransform = transform.root;
+	}
 
     public void ImmobilizeLegs(NPC_Legs npcLegs) {
         StopAllCoroutines();
@@ -31,21 +43,13 @@ public class Legs : MonoBehaviour {
         }
         canMove = true;
     }
-
-	// Use this for initialization
-	void Awake () {
-		minAxisInput = 0.15f;
-		maxSpeed = 5f;
-		moveForce = .25f;
-		jumpForce = 500f;
-        FireFighter.playerTransform = transform.root;
-	}
 	
-	// Update is called once per frame
 	void Update () {
         if (canMove) {
             Move ();
-		    Jump();
+        }
+        if (Input.GetButtonDown(Controls.Squat) && !isMidSquat) {
+            StartCoroutine (Squat());
         }
 	}
 
@@ -63,17 +67,18 @@ public class Legs : MonoBehaviour {
 		if (speed >= maxSpeed){
 			playerBody.velocity = playerBody.velocity.normalized * maxSpeed;
 		}
-
 	}
 
-	void Jump(){
-		if (Input.GetButtonDown (Controls.Jump)){
-			if (Physics.CheckSphere(feetTran.position,.5f,Layers.LayerMasks.ground.value)){
-				playerBody.velocity = new Vector3 (playerBody.velocity.x,0f,playerBody.velocity.z);
-                playerBody.AddForce (jumpForce * Vector3.up);
-			}
-		}
-	}
-
-
+    IEnumerator Squat() {
+        isSquatting = !isSquatting;
+        maxSpeed = isSquatting ? squattingMaxSpeed : standingMaxSpeed;
+        isMidSquat = true;
+        Vector3 targetPosition = isSquatting ? Vector3.down * .5f : Vector3.up * 0.5f;
+        while (Vector3.Distance(cameraTran.localPosition, targetPosition)>0.01f) {
+            cameraTran.localPosition = Vector3.MoveTowards(cameraTran.localPosition, targetPosition, squatSpeed);
+            yield return null;
+        }
+        cameraTran.localPosition = targetPosition;
+        isMidSquat = false;
+    }
 }

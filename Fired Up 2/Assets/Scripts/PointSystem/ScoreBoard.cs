@@ -12,9 +12,9 @@ public class ScoreBoard : MonoBehaviour {
         thisLevelSaveData.thisLevel = GameManager.Instance.CurrentLevel;
         thisLevelSaveData.levelDifficulty = GameManager.Instance.LevelDifficulty;
 
-        //foreach (Score SetupScore in Enum.GetValues(typeof(Score))) {
-        //    SetScore(SetupScore, (int)SetupScore);
-        //}
+        foreach (Score SetupScore in Enum.GetValues(typeof(Score))) {
+            SetScore(SetupScore, (int)SetupScore);
+        }
 
     }
 

@@ -105,6 +105,7 @@ namespace FU{
         public static string ToggleGrenade;
         public static string FollowMe;
         public static string PickUpPlayer;
+        public static string Squat;
 
         public static void SetControls (){
 			if (Application.platform == RuntimePlatform.OSXPlayer ||
@@ -124,6 +125,7 @@ namespace FU{
                 ToggleGrenade = "Mac_ToggleGrenade";
                 FollowMe = "Mac_FollowMe";
                 PickUpPlayer = "Mac_PickUpPlayer";
+                Squat = "Mac_Squat";
             }
 			else{
 				Forward = "Win_Forward";
@@ -138,6 +140,7 @@ namespace FU{
                 ToggleGrenade = "Win_ToggleGrenade";
                 FollowMe = "Win_FollowMe";
                 PickUpPlayer = "Win_PickUpPlayer";
+                Squat = "Win_Squat";
             }
 		}
 

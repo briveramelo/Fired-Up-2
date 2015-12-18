@@ -64,21 +64,22 @@ public class NPC_Legs : MonoBehaviour {
 
     private IEnumerator GetPickedUp() {
         float distanceAway = 10;
+        transform.parent = FireFighter.playerShoulderTransform;
+        myBody.isKinematic = true;
         while (NPCCollector.Instance.IsCarryingPlayer && distanceAway > 0.1f) {
-            transform.position = Vector3.Lerp(transform.position, FireFighter.playerShoulderTransform.position, pickUpSpeed);
-            distanceAway = Vector3.Distance(transform.position, FireFighter.playerShoulderTransform.position);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, Vector3.zero, pickUpSpeed);
+            distanceAway = Vector3.Distance(transform.localPosition, Vector3.zero);
             yield return null;
         }
+        transform.localPosition = Vector3.zero;
         isBeingPickedUp = false;
-        while (NPCCollector.Instance.IsCarryingPlayer) {
-            transform.position = FireFighter.playerShoulderTransform.position;
-            yield return null;
-        }
     }
 
     public void DropOff(float targetDistanceAway) {
         if (!isHomeSafe) {
             StopAllCoroutines();
+            transform.parent = null;
+            myBody.isKinematic = false;
             myAgent.enabled = true;
             myAgent.destination = FireFighter.playerTransform.position + FireFighter.playerTransform.forward * targetDistanceAway;
             isBeingCarried = false;

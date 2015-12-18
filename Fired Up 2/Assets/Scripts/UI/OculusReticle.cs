@@ -26,7 +26,8 @@ public class OculusReticle : MonoBehaviour {
                     {
                         hasBeenCalled = true;
                         col.gameObject.GetComponent<DifficultySelect>().OnHoldForEnoughTime();
-                    }
+                    material.material.SetFloat("_Cutoff", .01f);
+                }
                         
                     
                 }
@@ -41,7 +42,8 @@ public class OculusReticle : MonoBehaviour {
                     {
                         hasBeenCalled = true;
                         col.gameObject.GetComponent<LevelSelect>().OnHoldForEnoughTime();
-                    }
+                    material.material.SetFloat("_Cutoff", .01f);
+                }
                         
                     
                 }
@@ -56,7 +58,8 @@ public class OculusReticle : MonoBehaviour {
                     {
                         hasBeenCalled = true;
                         col.gameObject.GetComponent<GearSelectionMenu>().OnHoldForEnoughTime();
-                    }
+                    material.material.SetFloat("_Cutoff", .01f);
+                }
                         
                     
                 }
@@ -70,7 +73,8 @@ public class OculusReticle : MonoBehaviour {
                     {
                         hasBeenCalled = true;
                         col.gameObject.GetComponent<TheyreFiredUp>().OnHoldForEnoughTime();
-                    }
+                    material.material.SetFloat("_Cutoff", .01f);
+                }
 
 
                 }

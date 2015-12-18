@@ -10,7 +10,6 @@ public class PointsDance : MonoBehaviour {
     private float period = 3f;
     private float maxTilt = 10f;
     private float pi = Mathf.PI;
-    private float pulseTime = 2f;
     private float lerpRate = 0.03f;
     [SerializeField] private Text myText;
 

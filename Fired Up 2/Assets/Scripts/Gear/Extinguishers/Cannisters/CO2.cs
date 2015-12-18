@@ -7,6 +7,11 @@ public class CO2 : HandHeldExtinguisher{
 
     [SerializeField] private ParticleSystem gasParticles;
 
+    protected override void Awake() {
+        base.Awake();
+        extinguishedTime = 5f;
+    }
+
     protected override IEnumerator Use(){
         ParticleSystem.EmissionModule em = gasParticles.emission;
         em.enabled = true;

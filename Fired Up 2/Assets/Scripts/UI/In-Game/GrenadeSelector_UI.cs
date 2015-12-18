@@ -6,8 +6,9 @@ public class GrenadeSelector_UI : GearSelector_UI {
     new public static GrenadeSelector_UI Instance;
 
 
-    void Awake() {
+    void Start() {
         Instance = this;
+        HighlightActiveIcon();
     }
 
     public void HighlightActiveIcon(){
