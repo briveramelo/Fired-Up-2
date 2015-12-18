@@ -18,8 +18,10 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
     protected float minPercentToUse;
     float lastAxis;
     float deadZone;
+    protected float extinguishedTime;
 
     protected virtual void Awake(){
+        extinguishedTime = 30f;
         mySoundClipLength = mySound.clip.length;
         timeToExtinguish = 0.5f;
         percentFull = 1f;
@@ -84,7 +86,7 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
         }
         if (fires.Contains(col)){
             FireSpread fireSpreadScript = col.GetComponent<FireSpread>();
-            fireSpreadScript.ExtinguishFire();
+            fireSpreadScript.ExtinguishFire(extinguishedTime);
             fires.Remove(col);
         }
     }

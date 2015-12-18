@@ -21,12 +21,24 @@ public class Inventory : MonoBehaviour {
     void Awake(){
         Instance = this;
         GearInventory = new Dictionary<Gear, int>();
-		GearInventory.Add(Gear.SonicHose,   GameManager.Instance.SonicHoseQuantity);
-        GearInventory.Add(Gear.CO2,         GameManager.Instance.C02Quantity);
-        GearInventory.Add(Gear.Powder,      GameManager.Instance.PowderQuantity);
-        GearInventory.Add(Gear.K_Bomb,      GameManager.Instance.KBombQuantity);
-		GearInventory.Add(Gear.BlackDeath,  GameManager.Instance.BlackDeathQuantity);
-        GearInventory.Add(Gear.Empty,       int.MaxValue);
+
+        #region ALL THE PERKS
+        GearInventory.Add(Gear.SonicHose,       int.MaxValue);
+        GearInventory.Add(Gear.CO2,             int.MaxValue);
+        GearInventory.Add(Gear.Powder,          int.MaxValue);
+        GearInventory.Add(Gear.K_Bomb,          int.MaxValue);
+        GearInventory.Add(Gear.BlackDeath,      int.MaxValue);
+        GearInventory.Add(Gear.Empty,           int.MaxValue);
+        #endregion
+
+  //      #region Your Purchases
+  //      GearInventory.Add(Gear.SonicHose,   GameManager.Instance.SonicHoseQuantity);
+  //      GearInventory.Add(Gear.CO2,         GameManager.Instance.C02Quantity);
+  //      GearInventory.Add(Gear.Powder,      GameManager.Instance.PowderQuantity);
+  //      GearInventory.Add(Gear.K_Bomb,      GameManager.Instance.KBombQuantity);
+		//GearInventory.Add(Gear.BlackDeath,  GameManager.Instance.BlackDeathQuantity);
+  //      GearInventory.Add(Gear.Empty,       int.MaxValue);
+  //      #endregion
 
         sonicHose_UI =      FindObjectOfType<SonicHose_UI>();
         cO2_UI =            FindObjectOfType<CO2_UI>();

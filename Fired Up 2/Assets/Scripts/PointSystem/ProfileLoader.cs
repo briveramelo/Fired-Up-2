@@ -10,7 +10,6 @@ public class ProfileLoader : MonoBehaviour {
 
     [SerializeField] private GameObject FireFighterButton;
     [SerializeField] private RectTransform ContentPanelTransform;
-    [SerializeField] private ToggleGroup toggleGroup;
     private List<ButtonClass> buttonProfiles; public List<ButtonClass> ButtonProfiles { get { return buttonProfiles; } }
 
     IEnumerator Start() {

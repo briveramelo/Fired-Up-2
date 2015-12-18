@@ -8,23 +8,22 @@ public class Room : MonoBehaviour {
     List<FireSpread> RoomRandomFires = new List<FireSpread>();
     public int RoomFireNumber = 2;
     bool hasBeenSetOnFire;
+    //higithub
 
     void Start()
     {
         hasBeenSetOnFire = false;
-        
-
     }
+
     void pickRandomFiresByRoom()
     {
-        Debug.Log("Room1 " + RoomFireNumber);
         for (int i= 0; i < RoomFireNumber; i++)
         {
             int temp = Random.Range(0, RoomFires.Count - 1);
                 RoomRandomFires.Add(RoomFires[temp]);
-            Debug.Log("For " + i + " " + RoomFires[temp] + "was chosen");
         }
     }
+
     public void LightThisRoomOnFire()
     {
         if (!hasBeenSetOnFire)
@@ -34,6 +33,7 @@ public class Room : MonoBehaviour {
             setFires(RoomRandomFires);
         }
     }
+
     void OnTriggerEnter(Collider col){
         //Logic for collision checks is in the Physics Layer collision pyramid
         //if (col.gameObject.layer == 26)
@@ -51,7 +51,6 @@ public class Room : MonoBehaviour {
 
     void setFires(List<FireSpread> fires)
     {
-        Debug.Log(gameObject.tag + "" + fires.Count);
         for(int i = 0; i < fires.Count; i++)
         {
             fires[i].CatchFire();

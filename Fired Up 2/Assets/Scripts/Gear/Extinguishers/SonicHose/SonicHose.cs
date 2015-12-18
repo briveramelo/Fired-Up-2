@@ -16,10 +16,9 @@ public class SonicHose : HandHeldExtinguisher {
         base.Awake();
         Instance = this;
         rechargeTime = .75f;
-        minPercentToUse = 0f;
-        percentFull = 0f;
+        minPercentToUse = 1f;
+        percentFull = 1f;
     }
-
 
     public float BatteryPower{
         get { return percentFull; }
@@ -32,13 +31,15 @@ public class SonicHose : HandHeldExtinguisher {
 
     protected override IEnumerator Use(){
         if (!isCharging){
-            yield return StartCoroutine(Charge());
-            SonicPulse sonicPulseScript = (Instantiate(sonicPulse, transform.position, Quaternion.Euler (90f,transform.root.rotation.eulerAngles.y,0f)) as GameObject).GetComponent<SonicPulse>();
+            SonicPulse sonicPulseScript = (Instantiate(sonicPulse, transform.position, Quaternion.identity) as GameObject).GetComponent<SonicPulse>();
+            sonicPulseScript.transform.parent = transform;
+            sonicPulseScript.transform.localRotation = Quaternion.identity;
+            sonicPulseScript.transform.parent = null;
             sonicPulseScript.Launch(transform.up);
             BlastHose();
             DeActivateHose();
         }
-        yield return null;
+        yield return StartCoroutine(Charge());
     }
 
     void BlastHose() {
@@ -59,7 +60,6 @@ public class SonicHose : HandHeldExtinguisher {
             yield return null;
         }
         chargePlayer.Stop();
-        yield return new WaitForSeconds(0.2f);
         BatteryPower = 1f;
         isCharging = false;
     }

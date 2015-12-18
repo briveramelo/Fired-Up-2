@@ -20,7 +20,6 @@ public class LevelSelect : MonoBehaviour {
         lights = FindObjectsOfType<LevelSelect>();
         startIntensity = light.intensity;
         startingRange = light.range;
-        Debug.Log(startIntensity);
         if (!isDefault)
             light.intensity = 0;
         else
@@ -28,6 +27,7 @@ public class LevelSelect : MonoBehaviour {
             chosenLight = light;
             levelChoice = MyLevel;
         }
+        Debug.Log(levelChoice);
     }
 	
     public void OnHoverOverObject()
@@ -53,8 +53,7 @@ public class LevelSelect : MonoBehaviour {
         }
         else
         {
-            Debug.Log(light.name + "This is alskdhf;l");
-            light.intensity = startIntensity;
+           light.intensity = startIntensity;
            light.range = startingRange;
         }
             
@@ -83,7 +82,6 @@ public class LevelSelect : MonoBehaviour {
         float intensityMin= 0;
         float rangeMax = 4;
         float rangeMin = 0;
-        Debug.Log(light.name + "  " + LightOrDark);
         light.intensity = Mathf.Clamp(light.intensity + (LightOrDark * Time.deltaTime),0,intensityMax);
         light.range = Mathf.Clamp(light.range + (LightOrDark * Time.deltaTime), rangeMin, rangeMax);
         if (light.intensity == intensityMax || light.intensity == intensityMin)

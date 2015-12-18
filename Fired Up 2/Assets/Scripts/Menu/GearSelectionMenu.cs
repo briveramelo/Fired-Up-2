@@ -27,7 +27,7 @@ public class GearSelectionMenu : MonoBehaviour {
     public static int SonicQuantity;
     public static int KBombQuantity;
     public static int BlackholeQuantity;
-
+    int numberOfStartingPoints;
     TextMesh textMesh;
     BoxCollider boxCollider = null;
     GearSelectionMenu[] allGearQuatities = new GearSelectionMenu[35];
@@ -82,9 +82,10 @@ public class GearSelectionMenu : MonoBehaviour {
             {
                 SonicThresholdValue = ThresholdValue;
             }
-            pointRemaining = 30;
+
         }
-            
+        pointRemaining = 90;
+        numberOfStartingPoints = pointRemaining;
     }
 	void Start () {
         textMesh = this.GetComponent<TextMesh>();
@@ -183,8 +184,6 @@ public class GearSelectionMenu : MonoBehaviour {
     }
     public void OnHoldForEnoughTime()
     {
-        Debug.Log("1Remaining Points" + pointRemaining);
-            Debug.Log("Quantity" + quantity + "Cost" + cost);
             pointRemaining -= (quantity * cost);
         for (int i = 0; i < otherQuantitiesOfThisGear.Count; i++)
         {
@@ -192,10 +191,8 @@ public class GearSelectionMenu : MonoBehaviour {
             GearSelectionMenu temp = otherQuantitiesOfThisGear[i];
             if (temp != this)
             {
-                Debug.Log("2Remaining Points" + pointRemaining);
                 if (temp.isSelected == true)
                     pointRemaining += (temp.quantity * temp.cost);
-                Debug.Log("3Remaining Points" + pointRemaining);
                 temp.isSelected = false;
                 temp.checkCurrentState();
             }
@@ -219,9 +216,9 @@ public class GearSelectionMenu : MonoBehaviour {
     public void checkCurrentState()
     {
 
-         if (isSelected)
+        if (isSelected)
             isSelectedQuantity();
-         else if (((ThresholdValue > pointRemaining) || ((cost * quantity) > pointRemaining)) && quantity != 0 && !isLessThenCurrentlySelected())
+        else if (((ThresholdValue > numberOfStartingPoints) || ((cost * quantity) > (pointRemaining + selectedQuantityInGear()))) && quantity != 0 && !isLessThenCurrentlySelected())
             DisableSelection();
         else
             EnableSelection();
@@ -234,5 +231,14 @@ public class GearSelectionMenu : MonoBehaviour {
                 return true;
         }
         return false;
+    }
+    public int selectedQuantityInGear()
+    {
+        for (int i = 0; i < otherQuantitiesOfThisGear.Count; i++)
+        {
+            if (otherQuantitiesOfThisGear[i].isSelected)
+                return otherQuantitiesOfThisGear[i].quantity * otherQuantitiesOfThisGear[i].cost;
+        }
+        return 0;
     }
 }

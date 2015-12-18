@@ -17,10 +17,11 @@ public class Resilience : ScoreType {
 
    
     protected override int CalculateScore() {
-        damageDeathRatio = DamageTracker.DamageTaken / DamageTracker.LivesLost;
         if (DamageTracker.LivesLost == 0)
             return maxPoints;
-        else
+        else {
+            damageDeathRatio = DamageTracker.DamageTaken / DamageTracker.LivesLost;
             return Mathf.Clamp(pointRiseRate * damageDeathRatio, 0, maxPoints);
+        }
     }
 }
