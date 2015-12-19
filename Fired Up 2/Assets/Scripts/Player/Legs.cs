@@ -17,13 +17,13 @@ public class Legs : MonoBehaviour {
     private bool isSquatting = false;
     private bool isMidSquat = false;
     [SerializeField, Range (0,0.5f)]  private float squatSpeed = 0.03f;
-    private float standingMaxSpeed = 5f;
-    private float squattingMaxSpeed = 3f;
+    private float standingMaxSpeed = 3f;
+    private float squattingMaxSpeed = 2f;
 
     void Awake () {
 		maxSpeed = standingMaxSpeed;
 		minAxisInput = 0.15f;
-		moveForce = .25f;
+		moveForce = .2f;
         FireFighter.playerTransform = transform.root;
 	}
 
