@@ -7,7 +7,17 @@ public class SafetyZone : MonoBehaviour {
     [SerializeField] private GameObject finishLevel;
     [SerializeField] private GameObject AToLeave;
     public bool allCleared;
-
+    Light light;
+    void Start()
+    {
+        light = gameObject.GetComponent<Light>();
+        light.enabled = false;
+    }
+    void Update()
+    {
+        if (allCleared)
+            light.enabled = true;
+    }
     void OnTriggerEnter(Collider col) {
         if (col.gameObject.layer == Layers.People.NPC) {
             NPC_Legs npcLegs = col.GetComponent<NPC_Legs>();
