@@ -5,6 +5,8 @@ using FU;
 public class SonicPulse : MonoBehaviour {
     [SerializeField] Rigidbody pulseBody;
     private float pulseSpeed =20f;
+    private float extinguishedTime=2f;
+
 
     public void Launch(Vector3 launchDirection) {
         pulseBody.velocity = launchDirection * pulseSpeed;
@@ -15,7 +17,7 @@ public class SonicPulse : MonoBehaviour {
     void OnTriggerEnter(Collider col){
         if (LayerMaskExtensions.IsInLayerMask(col.gameObject, Layers.LayerMasks.allFires)
             && CompareTag(col.gameObject.tag))
-            col.GetComponent<FireSpread>().ExtinguishFire();
+            col.GetComponent<FireSpread>().ExtinguishFire(extinguishedTime);
     }
 
     IEnumerator Pulse() {

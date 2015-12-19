@@ -1,0 +1,137 @@
+# WaveFront OBJ - Mtl file exported by LightRay3D
+# faun3000.mtl
+# Num Materials: 19
+
+newmtl glassf
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\glassf.tga
+
+newmtl glasst
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\glasst.tga
+
+newmtl alpha1
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\alpha1.tga
+
+newmtl auspuff
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\auspuff.jpg
+
+newmtl kabadach
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\kabd.jpg
+
+newmtl kabi
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\kabi.tga
+
+newmtl kaba
+Ka 0.498039 0.498039 0.498039
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\kaba.jpg
+
+newmtl bumber
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\bumber.jpg
+
+newmtl alpha2
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\alpha2.tga
+
+newmtl wefer
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\werfer.tga
+
+newmtl zeug
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\geraete.tga
+
+newmtl radp
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\radp.tga
+
+newmtl radf
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\radf.tga
+
+newmtl keile
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\keile.jpg
+
+newmtl details
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\details.tga
+
+newmtl tank
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\tank.jpg
+
+newmtl licht
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\licht.tga
+
+newmtl rahmen
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\rahmen1.jpg
+
+newmtl Mat_1
+Ka 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 781.250000
+map_Kd G:\spiele\mohaa\model_entwurf\BWMOD_Franziska\faun3000\flagge.jpg
+

@@ -4,11 +4,12 @@ using FU;
 
 public abstract class DangerZone : MonoBehaviour {
 
-    private bool hasZoneBeenTriggered;
+    public bool hasZoneBeenTriggered;
     public bool HasZoneBeenTriggered { get { return hasZoneBeenTriggered; } }
 
     void OnTriggerEnter(Collider col) {
         if (col.gameObject.layer == Layers.Rooms.roomLocator && !hasZoneBeenTriggered) {
+            Debug.Log("dangerZOOONE");
             hasZoneBeenTriggered = true;
             TriggerZone();
         }

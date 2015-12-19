@@ -22,18 +22,18 @@ public class GrenadeTosser : Inventory {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetAxisRaw (Controls.FightFire)>=deadZone && gearInventory[CurrentGear]>0 &&
-		    (CurrentGear == GearEnum.K_Bomb || CurrentGear == GearEnum.BlackDeath) &&
+		if (Input.GetAxisRaw (Controls.ThrowGrenade)>=deadZone && GearInventory[CurrentGrenade] >0 &&
+		    (CurrentGrenade == Gear.K_Bomb || CurrentGrenade == Gear.BlackDeath) &&
 		    canThrowGrenade && lastAxis<deadZone){
 
 			StartCoroutine (ThrowThing());
 		}
-        lastAxis = Input.GetAxisRaw(Controls.FightFire);
+        lastAxis = Input.GetAxisRaw(Controls.ThrowGrenade);
     }
 
 	IEnumerator ThrowThing(){
-		GameObject objectToSpawn = CurrentGear == GearEnum.K_Bomb ? k_Bomb : blackDeath;
-        UpdateAmmo(CurrentGear, -1);
+		GameObject objectToSpawn = CurrentGrenade == Gear.K_Bomb ? k_Bomb : blackDeath;
+        UpdateAmmo(CurrentGrenade, -1);
         canThrowGrenade = false;
 		GameObject grenade = Instantiate(objectToSpawn, transform.position, Quaternion.identity) as GameObject;
 		grenade.GetComponentInChildren<Rigidbody>().AddForce(transform.forward * throwForce);

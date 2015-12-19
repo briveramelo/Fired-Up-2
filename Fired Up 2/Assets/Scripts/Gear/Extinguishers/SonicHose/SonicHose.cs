@@ -8,15 +8,17 @@ public class SonicHose : HandHeldExtinguisher {
     public static SonicHose Instance;
 
     [SerializeField] private GameObject sonicPulse;
+    [SerializeField] private AudioSource chargePlayer;
     private float rechargeTime;
+    private bool isCharging;
 
     protected override void Awake() {
         base.Awake();
         Instance = this;
-        rechargeTime = 1f;
+        rechargeTime = .75f;
         minPercentToUse = 1f;
+        percentFull = 1f;
     }
-
 
     public float BatteryPower{
         get { return percentFull; }
@@ -28,27 +30,37 @@ public class SonicHose : HandHeldExtinguisher {
     }
 
     protected override IEnumerator Use(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Engage);
-        mySound.Play();
-       
-        BatteryPower = 0f;
-        SonicPulse sonicPulseScript = (Instantiate(sonicPulse, transform.position, Quaternion.Euler (90f,transform.root.rotation.eulerAngles.y,0f)) as GameObject).GetComponent<SonicPulse>();
-        sonicPulseScript.Launch(transform.up);
+        if (!isCharging){
+            SonicPulse sonicPulseScript = (Instantiate(sonicPulse, transform.position, Quaternion.identity) as GameObject).GetComponent<SonicPulse>();
+            sonicPulseScript.transform.parent = transform;
+            sonicPulseScript.transform.localRotation = Quaternion.identity;
+            sonicPulseScript.transform.parent = null;
+            sonicPulseScript.Launch(transform.up);
+            BlastHose();
+            DeActivateHose();
+        }
+        yield return StartCoroutine(Charge());
+    }
 
-        DeActivateHose();
-        StartCoroutine(Recharge());
-        yield return null;
+    void BlastHose() {
+        myAnimator.SetInteger("AnimState", (int)HoseState.Engage);
+        mySound.Play();
+        BatteryPower = 0f;
     }
 
     protected override void DeActivateHose(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Idle);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Idle);
     }
 
-        IEnumerator Recharge() {
+    IEnumerator Charge() {
+        isCharging = true;
+        chargePlayer.Play();
         while (BatteryPower < 1f){
             BatteryPower += Time.deltaTime / rechargeTime;
             yield return null;
         }
+        chargePlayer.Stop();
         BatteryPower = 1f;
+        isCharging = false;
     }
 }

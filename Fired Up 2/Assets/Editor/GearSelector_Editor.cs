@@ -9,13 +9,11 @@ public class GearSelector_UI_Editor : Editor {
     public SerializedProperty
         UIMovementAnimator;
 
-    void OnEnable()
-    {
+    void OnEnable(){
         UIMovementAnimator = serializedObject.FindProperty("UIMovementAnimator");
     }
 
-    public override void OnInspectorGUI()
-    {
+    public override void OnInspectorGUI(){
         serializedObject.Update();
         EditorGUILayout.PropertyField(UIMovementAnimator);
         serializedObject.ApplyModifiedProperties();

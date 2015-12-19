@@ -5,21 +5,23 @@ using System.Collections.Generic;
 
 public abstract class HandHeldExtinguisher : MonoBehaviour {
 
-    [SerializeField] protected GearEnum MyGear;
+    [SerializeField] protected Gear MyGear;
     [SerializeField] protected Animator myAnimator;
     [SerializeField] protected Collider myCollider;
     [SerializeField] protected AudioSource mySound;
 
-    protected GearEnum LastGear;
+    protected Gear LastGear;
     protected float percentFull;
     protected float mySoundClipLength;
     protected float timeToExtinguish;
-    public List<Collider> fires;
+    private List<Collider> fires;
     protected float minPercentToUse;
     float lastAxis;
     float deadZone;
+    protected float extinguishedTime;
 
     protected virtual void Awake(){
+        extinguishedTime = 30f;
         mySoundClipLength = mySound.clip.length;
         timeToExtinguish = 0.5f;
         percentFull = 1f;
@@ -29,28 +31,28 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
     }
 
     protected virtual void Update(){
-        if (Inventory.CurrentGear == MyGear){
+        if (Inventory.CurrentHose == MyGear){
             if (LastGear != MyGear)
                 Equip();
-            if (Input.GetAxisRaw(Controls.FightFire) > deadZone && percentFull >= minPercentToUse && lastAxis<= deadZone)
+            if (Input.GetAxisRaw(Controls.UseHose) > deadZone && percentFull >= minPercentToUse && lastAxis<= deadZone)
                 StartCoroutine(Use());
         }
-        else if (LastGear == MyGear && Inventory.CurrentGear != MyGear)
+        else if (LastGear == MyGear && Inventory.CurrentHose != MyGear)
             StartCoroutine(PutAway());
 
-        LastGear = Inventory.CurrentGear;
-        lastAxis = Input.GetAxisRaw(Controls.FightFire);
+        LastGear = Inventory.CurrentHose;
+        lastAxis = Input.GetAxisRaw(Controls.UseHose);
     }
 
     protected virtual void Equip(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Equip);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Equip);
     }
 
     protected virtual IEnumerator Use(){
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Engage);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Engage);
         myCollider.enabled = true;
         mySound.Play();
-        while (Input.GetAxisRaw(Controls.FightFire)>0.3f && Inventory.CurrentGear == MyGear && percentFull > 0f){
+        while (Input.GetAxisRaw(Controls.UseHose) >0.3f && Inventory.CurrentHose == MyGear && percentFull > 0f){
             percentFull -= Time.deltaTime / mySoundClipLength;
             yield return null;
         }
@@ -59,14 +61,14 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
 
     protected virtual void DeActivateHose(){
         mySound.Stop();
-        myAnimator.SetInteger("AnimState", (int)HoseStates.Idle);
+        myAnimator.SetInteger("AnimState", (int)HoseState.Idle);
         myCollider.enabled = false;
         if (fires.Count > 0) fires.Clear();
     }
 
     protected virtual IEnumerator PutAway(){
         yield return null;
-        myAnimator.SetInteger("AnimState", (int)HoseStates.PutAway);
+        myAnimator.SetInteger("AnimState", (int)HoseState.PutAway);
     }
 
     protected virtual void OnTriggerEnter(Collider col){
@@ -84,7 +86,7 @@ public abstract class HandHeldExtinguisher : MonoBehaviour {
         }
         if (fires.Contains(col)){
             FireSpread fireSpreadScript = col.GetComponent<FireSpread>();
-            fireSpreadScript.ExtinguishFire();
+            fireSpreadScript.ExtinguishFire(extinguishedTime);
             fires.Remove(col);
         }
     }

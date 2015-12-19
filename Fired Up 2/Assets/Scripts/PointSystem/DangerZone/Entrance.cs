@@ -29,7 +29,8 @@ public class Entrance : DangerZone {
         int points = CalculateConfidence();
         Confidence.Instance.ConfidencePoints += points;
         PointDisplay pointsToDisplay = (Instantiate(pointDisplayGameObject, exit.transform.position, exit.transform.LookAtPlayer(exit.transform.position)) as GameObject).GetComponent<PointDisplay>();
-        pointsToDisplay.DisplayPoints(points, ScoreType.Confidence, true);
+        pointsToDisplay.DisplayPoints(points, Score.Confidence, true);
+        UnityEngine.Debug.Log("timer stopped");
     }
 
     private int CalculateConfidence() {

@@ -76,11 +76,6 @@ public class NPCCollector : MonoBehaviour {
             npcLight.HighlightOnHover();            
     }
 
-    void OnDrawGizmos() {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * communicationDistance);
-    }
-
     void TellToFollowMe(NPC_Legs npcLegs) {
         npcLegs.ToggleFollow();
     }
