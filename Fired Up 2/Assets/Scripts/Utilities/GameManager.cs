@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour {
         else if (Instance != this) {
             Destroy(gameObject);
         }
+
+        SetLevel(Level.Level_2);
 	}
 
     public void SetInventory(Gear GearType, int quantity) {

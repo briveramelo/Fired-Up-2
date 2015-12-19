@@ -88,6 +88,9 @@ public class NPC_Legs : MonoBehaviour {
 
     public void EnterSafeZone(Vector3 zoneCenter) {
         StopAllCoroutines();
+        if (isBeingCarried) {
+            DropOff(.3f);
+        }
         myAgent.destination = zoneCenter;
         isHomeSafe = true;
     }

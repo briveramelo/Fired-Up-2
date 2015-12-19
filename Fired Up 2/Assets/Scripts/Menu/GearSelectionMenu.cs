@@ -1,244 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GearSelectionMenu : MonoBehaviour {
-    public bool isThresholdValue;
-    public bool isCostValue;
-    public bool isSelected;
-   // public enum Gear {Co2,Powder,Sonic,IceGrenade,BlackHole};
-    public Gear gear;
-    public int cost;
-    public int ThresholdValue;
-    public int quantity;
-    static int pointRemaining;
-    static int CO2costValue;
-    static int PowdercostValue;
-    static int SoniccostValue;
-    static int IceGrenadecostValue;
-    static int BlackHolecostValue;
-    static int CO2ThresholdValue;
-    static int PowderThresholdValue;
-    static int SonicThresholdValue;
-    static int IceGrenadeThresholdValue;
-    static int BlackHoleThresholdValue;
-    public static int PowderQuantity;
-    public static int CO2Quantity;
-    public static int SonicQuantity;
-    public static int KBombQuantity;
-    public static int BlackholeQuantity;
-    int numberOfStartingPoints;
-    TextMesh textMesh;
-    BoxCollider boxCollider = null;
-    GearSelectionMenu[] allGearQuatities = new GearSelectionMenu[35];
-    List<GearSelectionMenu> otherQuantitiesOfThisGear = new List<GearSelectionMenu>();
-    public TextMesh remainingPointsMesh;
-    // Use this for initialization
-    void Awake()
-    {
-        if (isCostValue)
-        {
-            if (gear == Gear.BlackDeath)
-            {
-                BlackHolecostValue = cost;
-            }
-            else if (gear == Gear.CO2)
-            {
-                CO2costValue = cost;
-            }
-            else if (gear == Gear.K_Bomb)
-            {
-                IceGrenadecostValue = cost;
-            }
-            else if (gear == Gear.Powder)
-            {
-                PowdercostValue = cost;
-            }
-            else if (gear == Gear.SonicHose)
-            {
-                SoniccostValue = cost;
-            }
 
-        }
-        else if (isThresholdValue)
-        {
-            if (gear == Gear.BlackDeath)
-            {
-                BlackHoleThresholdValue = ThresholdValue;
-            }
-            else if (gear == Gear.CO2)
-            {
-                CO2ThresholdValue = ThresholdValue;
-            }
-            else if (gear == Gear.K_Bomb)
-            {
-                IceGrenadeThresholdValue = ThresholdValue;
-            }
-            else if (gear == Gear.Powder)
-            {
-                PowderThresholdValue = ThresholdValue;
-            }
-            else if (gear == Gear.SonicHose)
-            {
-                SonicThresholdValue = ThresholdValue;
-            }
+    public static GearSelectionMenu Instance;
 
-        }
-        pointRemaining = 90;
-        numberOfStartingPoints = pointRemaining;
-    }
-	void Start () {
-        textMesh = this.GetComponent<TextMesh>();
-        if (gear == Gear.BlackDeath)
-        {
-            ThresholdValue = BlackHoleThresholdValue;
-            cost = BlackHolecostValue;
-        }
-        else if (gear == Gear.CO2)
-        {
-            ThresholdValue = CO2ThresholdValue;
-            cost = CO2costValue;
-        }
-        else if (gear == Gear.K_Bomb)
-        {
-            ThresholdValue = IceGrenadeThresholdValue;
-            cost = IceGrenadecostValue;
-        }
-        else if (gear == Gear.Powder)
-        {
-            ThresholdValue = PowderThresholdValue;
-            cost = PowdercostValue;
-        }
-        else if (gear == Gear.SonicHose)
-        {
-            ThresholdValue = SonicThresholdValue;
-            cost = SoniccostValue;
-        }
-        if (gameObject.GetComponent<BoxCollider>() != null)
-            boxCollider = gameObject.GetComponent<BoxCollider>();
-        if ((ThresholdValue > pointRemaining) || ((cost * quantity) > pointRemaining))
-            DisableSelection();
-        if (isSelected)
-            isSelectedQuantity();
-        allGearQuatities = FindObjectsOfType<GearSelectionMenu>();
-        FindGearOfMyType();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-    void FindGearOfMyType()
-    {
-        for (int i = 0; i < allGearQuatities.Length; i++)
-        {
-            if (allGearQuatities[i].gear.Equals(gear))
-                otherQuantitiesOfThisGear.Add(allGearQuatities[i]);
-        }
-    }
-    void DisableSelection()
-    {
-        textMesh.color = Color.grey;
-        if (boxCollider != null)
-            boxCollider.enabled = false;
-    }
-    void EnableSelection()
-    {
-        textMesh.color = Color.white;
-        if (boxCollider != null)
-            boxCollider.enabled = true;
-    }
-    void isSelectedQuantity()
-    {
-        isSelected = true;
-        textMesh.color = Color.blue;
-        boxCollider.enabled = false;
-        if (gear == Gear.BlackDeath)
-        {
-            BlackholeQuantity = quantity;
-        }
-        else if (gear == Gear.CO2)
-        {
-            CO2Quantity = quantity;
-        }
-        else if (gear == Gear.K_Bomb)
-        {
-            KBombQuantity = quantity;
-        }
-        else if (gear == Gear.Powder)
-        {
-            PowderQuantity = quantity;
-        }
-        else if (gear == Gear.SonicHose)
-        {
-            SonicQuantity = quantity;
-        }
-    }
-    public void OnHoverOverObject()
-    {
-        textMesh.color = Color.cyan;
-    }
-    public void OnHoverExitObject()
-    {
-        checkCurrentState();
-    }
-    public void OnHoldForEnoughTime()
-    {
-            pointRemaining -= (quantity * cost);
-        for (int i = 0; i < otherQuantitiesOfThisGear.Count; i++)
-        {
-            
-            GearSelectionMenu temp = otherQuantitiesOfThisGear[i];
-            if (temp != this)
-            {
-                if (temp.isSelected == true)
-                    pointRemaining += (temp.quantity * temp.cost);
-                temp.isSelected = false;
-                temp.checkCurrentState();
-            }
-            
-        }
-        
-        isSelectedQuantity();
-        checkAllCurrentState();
-        remainingPointsMesh.text = pointRemaining.ToString();
-    }
-    void checkAllCurrentState()
-    {
-        for (int i = 0; i < allGearQuatities.Length; i++)
-        {
-            if (allGearQuatities[i] != null)
-            {
-                allGearQuatities[i].checkCurrentState();
-            }
-        }
-    }
-    public void checkCurrentState()
-    {
+    public static int PowderQuantity_Selected;
+    public static int CO2Quantity_Selected;
+    public static int KBombQuantity_Selected;
+    public static int BlackholeQuantity_Selected;
 
-        if (isSelected)
-            isSelectedQuantity();
-        else if (((ThresholdValue > numberOfStartingPoints) || ((cost * quantity) > (pointRemaining + selectedQuantityInGear()))) && quantity != 0 && !isLessThenCurrentlySelected())
-            DisableSelection();
-        else
-            EnableSelection();
+    [SerializeField] private TextMesh remainingPointsMesh;
+
+    [SerializeField] private int cO2_Cost;              public int CO2_Cost { get { return cO2_Cost; } }
+    [SerializeField] private int powder_Cost;           public int Powder_Cost { get { return powder_Cost; } }
+    [SerializeField] private int iceGrenade_Cost;       public int IceGrenade_Cost { get { return iceGrenade_Cost; } }
+    [SerializeField] private int blackHole_Cost;        public int BlackHole_Cost { get { return blackHole_Cost; } }
+
+    [SerializeField] private int cO2_Threshold;         public int CO2_Threshold { get { return cO2_Threshold; } }
+    [SerializeField] private int powder_Threshold;      public int Powder_Threshold { get { return powder_Threshold; } }
+    [SerializeField] private int iceGrenade_Threshold;  public int IceGrenade_Threshold { get { return iceGrenade_Threshold; } }
+    [SerializeField] private int blackHole_Threshold;   public int BlackHole_Threshold { get { return blackHole_Threshold; } }
+
+    private int pointsRemaining;    public int PointsRemaining { get { return pointsRemaining; } }
+    private int startingPoints { get { return 90; } }
+    List<GearMenuQuantity> allGearQuantities;
+
+    void Awake() {
+        Instance = this;
+        pointsRemaining = startingPoints;
+        allGearQuantities = FindObjectsOfType<GearMenuQuantity>().ToList();
     }
-    public bool isLessThenCurrentlySelected()
-    {
-        for (int i = 0; i < otherQuantitiesOfThisGear.Count; i++)
-        {
-            if (otherQuantitiesOfThisGear[i].isSelected && otherQuantitiesOfThisGear[i].quantity > quantity)
-                return true;
+
+    public void SetGearQuantity(Gear GearType, int quantity) {
+        switch (GearType) {
+            case Gear.BlackDeath:   BlackholeQuantity_Selected = quantity; break;
+            case Gear.CO2:          CO2Quantity_Selected =       quantity; break;
+            case Gear.K_Bomb:       KBombQuantity_Selected =     quantity; break;
+            case Gear.Powder:       PowderQuantity_Selected =    quantity; break;
         }
-        return false;
+        ReCalculatePointsRemaining();
     }
-    public int selectedQuantityInGear()
-    {
-        for (int i = 0; i < otherQuantitiesOfThisGear.Count; i++)
-        {
-            if (otherQuantitiesOfThisGear[i].isSelected)
-                return otherQuantitiesOfThisGear[i].quantity * otherQuantitiesOfThisGear[i].cost;
-        }
-        return 0;
+
+    public void ReCalculatePointsRemaining() {
+        pointsRemaining = startingPoints;
+        allGearQuantities.ForEach(gearQuantity => pointsRemaining -= gearQuantity.isSelected ? gearQuantity.NetCost : 0);
+        remainingPointsMesh.text = pointsRemaining.ToString();
+    }
+
+    public void SetAllGearQuantityStates() {
+        allGearQuantities.ForEach(gearQuantity => gearQuantity.SetCurrentState());
     }
 }

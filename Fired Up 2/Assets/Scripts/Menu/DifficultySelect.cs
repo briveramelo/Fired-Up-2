@@ -1,43 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-public class DifficultySelect : MonoBehaviour {
-   // public enum difficultyPossibilies { Easy, Normal, Hard };
-    public static Difficulty difficultyChoice;
+public class DifficultySelect : MonoBehaviour, IRiftSelectable {
+
+    public static Difficulty DifficultyChoice;
     public Difficulty MyDifficulty;
-    TextMesh text;
-    DifficultySelect[] difficulties = new DifficultySelect[3];
-    Color selectedColor = Color.cyan;
+
+    TextMesh myText;
+    List<DifficultySelect> otherDifficultySelectScripts;
+
     Color defaultColor = Color.white;
-    Color chosenColor = Color.blue;
-    void Start()
-    {
-        difficultyChoice = Difficulty.Easy;
-        text = this.GetComponent<TextMesh>();
-        difficulties = FindObjectsOfType<DifficultySelect>();
-        if (MyDifficulty == difficultyChoice)
-            text.color = chosenColor;
+    Color highlightedColor = Color.cyan;
+    Color selectedColor = Color.blue;
 
+    void Start(){
+        myText = GetComponent<TextMesh>();
+        otherDifficultySelectScripts = FindObjectsOfType<DifficultySelect>().Where(difficultyScript => difficultyScript != this).ToList();
+        if (!IsSelectable())
+            myText.color = selectedColor;
     }
 
-    public void OnHoverOverObject()
-    {
-        text.color = selectedColor;
+    public void OnHoverOverObject(){
+        if (IsSelectable())
+            myText.color = highlightedColor;
     }
-    public void OnHoverExitObject()
-    {
-        if (MyDifficulty != difficultyChoice)
-            text.color = defaultColor;
-        else if (MyDifficulty == difficultyChoice)
-            text.color = chosenColor;
+
+    public void OnHoverExitObject(){
+        if (IsSelectable())
+            myText.color = defaultColor;
     }
-    public void OnHoldForEnoughTime()
-    {
-        for (int i = 0; i < difficulties.Length; i++)
-        {
-            difficulties[i].text.color = defaultColor;
-        }
-        text.color = chosenColor;
-        difficultyChoice = MyDifficulty;
+
+    public void OnHoldForEnoughTime(){
+        otherDifficultySelectScripts.ForEach(difficultyScript => difficultyScript.myText.color = defaultColor);
+
+        myText.color = selectedColor;
+        DifficultyChoice = MyDifficulty;
+    }
+
+    public bool IsSelectable() {
+        return MyDifficulty != DifficultyChoice;
     }
 }
