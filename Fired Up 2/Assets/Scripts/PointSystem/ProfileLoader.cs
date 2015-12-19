@@ -17,13 +17,17 @@ public class ProfileLoader : MonoBehaviour {
         buttonProfiles = new List<ButtonClass>();
         yield return new WaitForSeconds(0.1f);
         LoadProfiles();
+
+        if (DataSaver.Instance.DataSaveFile.profiles == null){
+            NameInputHandler.Instance.isSelected = true;
+        }
     }
 
     public void LoadProfiles() {
-        if (DataSaver.Instance.DataSaveFile.playersLevelBests != null) {
+        if (DataSaver.Instance.DataSaveFile.profiles != null) {
             buttonProfiles.Clear();
             int i = 0;
-            foreach (PlayerInfo playerInfo in DataSaver.Instance.DataSaveFile.playersLevelBests.Keys) {
+            foreach (PlayerInfo playerInfo in DataSaver.Instance.DataSaveFile.profiles.Values) {
                 GameObject newButton = (Instantiate(FireFighterButton, transform.position, Quaternion.identity) as GameObject);
                 ButtonClass button = newButton.GetComponent<ButtonClass>();
                 if (i == 0)

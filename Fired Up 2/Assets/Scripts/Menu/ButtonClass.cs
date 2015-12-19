@@ -14,9 +14,9 @@ public class ButtonClass : MonoBehaviour {
     private Color deselectedColor = Color.white;
 
     public void SetPlayerInfo(PlayerInfo incomingPlayerInfo) {
-        Name.text = incomingPlayerInfo._playerName;
-        Rank.text = incomingPlayerInfo._myRank.ToString();
-        TotalBest.text = incomingPlayerInfo._totalBest.ToString();
+        Name.text = incomingPlayerInfo.playerName;
+        Rank.text = incomingPlayerInfo.myRank.ToString();
+        TotalBest.text = incomingPlayerInfo.totalBest.ToString();
         myPlayerInfo = incomingPlayerInfo;
     }
 

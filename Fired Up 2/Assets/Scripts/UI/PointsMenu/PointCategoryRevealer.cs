@@ -38,7 +38,7 @@ public class PointCategoryRevealer : MonoBehaviour {
 
     IEnumerator Start() {
         yield return null;
-            levelName.text = GameManager.Instance.CurrentLevel.ToString();
+            levelName.text = GameManager.Instance.PreviousLevel.ToString();
         yield return StartCoroutine(DisplayAllSubtotals());
         yield return StartCoroutine(WaitForInput());
             HidePoints();
@@ -59,7 +59,7 @@ public class PointCategoryRevealer : MonoBehaviour {
         textToActivate.SetActive(true);
 
         int pointDisplay = 0;
-        int score = ScoreBoard.Instance.GetScore(ScoreToReturn) * 10000 + 1337;
+        int score = ScoreBoard.Instance.GetScore(ScoreToReturn);
         int flipRate = Mathf.CeilToInt(score / (timeToFlipPoints * 60));
         while (!Input.GetButtonDown(Controls.Jump) && pointDisplay < score){
             pointDisplay += flipRate;

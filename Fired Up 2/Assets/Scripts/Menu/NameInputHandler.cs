@@ -6,10 +6,12 @@ using FU;
 
 public class NameInputHandler : MonoBehaviour {
 
+    public static NameInputHandler Instance;
     [SerializeField] private InputField inputField;
     /*[HideInInspector]*/ public bool isSelected;
 
     void Awake() {
+        Instance = this;
         Controls.SetControls();
     }
 

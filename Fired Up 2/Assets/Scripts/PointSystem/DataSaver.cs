@@ -12,7 +12,6 @@ public class DataSaver : MonoBehaviour {
     public static DataSaver Instance;
     private DataSave dataSaveFile;      public DataSave DataSaveFile { get { return dataSaveFile; } }
 
-    // Use this for initialization
     void Awake () {
         Instance = this;
         //ClearData();
@@ -34,12 +33,14 @@ public class DataSaver : MonoBehaviour {
 	}
 
     public void SaveLevelData(LevelSaveData newLevelSaveData){
-        PlayerInfo playerInfo = newLevelSaveData.playerInfo;
+        string playerName = newLevelSaveData.playerInfo.playerName;
         Difficulty difficulty = newLevelSaveData.levelDifficulty;
         Level ThisLevel = newLevelSaveData.thisLevel;
-        
-        if (newLevelSaveData.pointTotal > dataSaveFile.playersLevelBests[playerInfo][ThisLevel][difficulty].pointTotal) {
-            dataSaveFile.playersLevelBests[playerInfo][ThisLevel][difficulty] = newLevelSaveData;
+
+        Debug.Log(newLevelSaveData.pointTotal);
+
+        if (newLevelSaveData.pointTotal > dataSaveFile.profiles[playerName].levelBests[ThisLevel][difficulty].pointTotal) {
+            dataSaveFile.profiles[playerName].levelBests[ThisLevel][difficulty] = newLevelSaveData;
 		    Save();
         }
 	}
@@ -50,14 +51,14 @@ public class DataSaver : MonoBehaviour {
 
 		bf.Serialize (fileStream, dataSaveFile);
 		fileStream.Close ();
-	}
+    }
 
-    public void CreateNewPlayer(string PlayerName) {
-        if (dataSaveFile.playersLevelBests == null) {
-            dataSaveFile = new DataSave(PlayerName);
+    public void CreateNewPlayer(string playerName) {
+        if (dataSaveFile.profiles == null) {
+            dataSaveFile = new DataSave(playerName);
         }
         else {
-            dataSaveFile.AddNewPlayer(PlayerName);
+            dataSaveFile.AddNewPlayer(playerName);
         }
         Save();
     }
@@ -66,32 +67,22 @@ public class DataSaver : MonoBehaviour {
 
 [Serializable]
 public struct DataSave{
-    public Dictionary<PlayerInfo, Dictionary<Level, Dictionary<Difficulty, LevelSaveData>>> playersLevelBests;
-
+    public Dictionary<string, PlayerInfo> profiles;
+    
     public DataSave(string playerName) {
-        playersLevelBests = new Dictionary<PlayerInfo, Dictionary<Level, Dictionary<Difficulty, LevelSaveData>>>();
+        profiles = new Dictionary<string, PlayerInfo>();
         AddNewPlayer(playerName);
     }
 
-    public void AddNewPlayer(string playerName) {
-        Dictionary<Level, Dictionary<Difficulty, LevelSaveData>> newLevelDifficultyBests = new Dictionary<Level, Dictionary<Difficulty, LevelSaveData>>();
-        LevelSaveData emptyLevelSaveData = new LevelSaveData();
-
-        foreach (Level levelEnum in Enum.GetValues(typeof(Level))){
-            Dictionary<Difficulty, LevelSaveData> newDifficultyBests = new Dictionary<Difficulty, LevelSaveData>();
-            foreach (Difficulty difficultyEnum in Enum.GetValues(typeof(Difficulty))) {
-                newDifficultyBests.Add(difficultyEnum, emptyLevelSaveData);
-            }
-            newLevelDifficultyBests.Add(levelEnum, newDifficultyBests);
-        }
-
-        PlayerInfo newPlayerInfo = new PlayerInfo(playerName);
-        playersLevelBests.Add(newPlayerInfo, newLevelDifficultyBests);
+    public void AddNewPlayer(string newPlayerName) {
+        PlayerInfo newPlayerInfo = new PlayerInfo(newPlayerName);
+        profiles.Add(newPlayerName, newPlayerInfo);
+        Debug.Log(newPlayerName);
     }
 
     public static bool IsRepeatName(string newPlayerName) {
-        if (DataSaver.Instance.DataSaveFile.playersLevelBests != null) {
-            return DataSaver.Instance.DataSaveFile.playersLevelBests.Any(playerLevelBest => newPlayerName == playerLevelBest.Key._playerName);
+        if (DataSaver.Instance.DataSaveFile.profiles != null) {
+            return DataSaver.Instance.DataSaveFile.profiles.Any(profile => newPlayerName == profile.Key);
         }
         else {
             return false;
