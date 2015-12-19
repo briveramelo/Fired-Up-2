@@ -11,16 +11,15 @@ public class ScoreBoard : MonoBehaviour {
         thisLevelSaveData = new LevelSaveData();
         thisLevelSaveData.thisLevel = GameManager.Instance.CurrentLevel;
         thisLevelSaveData.levelDifficulty = GameManager.Instance.LevelDifficulty;
+        thisLevelSaveData.playerInfo = GameManager.Instance.SelectedPlayerInfo;
 
-        foreach (Score SetupScore in Enum.GetValues(typeof(Score))) {
-            SetScore(SetupScore, (int)SetupScore);
+        if (GameManager.Instance.CurrentLevel  == Level.PointScreen) {
+            thisLevelSaveData = GameManager.Instance.PreviousLevelSaveData;
         }
-
     }
 
     public void SetScore(Score ScoreToSet, int newSetScore) {
         switch (ScoreToSet) {
-            case Score.Combos:                  thisLevelSaveData.combos =                newSetScore;  break;
             case Score.Confidence:              thisLevelSaveData.confidence =            newSetScore;  break;
             case Score.Resilience:              thisLevelSaveData.resilience =            newSetScore;  break;
             case Score.TimeBonus:               thisLevelSaveData.timeBonus =             newSetScore;  break;
@@ -36,13 +35,13 @@ public class ScoreBoard : MonoBehaviour {
         }
     }
 
-    public void SaveToDataSaver() {
+    public void SaveScores() {
+        GameManager.Instance.PreviousLevelSaveData = thisLevelSaveData;
         DataSaver.Instance.SaveLevelData(thisLevelSaveData);
     }
 
     public int GetScore(Score ScoreToReturn) {
         switch (ScoreToReturn) {
-            case Score.Combos:                  return thisLevelSaveData.combos;
             case Score.Confidence:              return thisLevelSaveData.confidence;
             case Score.Resilience:              return thisLevelSaveData.resilience;
             case Score.TimeBonus:               return thisLevelSaveData.timeBonus;

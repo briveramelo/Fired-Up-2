@@ -14,6 +14,6 @@ public class ProblemSolving : ScoreType {
     
 
     protected override int CalculateScore() {
-        return 1;
+        return ProblemSolvingPoints;
     }
 }

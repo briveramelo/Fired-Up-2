@@ -10,7 +10,6 @@ public class SafetyZone : MonoBehaviour {
 
     void OnTriggerEnter(Collider col) {
         if (col.gameObject.layer == Layers.People.NPC) {
-            Debug.Log("InTheZone");
             NPC_Legs npcLegs = col.GetComponent<NPC_Legs>();
             Selectable_Light npcLight = col.GetComponent<Selectable_Light>();
             npcLegs.EnterSafeZone(transform.position);

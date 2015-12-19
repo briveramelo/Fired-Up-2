@@ -8,11 +8,14 @@ using UnityEngine.SceneManagement;
 
 public class ProfileSelector : MonoBehaviour {
 
+    public static ProfileSelector Instance;
+
     int selectedProfileIndex;
     float currentInput;
     float lastInput;
 
     void Awake() {
+        Instance = this;
         Controls.SetControls();
     }
 
@@ -54,7 +57,7 @@ public class ProfileSelector : MonoBehaviour {
         }
     }
 
-    void SelectProfile(ButtonClass selectedButton) {
+    public void SelectProfile(ButtonClass selectedButton) {
         GameManager.Instance.SetPlayerInfo(selectedButton.MyPlayerInfo);
         SceneManager.LoadScene((int)Level.LevelSelect);
     }

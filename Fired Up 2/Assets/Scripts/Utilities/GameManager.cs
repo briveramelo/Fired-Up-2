@@ -4,16 +4,18 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
+    public LevelSaveData PreviousLevelSaveData { get; set; }
 
-    private PlayerInfo selectedPlayer;  public PlayerInfo   SelectedPlayer  { get { return selectedPlayer; } }
-    private Level currentLevel;         public Level        CurrentLevel    { get { return currentLevel; } }
-    private Difficulty levelDifficulty; public Difficulty   LevelDifficulty { get { return levelDifficulty; } }
+    private PlayerInfo selectedPlayerInfo;  public PlayerInfo   SelectedPlayerInfo  { get { return selectedPlayerInfo; } }
+    private Level currentLevel;             public Level        CurrentLevel    { get { return currentLevel; } }
+    private Level previousLevel;            public Level        PreviousLevel { get { return previousLevel; } }
+    private Difficulty levelDifficulty;     public Difficulty   LevelDifficulty { get { return levelDifficulty; } }
 
-    private int sonicHoseQuantity;      public int SonicHoseQuantity { get { return sonicHoseQuantity; } }
-    private int c02Quantity;            public int C02Quantity { get { return c02Quantity; } }
-    private int powderQuantity;         public int PowderQuantity { get { return powderQuantity; } }
-    private int kBombQuantity;          public int KBombQuantity { get { return kBombQuantity; } }
-    private int blackDeathQuantity;     public int BlackDeathQuantity { get { return blackDeathQuantity; } }
+    private int sonicHoseQuantity;          public int SonicHoseQuantity { get { return sonicHoseQuantity; } }
+    private int c02Quantity;                public int C02Quantity { get { return c02Quantity; } }
+    private int powderQuantity;             public int PowderQuantity { get { return powderQuantity; } }
+    private int kBombQuantity;              public int KBombQuantity { get { return kBombQuantity; } }
+    private int blackDeathQuantity;         public int BlackDeathQuantity { get { return blackDeathQuantity; } }
 
     void Awake () {
         if (Instance == null){
@@ -24,8 +26,6 @@ public class GameManager : MonoBehaviour {
         else if (Instance != this) {
             Destroy(gameObject);
         }
-
-        SetLevel(Level.Level_2);
 	}
 
     public void SetInventory(Gear GearType, int quantity) {
@@ -38,8 +38,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void SetLevel(Level newLevel) {
-        currentLevel = newLevel;
+    public void OnLevelWasLoaded(int levelNum) {
+        previousLevel = currentLevel;
+        currentLevel = (Level)levelNum;
     }
 
     public void SetDifficulty(Difficulty newLevelDifficulty) {
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SetPlayerInfo(PlayerInfo playerInfo) {
-        selectedPlayer = playerInfo;
+        selectedPlayerInfo = playerInfo;
     }
 
 }
