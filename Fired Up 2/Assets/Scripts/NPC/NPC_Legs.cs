@@ -4,8 +4,10 @@ using FU;
 
 public class NPC_Legs : MonoBehaviour {
 
+
     [SerializeField] Rigidbody myBody;
     private bool isFollowingPlayer;
+    public Animator animFollow;
 
     private bool isBeingCarried;
     public bool IsBeingCarried { get { return isBeingCarried; } }
@@ -23,6 +25,14 @@ public class NPC_Legs : MonoBehaviour {
     private float brakeFactor = 0.75f;
     private float maxBrakeMultiplier = 2f;
     [SerializeField] private NavMeshAgent myAgent;
+
+    private enum AnimState
+    {
+        Coughing = 0,
+        Following = 1,
+
+
+    }
 
 
     public void ToggleFollow() {
@@ -59,13 +69,15 @@ public class NPC_Legs : MonoBehaviour {
             isBeingCarried = true;
             isBeingPickedUp = true;
             StartCoroutine(GetPickedUp());
+            transform.parent = FireFighter.playerShoulderTransform;
         }
     }
 
     private IEnumerator GetPickedUp() {
         float distanceAway = 10;
-        transform.parent = FireFighter.playerShoulderTransform;
+        
         myBody.isKinematic = true;
+        animFollow.SetInteger("AnimState", (int)AnimState.Following);
         while (NPCCollector.Instance.IsCarryingPlayer && distanceAway > 0.1f) {
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, Vector3.zero, pickUpSpeed);
             distanceAway = Vector3.Distance(transform.localPosition, Vector3.zero);
