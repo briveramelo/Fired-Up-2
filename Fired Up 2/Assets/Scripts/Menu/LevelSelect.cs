@@ -2,93 +2,47 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System.Linq;
 
-public class LevelSelect : MonoBehaviour {
-    public static int levelChoice;
-    int MyLevel;
-    public Level levelEnum;
-    Light light;
-    public static Light chosenLight;
-    float startIntensity;
-    public bool isDefault;
-    LevelSelect[] lights = new LevelSelect[5];
-    float startingRange;
-	// Use this for initialization
-	void Start () {
-        MyLevel = (int)levelEnum;
-        light = GetComponent<Light>();
-        lights = FindObjectsOfType<LevelSelect>();
-        startIntensity = light.intensity;
-        startingRange = light.range;
-        if (!isDefault)
-            light.intensity = 0;
-        else
-        {
-            chosenLight = light;
-            levelChoice = MyLevel;
-        }
-        Debug.Log(levelChoice);
-    }
-	
-    public void OnHoverOverObject()
-    {
-        light.intensity = startIntensity;
-        StartCoroutine(ChangeLight(1,light));
-        if (chosenLight != light)
-        {
-            StartCoroutine(ChangeLight(-.75f, chosenLight));
-        }
-        this.StopAllCoroutines();
-      
-    }
-    public void OnHoverExitObject()
-    {
-        this.StopAllCoroutines();
-        Debug.Log(levelChoice);
-        if (MyLevel != levelChoice)
-        {
+public class LevelSelect : MonoBehaviour, IRiftSelectable {
 
-            light.intensity = 0;
-            light.range = startingRange;
-        }
-        else
-        {
-           light.intensity = startIntensity;
-           light.range = startingRange;
-        }
-            
-    }
-    public void OnHoldForEnoughTime()
-    {
-        for (int i = 0; i < lights.Length; i++)
-        {
-            if (lights[i].MyLevel != MyLevel)
-            {
-                lights[i].light.intensity = 0;
-                light.range = startingRange;
-            }
-            
+    public static Level LevelChoice;
 
+    public Level MyLevel;
+    [SerializeField] private Light myLight;
+
+    private bool isBeingHoveredOver;
+
+    List<LevelSelect> otherLevelSelectScripts;
+
+    void Start() {
+        if (MyLevel == Level.Level_1) {
+            LevelChoice = MyLevel;
         }
-        //light.intensity = startIntensity;
-       // StartCoroutine(ChangeLight(1, light));
-        levelChoice = MyLevel;
-        chosenLight = light;
-        this.StopAllCoroutines();
-    }
-    public IEnumerator ChangeLight(float LightOrDark, Light light)
-    {
-        float intensityMax = 3;
-        float intensityMin= 0;
-        float rangeMax = 4;
-        float rangeMin = 0;
-        light.intensity = Mathf.Clamp(light.intensity + (LightOrDark * Time.deltaTime),0,intensityMax);
-        light.range = Mathf.Clamp(light.range + (LightOrDark * Time.deltaTime), rangeMin, rangeMax);
-        if (light.intensity == intensityMax || light.intensity == intensityMin)
-            light.intensity = startIntensity;
-        if (light.range == intensityMax || light.range == intensityMin)
-            light.range = startingRange;
-        yield return new WaitForSeconds(.1f);
+        
+        otherLevelSelectScripts = FindObjectsOfType<LevelSelect>().Where(levelScript => levelScript != this).ToList();
     }
 
+    public void OnHoverOverObject() {
+        if (!isBeingHoveredOver) {
+            myLight.enabled = true;
+            isBeingHoveredOver = true;
+        }
+    }
+
+    public void OnHoverExitObject() {
+        isBeingHoveredOver = false;
+        if (IsSelectable())
+            myLight.enabled = false;
+    }
+
+    public void OnHoldForEnoughTime() {
+        otherLevelSelectScripts.ForEach(levelSelectScript => levelSelectScript.myLight.enabled = false);
+        myLight.enabled = true;
+        LevelChoice = MyLevel;
+    }
+
+    public bool IsSelectable() {
+        return MyLevel != LevelChoice;
+    }
 }

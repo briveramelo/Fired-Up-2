@@ -2,104 +2,43 @@
 using System.Collections;
 
 public class OculusReticle : MonoBehaviour {
-    Renderer material;
+
+    [SerializeField] Renderer reticleRenderer;
     bool hasBeenCalled;
-	// Use this for initialization
+
+    public static float timeToSelect = 2.5f;
+    private float targetCutOff = 1f;
+    private float selectionRate;
+
 	void Start () {
-        material = GetComponent<Renderer>();
-        material.material.SetFloat("_Cutoff", .01f);
+        reticleRenderer.material.SetFloat("_Cutoff", .01f);
         hasBeenCalled = false;
+        selectionRate = targetCutOff / timeToSelect;
     }
 	
-
-    void OnTriggerStay(Collider col)
-    {
-        material.material.SetFloat("_Cutoff", material.material.GetFloat("_Cutoff") + .4f * Time.deltaTime);
-
-            if (col.gameObject.GetComponent<DifficultySelect>() != null)
-            {
-                col.gameObject.GetComponent<DifficultySelect>().OnHoverOverObject();
-                if (material.material.GetFloat("_Cutoff") >= 1)
-                {
-
-                    if (!hasBeenCalled)
-                    {
+    void OnTriggerStay(Collider col){
+        if (col.gameObject.GetComponent<IRiftSelectable>() != null){
+            IRiftSelectable riftInterface = col.gameObject.GetComponent<IRiftSelectable>();
+            if (riftInterface.IsSelectable()) {
+                reticleRenderer.material.SetFloat("_Cutoff", reticleRenderer.material.GetFloat("_Cutoff") + selectionRate * Time.deltaTime);
+                riftInterface.OnHoverOverObject();
+                if (reticleRenderer.material.GetFloat("_Cutoff") >= targetCutOff){
+                    if (!hasBeenCalled){
                         hasBeenCalled = true;
-                        col.gameObject.GetComponent<DifficultySelect>().OnHoldForEnoughTime();
-                    material.material.SetFloat("_Cutoff", .01f);
-                }
-                        
-                    
-                }
-
-            }
-            else if (col.gameObject.GetComponent<LevelSelect>() != null)
-            {
-                col.gameObject.GetComponent<LevelSelect>().OnHoverOverObject();
-                if (material.material.GetFloat("_Cutoff") >= 1)
-                {
-                    if (!hasBeenCalled)
-                    {
-                        hasBeenCalled = true;
-                        col.gameObject.GetComponent<LevelSelect>().OnHoldForEnoughTime();
-                    material.material.SetFloat("_Cutoff", .01f);
-                }
-                        
-                    
+                        riftInterface.OnHoldForEnoughTime();
+                        reticleRenderer.material.SetFloat("_Cutoff", .01f);
+                    }
                 }
             }
-            else if (col.gameObject.GetComponent<GearSelectionMenu>() != null)
-            {
-                col.gameObject.GetComponent<GearSelectionMenu>().OnHoverOverObject();
-                if (material.material.GetFloat("_Cutoff") >= 1)
-                {
-                    Debug.Log("Look at me" + hasBeenCalled);
-                    if (!hasBeenCalled)
-                    {
-                        hasBeenCalled = true;
-                        col.gameObject.GetComponent<GearSelectionMenu>().OnHoldForEnoughTime();
-                    material.material.SetFloat("_Cutoff", .01f);
-                }
-                        
-                    
-                }
-            }
-            else if (col.gameObject.GetComponent<TheyreFiredUp>() != null)
-            {
-                col.gameObject.GetComponent<TheyreFiredUp>().OnHoverOverObject();
-                if (material.material.GetFloat("_Cutoff") >= 1)
-                {
-                    if (!hasBeenCalled)
-                    {
-                        hasBeenCalled = true;
-                        col.gameObject.GetComponent<TheyreFiredUp>().OnHoldForEnoughTime();
-                    material.material.SetFloat("_Cutoff", .01f);
-                }
-
-
-                }
-            
         }
     }
-    void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject.GetComponent<DifficultySelect>() != null)
-        {
-            col.gameObject.GetComponent<DifficultySelect>().OnHoverExitObject();
+
+    void OnTriggerExit(Collider col){
+        if (col.gameObject.GetComponent<IRiftSelectable>() != null){
+            IRiftSelectable riftInterface = col.gameObject.GetComponent<IRiftSelectable>();
+            riftInterface.OnHoverExitObject();
         }
-        else if (col.gameObject.GetComponent<LevelSelect>() != null)
-        {
-            col.gameObject.GetComponent<LevelSelect>().OnHoverExitObject();
-        }
-        else if (col.gameObject.GetComponent<GearSelectionMenu>() != null)
-        {
-            col.gameObject.GetComponent<GearSelectionMenu>().OnHoverExitObject();
-        }
-        else if (col.gameObject.GetComponent<TheyreFiredUp>() != null)
-        {
-            col.gameObject.GetComponent<TheyreFiredUp>().OnHoverExitObject();
-        }
-        material.material.SetFloat("_Cutoff", .01f);
+        reticleRenderer.material.SetFloat("_Cutoff", .01f);
         hasBeenCalled = false;
     }
 }
