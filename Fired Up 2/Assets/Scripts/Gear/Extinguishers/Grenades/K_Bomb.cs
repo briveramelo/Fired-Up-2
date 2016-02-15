@@ -5,14 +5,14 @@ using System.Linq;
 
 public class K_Bomb : MonoBehaviour {
 
-    #region Init
     [SerializeField]	private GameObject iceExplosion;
 	private float timeToExplode;
+    private float extinguishedTime;
 	private float explosionRadius;
-    #endregion
 
     void Awake(){
-		timeToExplode= 2f;
+        extinguishedTime = 9f;
+        timeToExplode= 2f;
 		explosionRadius = 5f;
 		StartCoroutine (Explode());
 	}
@@ -23,12 +23,15 @@ public class K_Bomb : MonoBehaviour {
 		iceExplosion.transform.position = transform.position;
 		iceExplosion.SetActive(true);
 
-        Collider[] extingishableColliders = Physics.OverlapSphere(transform.position, explosionRadius, Layers.LayerMasks.allFires.value).Where(col => CompareTag(col.tag)).ToArray();
+        Collider[] extingishableColliders = Physics.OverlapSphere(transform.position, explosionRadius, Layers.LayerMasks.allFires.value).Where(col => CompareTag(col.tag) && col.GetComponent<FireSpread>()).ToArray();
+        Collider[] playerOrAI = Physics.OverlapSphere(transform.position, explosionRadius, Layers.LayerMasks.allPeople.value).ToArray();
+        for (int i = 0; i < playerOrAI.Length; i++){
+            playerOrAI[i].GetComponentInChildren<Health>().DamagePlayer((1/(playerOrAI[i].transform.position - this.transform.position).magnitude)*100);
+        }
         foreach (Collider col in extingishableColliders){
             FireSpread firespread = col.GetComponent<FireSpread>();
-            firespread.ExtinguishFire();
-            firespread.SupplyOxygen(false, 4f);
-		}
+            firespread.ExtinguishFire(extinguishedTime);
+        }
 		Destroy(gameObject);
 	}
 	

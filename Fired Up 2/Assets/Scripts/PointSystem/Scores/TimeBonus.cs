@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 
-public class TimeBonus : Score {
+public class TimeBonus : ScoreType {
 
     //Set these for each level in the inspector
     //In Descending order
@@ -20,7 +20,7 @@ public class TimeBonus : Score {
         timer = new Stopwatch();
         timer.Start();
         pointDropRate = (1 / (timeToZeroPoints - timeToA));
-        MyScoreType = ScoreType.TimeBonus;
+        MyScoreEnum = Score.TimeBonus;
     }
 
     protected override int CalculateScore() {

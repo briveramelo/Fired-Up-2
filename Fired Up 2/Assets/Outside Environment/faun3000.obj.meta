@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: f0c1188be74acf541a16a82d76786d5b
+timeCreated: 1450160236
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: alpha1
+    100002: alpha2
+    100004: auspuff
+    100006: bumber
+    100008: details
+    100010: //RootNode
+    100012: flagge
+    100014: glassf
+    100016: glasst
+    100018: kaba
+    100020: kabadach
+    100022: kabi
+    100024: keile
+    100026: kots
+    100028: licht
+    100030: lima
+    100032: radf
+    100034: radp
+    100036: rahmen1
+    100038: rahmen2
+    100040: tank
+    100042: tankadds
+    100044: werfer
+    400000: alpha1
+    400002: alpha2
+    400004: auspuff
+    400006: bumber
+    400008: details
+    400010: //RootNode
+    400012: flagge
+    400014: glassf
+    400016: glasst
+    400018: kaba
+    400020: kabadach
+    400022: kabi
+    400024: keile
+    400026: kots
+    400028: licht
+    400030: lima
+    400032: radf
+    400034: radp
+    400036: rahmen1
+    400038: rahmen2
+    400040: tank
+    400042: tankadds
+    400044: werfer
+    2300000: alpha1
+    2300002: alpha2
+    2300004: auspuff
+    2300006: bumber
+    2300008: details
+    2300010: flagge
+    2300012: glassf
+    2300014: glasst
+    2300016: kaba
+    2300018: kabadach
+    2300020: kabi
+    2300022: keile
+    2300024: kots
+    2300026: licht
+    2300028: lima
+    2300030: radf
+    2300032: radp
+    2300034: rahmen1
+    2300036: rahmen2
+    2300038: tank
+    2300040: tankadds
+    2300042: werfer
+    3300000: alpha1
+    3300002: alpha2
+    3300004: auspuff
+    3300006: bumber
+    3300008: details
+    3300010: flagge
+    3300012: glassf
+    3300014: glasst
+    3300016: kaba
+    3300018: kabadach
+    3300020: kabi
+    3300022: keile
+    3300024: kots
+    3300026: licht
+    3300028: lima
+    3300030: radf
+    3300032: radp
+    3300034: rahmen1
+    3300036: rahmen2
+    3300038: tank
+    3300040: tankadds
+    3300042: werfer
+    4300000: alpha1
+    4300002: alpha2
+    4300004: auspuff
+    4300006: bumber
+    4300008: details
+    4300010: flagge
+    4300012: glassf
+    4300014: glasst
+    4300016: kaba
+    4300018: kabadach
+    4300020: kabi
+    4300022: keile
+    4300024: kots
+    4300026: licht
+    4300028: lima
+    4300030: radf
+    4300032: radp
+    4300034: rahmen1
+    4300036: rahmen2
+    4300038: tank
+    4300040: tankadds
+    4300042: werfer
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

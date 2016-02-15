@@ -4,7 +4,7 @@ using FU;
 
 public abstract class DangerZone : MonoBehaviour {
 
-    private bool hasZoneBeenTriggered;
+    public bool hasZoneBeenTriggered;
     public bool HasZoneBeenTriggered { get { return hasZoneBeenTriggered; } }
 
     void OnTriggerEnter(Collider col) {

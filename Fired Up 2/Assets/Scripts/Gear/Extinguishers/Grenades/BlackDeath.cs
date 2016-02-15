@@ -30,8 +30,8 @@ public class BlackDeath : MonoBehaviour {
     private float distanceToTimeFactor;
     private float maxTimeMult;
     private float timeFactor;
+    private float extinguishedTime;
 
-    // Use this for initialization
     void Awake () {
 		holeRadius = 6f;
 		pullForce = 20f;
@@ -41,7 +41,7 @@ public class BlackDeath : MonoBehaviour {
         heightToRise = .2f;
         riseSpeed = .005f;
         timer = new Stopwatch();
-
+        extinguishedTime = 12f;
         maxTimeMult = 1f - minimumTimeScale;
         distanceToTimeFactor = maxTimeMult / maxDistanceBeforeZeroTimeScale;
 
@@ -59,7 +59,6 @@ public class BlackDeath : MonoBehaviour {
         blackHoleSound.SetActive(true);
 		singularizing = true;
         StartCoroutine (MoveUp());
-        //StartCoroutine (PulseLights());
         StartCoroutine (BendTime());
 		StartCoroutine (PullInObjects());
 
@@ -162,8 +161,7 @@ public class BlackDeath : MonoBehaviour {
         Collider[] extingishableColliders = Physics.OverlapSphere(transform.position, holeRadius, Layers.LayerMasks.allFires.value).Where(col => CompareTag(col.tag)).ToArray();
         foreach (Collider col in extingishableColliders) {
             FireSpread fireSpread = col.GetComponent<FireSpread>();
-            fireSpread.ExtinguishFire();
-            fireSpread.SupplyOxygen(false, 12f);
+            fireSpread.ExtinguishFire(extinguishedTime);
         }
 
         willKillOnCollision = true;

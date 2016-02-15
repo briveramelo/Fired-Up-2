@@ -11,7 +11,7 @@ public class Head : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		rotationSpeed = 3f;
+		rotationSpeed = 1.5f;
 		minAxisInput = 0.15f;
 		lowBound = 85;
 		highBound = 275;

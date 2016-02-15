@@ -4,9 +4,14 @@ using System.Collections;
 public class CO2_UI : UI_Animations {
 
     [SerializeField] private ParticleSystem CO2Particles;
+    private Material CO2Material;
+
+    private Color unselectedC02Color = new Color(  141f /255f,  141f /255f,  141f /255f,  25f  /255f);
+    private Color selectedC02Color =   new Color(  141f /255f,  141f /255f,  141f /255f,  172f /255f);
 
     void Awake(){
-		StartCoroutine (PlaySmoke(2f));
+        CO2Material = CO2Particles.GetComponent<ParticleSystemRenderer>().material;
+        StartCoroutine (PlaySmoke(2f));
 	}
 
 	IEnumerator PlaySmoke(float timeToPause){
@@ -25,12 +30,14 @@ public class CO2_UI : UI_Animations {
 
 	public override void ActivateUI(){
 		base.ActivateUI();
-		StartCoroutine (PlaySmoke(0.75f));
+        CO2Material.SetColor("_TintColor", selectedC02Color);
+        StartCoroutine (PlaySmoke(0.75f));
 	}
 
 	public override void DeActivateUI(){
 		base.DeActivateUI();
-		StartCoroutine(PauseSmoke(0f));
+        CO2Material.SetColor("_TintColor", unselectedC02Color);
+        StartCoroutine(PauseSmoke(0f));
 	}
 	
 }

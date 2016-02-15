@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using FU;
+using UnityEngine.SceneManagement;
+
 public class Player : MonoBehaviour {
     public static Player player;
     public List<MonoBehaviour> movements;
@@ -19,7 +21,7 @@ public class Player : MonoBehaviour {
         {
 
             if (Input.GetButtonDown(Controls.Jump))
-                Application.LoadLevel(Application.loadedLevelName);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
     }
